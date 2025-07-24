@@ -29,8 +29,11 @@ import (
 type Configuration struct {
 	Log_path string `json:"log_path" fastnetmon_type:"string"`
 
-	// f5, f5_xc or path or cloudflare
+	// f5, f5_xc, path, cloudflare, gcore
 	Provider_name string `json:"provider_name" fastnetmon_type:"string"`
+
+	// gCore credentials
+	Gcore_api_token string `json:"gcore_api_token" fastnetmon_type:"string" sensitive:"true"`
 
 	// F5 Silverline credentials
 	F5_email    string `json:"f5_email" fastnetmon_type:"string"`
@@ -354,6 +357,10 @@ func main() {
 			fast_logger.Printf("Successfully created route")
 		}
 
+	} else if conf.Provider_name == "gcore" {
+		if conf.Gcore_api_token == "" {
+			fast_logger.Fatal("Please set gcore_api_token field in configuration")
+		}
 	} else {
 		fast_logger.Fatalf("Unknown provider name, we support only 'f5' or 'path': %s", conf.Provider_name)
 	}
