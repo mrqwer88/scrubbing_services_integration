@@ -75,6 +75,14 @@ var path_api_url string = "https://api.path.net/"
 // Emulate successful auth and try to issue announce commands
 var fake_auth = false
 
+type GcoreProfileTemplate struct {
+	ID          int    `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Version     string `json:"version"`
+	// There are more fields but we look only for most important ones
+}
+
 func main() {
 	conf := Configuration{Log_path: "/var/log/fastnetmon/fastnetmon_scrubbing_services_integration.log"}
 
@@ -361,6 +369,60 @@ func main() {
 		if conf.Gcore_api_token == "" {
 			fast_logger.Fatal("Please set gcore_api_token field in configuration")
 		}
+
+		// Special command to get all profile templates for our information
+		if os.Getenv("LIST_PROFILE_TEMPLATES") != "" {
+			apiURL := "https://api.gcore.com/security/iaas/profile-templates"
+
+			client := &http.Client{
+				Timeout: 10 * time.Second,
+			}
+
+			req, err := http.NewRequest("GET", apiURL, nil)
+			if err != nil {
+				fmt.Printf("Error creating request: %s\n", err)
+				return
+			}
+
+			// Set the Authorization header
+			req.Header.Set("Authorization", "APIKey "+conf.Gcore_api_token)
+			req.Header.Set("Accept", "application/json")
+
+			// Send the request
+			resp, err := client.Do(req)
+			if err != nil {
+				fmt.Printf("Error sending request: %s\n", err)
+				return
+			}
+			defer resp.Body.Close() // Ensure the response body is closed
+
+			// Read the response body
+			body, err := io.ReadAll(resp.Body)
+			if err != nil {
+				fmt.Printf("Error reading response body: %s\n", err)
+				return
+			}
+
+			if resp.StatusCode != http.StatusOK {
+				fmt.Printf("API returned non-200 status: %d %s\n", resp.StatusCode, resp.Status)
+				fmt.Printf("Response body: %s\n", body)
+				return
+			}
+
+			var templates []GcoreProfileTemplate
+
+			err = json.Unmarshal(body, &templates)
+
+			if err != nil {
+				fmt.Printf("Error unmarshaling JSON: %s\n", err)
+				return
+			}
+
+			for _, template := range templates {
+				fmt.Printf("ID: %d, Name: %s, Description: %s, Version: %s\n", template.ID, template.Name, template.Description, template.Version)
+			}
+		}
+
 	} else {
 		fast_logger.Fatalf("Unknown provider name, we support only 'f5' or 'path': %s", conf.Provider_name)
 	}
