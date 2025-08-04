@@ -480,6 +480,9 @@ func main() {
 		fast_logger.Printf("Successfully sent query")
 		// Well, in case of success and when we send same announce as already existent one we will receive code 200 and "null" in response
 		// I asked folks to improve it
+		// We can use this command to check status of announce:
+		//  curl -H 'Content-Type: application/json'  'https://api.gcore.com/security/sifter/v2/protected_addresses/announces' -H 'Authorization: ApiKey xxx
+		// Example answer: [{"client_id":1234,"announced":[],"not_announced":["10.1.2.0/24"]}]
 	} else {
 		fast_logger.Fatalf("Unknown provider name, we support only 'f5' or 'path': %s", conf.Provider_name)
 	}
