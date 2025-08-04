@@ -380,7 +380,7 @@ func main() {
 
 			req, err := http.NewRequest("GET", apiURL, nil)
 			if err != nil {
-				fmt.Printf("Error creating request: %s\n", err)
+				fast_logger.Printf("Error creating request: %s\n", err)
 				return
 			}
 
@@ -391,7 +391,7 @@ func main() {
 			// Send the request
 			resp, err := client.Do(req)
 			if err != nil {
-				fmt.Printf("Error sending request: %s\n", err)
+				fast_logger.Printf("Error sending request: %s\n", err)
 				return
 			}
 			defer resp.Body.Close() // Ensure the response body is closed
@@ -399,13 +399,13 @@ func main() {
 			// Read the response body
 			body, err := io.ReadAll(resp.Body)
 			if err != nil {
-				fmt.Printf("Error reading response body: %s\n", err)
+				fast_logger.Printf("Error reading response body: %s\n", err)
 				return
 			}
 
 			if resp.StatusCode != http.StatusOK {
-				fmt.Printf("API returned non-200 status: %d %s\n", resp.StatusCode, resp.Status)
-				fmt.Printf("Response body: %s\n", body)
+				fast_logger.Printf("API returned non-200 status: %d %s\n", resp.StatusCode, resp.Status)
+				fast_logger.Printf("Response body: %s\n", body)
 				return
 			}
 
@@ -414,7 +414,7 @@ func main() {
 			err = json.Unmarshal(body, &templates)
 
 			if err != nil {
-				fmt.Printf("Error unmarshaling JSON: %s\n", err)
+				log.Fatalf("Error unmarshaling JSON: %s\n", err)
 				return
 			}
 
@@ -423,6 +423,63 @@ func main() {
 			}
 		}
 
+		type AnnounceConfig struct {
+			Announce string `json:"announce"`
+			Enabled  bool   `json:"enabled"`
+		}
+
+		announceConfig := AnnounceConfig{Announce: network_cidr_prefix}
+
+		if withdrawal {
+			announceConfig.Enabled = false
+		} else {
+			announceConfig.Enabled = true
+		}
+
+		announceURL := "https://api.gcore.com/security/sifter/v2/protected_addresses/announces"
+
+		client := &http.Client{
+			Timeout: 10 * time.Second,
+		}
+
+		announce_json, err := json.Marshal(announceConfig)
+
+		if err != nil {
+			fast_logger.Fatalf("Cannot marshal announce document: %v", err)
+		}
+
+		req, err := http.NewRequest(http.MethodPost, announceURL, bytes.NewReader(announce_json))
+
+		if err != nil {
+			fast_logger.Fatalf("Cannot create POST request: %v", err)
+		}
+
+		// Set the Authorization header
+		req.Header.Set("Authorization", "APIKey "+conf.Gcore_api_token)
+		req.Header.Set("Accept", "application/json")
+
+		// Send the request
+		resp, err := client.Do(req)
+		if err != nil {
+			log.Fatalf("Error sending request: %s\n", err)
+		}
+		defer resp.Body.Close() // Ensure the response body is closed
+
+		// Read the response body
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			fast_logger.Fatalf("Error reading response body: %s\n", err)
+		}
+
+		if resp.StatusCode != http.StatusOK {
+			fast_logger.Printf("API returned non-200 status: %d %s\n", resp.StatusCode, resp.Status)
+			fast_logger.Fatalf("Response body: %s\n", body)
+			return
+		}
+
+		fast_logger.Printf("Successfully sent query")
+		// Well, in case of success and when we send same announce as already existent one we will receive code 200 and "null" in response
+		// I asked folks to improve it
 	} else {
 		fast_logger.Fatalf("Unknown provider name, we support only 'f5' or 'path': %s", conf.Provider_name)
 	}
