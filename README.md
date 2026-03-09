@@ -7,3 +7,4 @@ This tools offers integration of FastNetMon with different scrubbing providers
 echo '{"action":"ban", "ip":"1.2.3.4"}' | LIST_PROFILE_TEMPLATES=1 bin/scrubbing_services_integration
 ```
 
+It needs to be built manually and then uploaded to bucket
