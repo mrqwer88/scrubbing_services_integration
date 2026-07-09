@@ -1,0 +1,245 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+package cloud
+
+import (
+	"context"
+	"net/http"
+	"net/url"
+	"slices"
+	"time"
+
+	"github.com/G-Core/gcore-go/internal/apijson"
+	"github.com/G-Core/gcore-go/internal/apiquery"
+	"github.com/G-Core/gcore-go/internal/requestconfig"
+	"github.com/G-Core/gcore-go/option"
+	"github.com/G-Core/gcore-go/packages/param"
+	"github.com/G-Core/gcore-go/packages/respjson"
+)
+
+// BillingReservationService contains methods and other services that help with
+// interacting with the gcore API.
+//
+// Note, unlike clients, this service does not read variables from the environment
+// automatically. You should not instantiate this service directly, and instead use
+// the [NewBillingReservationService] method instead.
+type BillingReservationService struct {
+	Options []option.RequestOption
+}
+
+// NewBillingReservationService generates a new service that applies the given
+// options to each request. These options are applied after the parent client's
+// options (if there is one), and before any request-specific options.
+func NewBillingReservationService(opts ...option.RequestOption) (r BillingReservationService) {
+	r = BillingReservationService{}
+	r.Options = opts
+	return
+}
+
+// Get a list of billing reservations along with detailed information on resource
+// configurations and associated pricing.
+func (r *BillingReservationService) List(ctx context.Context, query BillingReservationListParams, opts ...option.RequestOption) (res *BillingReservations, err error) {
+	opts = slices.Concat(r.Options, opts)
+	path := "cloud/v2/reservations"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return res, err
+}
+
+type BillingReservation struct {
+	// Active billing plan ID
+	ActiveBillingPlanID int64 `json:"active_billing_plan_id" api:"required"`
+	// Overcommit pricing details
+	ActiveOvercommit BillingReservationActiveOvercommit `json:"active_overcommit" api:"required"`
+	// Commit pricing details
+	Commit BillingReservationCommit `json:"commit" api:"required"`
+	// Hardware specifications
+	HardwareInfo BillingReservationHardwareInfo `json:"hardware_info" api:"required"`
+	// Region name
+	RegionName string `json:"region_name" api:"required"`
+	// Number of reserved resource items
+	ResourceCount int64 `json:"resource_count" api:"required"`
+	// Resource name
+	ResourceName string `json:"resource_name" api:"required"`
+	// Unit name (e.g., 'H' for hours)
+	UnitName string `json:"unit_name" api:"required"`
+	// Unit size per month (e.g., 744 hours)
+	UnitSizeMonth string `json:"unit_size_month" api:"required"`
+	// Unit size month multiplied by count of resources in the reservation
+	UnitSizeTotal string `json:"unit_size_total" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		ActiveBillingPlanID respjson.Field
+		ActiveOvercommit    respjson.Field
+		Commit              respjson.Field
+		HardwareInfo        respjson.Field
+		RegionName          respjson.Field
+		ResourceCount       respjson.Field
+		ResourceName        respjson.Field
+		UnitName            respjson.Field
+		UnitSizeMonth       respjson.Field
+		UnitSizeTotal       respjson.Field
+		ExtraFields         map[string]respjson.Field
+		raw                 string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r BillingReservation) RawJSON() string { return r.JSON.raw }
+func (r *BillingReservation) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Overcommit pricing details
+type BillingReservationActiveOvercommit struct {
+	// Billing subscription active from date
+	ActiveFrom time.Time `json:"active_from" api:"required" format:"date-time"`
+	// Billing plan item ID
+	PlanItemID int64 `json:"plan_item_id" api:"required"`
+	// Price per month
+	PricePerMonth string `json:"price_per_month" api:"required"`
+	// Price per unit (hourly)
+	PricePerUnit string `json:"price_per_unit" api:"required"`
+	// Total price for the reservation period
+	PriceTotal string `json:"price_total" api:"required"`
+	// Billing subscription ID for overcommit
+	SubscriptionID int64 `json:"subscription_id" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		ActiveFrom     respjson.Field
+		PlanItemID     respjson.Field
+		PricePerMonth  respjson.Field
+		PricePerUnit   respjson.Field
+		PriceTotal     respjson.Field
+		SubscriptionID respjson.Field
+		ExtraFields    map[string]respjson.Field
+		raw            string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r BillingReservationActiveOvercommit) RawJSON() string { return r.JSON.raw }
+func (r *BillingReservationActiveOvercommit) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Commit pricing details
+type BillingReservationCommit struct {
+	// Billing subscription active from date
+	ActiveFrom time.Time `json:"active_from" api:"required" format:"date-time"`
+	// Billing subscription active to date
+	ActiveTo time.Time `json:"active_to" api:"required" format:"date-time"`
+	// Price per month, per one resource
+	PricePerMonth string `json:"price_per_month" api:"required"`
+	// Price per unit, per one resource (hourly)
+	PricePerUnit string `json:"price_per_unit" api:"required"`
+	// Total price for the reservation period for the full reserved amount
+	PriceTotal string `json:"price_total" api:"required"`
+	// Billing subscription ID for commit
+	SubscriptionID int64 `json:"subscription_id" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		ActiveFrom     respjson.Field
+		ActiveTo       respjson.Field
+		PricePerMonth  respjson.Field
+		PricePerUnit   respjson.Field
+		PriceTotal     respjson.Field
+		SubscriptionID respjson.Field
+		ExtraFields    map[string]respjson.Field
+		raw            string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r BillingReservationCommit) RawJSON() string { return r.JSON.raw }
+func (r *BillingReservationCommit) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Hardware specifications
+type BillingReservationHardwareInfo struct {
+	// CPU specification
+	CPU string `json:"cpu" api:"required"`
+	// Disk specification
+	Disk string `json:"disk" api:"required"`
+	// RAM specification
+	Ram string `json:"ram" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		CPU         respjson.Field
+		Disk        respjson.Field
+		Ram         respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r BillingReservationHardwareInfo) RawJSON() string { return r.JSON.raw }
+func (r *BillingReservationHardwareInfo) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type BillingReservations struct {
+	// Number of objects
+	Count int64 `json:"count" api:"required"`
+	// Objects
+	Results []BillingReservation `json:"results" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Count       respjson.Field
+		Results     respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r BillingReservations) RawJSON() string { return r.JSON.raw }
+func (r *BillingReservations) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type BillingReservationListParams struct {
+	// Metric name for the resource (e.g., 'bm1-hf-medium_min')
+	MetricName param.Opt[string] `query:"metric_name,omitzero" json:"-"`
+	// Region for reservation
+	RegionID param.Opt[int64] `query:"region_id,omitzero" json:"-"`
+	// Include inactive commits in the response. Only applies when no period is given;
+	// ignored when 'time_from'/'time_to' are supplied, since the period defines the
+	// window.
+	ShowInactive param.Opt[bool] `query:"show_inactive,omitzero" json:"-"`
+	// Start of the reservation period (ISO 8601). Must be supplied together with
+	// 'time_to'. When both are given, period-matched monthly pricing is returned and
+	// the period must be at most one month (31 days). When both are omitted, current
+	// pricing is returned.
+	TimeFrom param.Opt[time.Time] `query:"time_from,omitzero" format:"date-time" json:"-"`
+	// End of the reservation period (ISO 8601). Must be supplied together with
+	// 'time_from'. When both are given, period-matched monthly pricing is returned and
+	// the period must be at most one month (31 days). When both are omitted, current
+	// pricing is returned.
+	TimeTo param.Opt[time.Time] `query:"time_to,omitzero" format:"date-time" json:"-"`
+	// Order by field and direction.
+	//
+	// Any of "active_from.asc", "active_from.desc", "active_to.asc", "active_to.desc".
+	OrderBy BillingReservationListParamsOrderBy `query:"order_by,omitzero" json:"-"`
+	paramObj
+}
+
+// URLQuery serializes [BillingReservationListParams]'s query parameters as
+// `url.Values`.
+func (r BillingReservationListParams) URLQuery() (v url.Values, err error) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatRepeat,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+// Order by field and direction.
+type BillingReservationListParamsOrderBy string
+
+const (
+	BillingReservationListParamsOrderByActiveFromAsc  BillingReservationListParamsOrderBy = "active_from.asc"
+	BillingReservationListParamsOrderByActiveFromDesc BillingReservationListParamsOrderBy = "active_from.desc"
+	BillingReservationListParamsOrderByActiveToAsc    BillingReservationListParamsOrderBy = "active_to.asc"
+	BillingReservationListParamsOrderByActiveToDesc   BillingReservationListParamsOrderBy = "active_to.desc"
+)

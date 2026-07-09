@@ -1,0 +1,298 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+package cloud
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"net/http"
+	"net/url"
+	"slices"
+
+	"github.com/G-Core/gcore-go/internal/apijson"
+	"github.com/G-Core/gcore-go/internal/apiquery"
+	"github.com/G-Core/gcore-go/internal/requestconfig"
+	"github.com/G-Core/gcore-go/option"
+	"github.com/G-Core/gcore-go/packages/param"
+	"github.com/G-Core/gcore-go/packages/respjson"
+)
+
+// Placement groups enforce affinity or anti-affinity policies that control whether
+// virtual machines are hosted on the same or different physical servers.
+//
+// PlacementGroupService contains methods and other services that help with
+// interacting with the gcore API.
+//
+// Note, unlike clients, this service does not read variables from the environment
+// automatically. You should not instantiate this service directly, and instead use
+// the [NewPlacementGroupService] method instead.
+type PlacementGroupService struct {
+	Options []option.RequestOption
+	tasks   TaskService
+}
+
+// NewPlacementGroupService generates a new service that applies the given options
+// to each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
+func NewPlacementGroupService(opts ...option.RequestOption) (r PlacementGroupService) {
+	r = PlacementGroupService{}
+	r.Options = opts
+	r.tasks = NewTaskService(opts...)
+	return
+}
+
+// Create an affinity or anti-affinity or soft-anti-affinity placement group
+func (r *PlacementGroupService) New(ctx context.Context, params PlacementGroupNewParams, opts ...option.RequestOption) (res *PlacementGroup, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&params.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&params.RegionID, precfg.CloudRegionID)
+	if !params.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !params.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v1/servergroups/%v/%v", params.ProjectID.Value, params.RegionID.Value)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
+	return res, err
+}
+
+// List placement groups
+func (r *PlacementGroupService) List(ctx context.Context, params PlacementGroupListParams, opts ...option.RequestOption) (res *PlacementGroupList, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&params.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&params.RegionID, precfg.CloudRegionID)
+	if !params.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !params.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v1/servergroups/%v/%v", params.ProjectID.Value, params.RegionID.Value)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, params, &res, opts...)
+	return res, err
+}
+
+// Delete placement group
+func (r *PlacementGroupService) Delete(ctx context.Context, groupID string, body PlacementGroupDeleteParams, opts ...option.RequestOption) (res *TaskIDList, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&body.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&body.RegionID, precfg.CloudRegionID)
+	if !body.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !body.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	if groupID == "" {
+		err = errors.New("missing required group_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v1/servergroups/%v/%v/%s", body.ProjectID.Value, body.RegionID.Value, groupID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, &res, opts...)
+	return res, err
+}
+
+// DeleteAndPoll deletes a placement group and polls for completion of the first task. Use the
+// [TaskService.Poll] method if you need to poll for all tasks.
+func (r *PlacementGroupService) DeleteAndPoll(ctx context.Context, groupID string, body PlacementGroupDeleteParams, opts ...option.RequestOption) (err error) {
+	// Exclude WithResponseBodyInto for the action (Delete returns TaskIDList, must deserialize properly)
+	actionOpts := requestconfig.ExcludeResponseBodyInto(opts...)
+	resource, err := r.Delete(ctx, groupID, body, actionOpts...)
+	if err != nil {
+		return err
+	}
+
+	if len(resource.Tasks) == 0 {
+		return errors.New("expected at least one task to be created")
+	}
+	taskID := resource.Tasks[0]
+	// Exclude WithResponseBodyInto and clear request body for Poll (returns Task, must deserialize properly)
+	pollOpts := slices.Concat(
+		requestconfig.ExcludeResponseBodyInto(opts...),
+		[]option.RequestOption{requestconfig.WithoutRequestBody()},
+	)
+	_, err = r.tasks.Poll(ctx, taskID, pollOpts...)
+	return err
+}
+
+// Get placement group
+func (r *PlacementGroupService) Get(ctx context.Context, groupID string, query PlacementGroupGetParams, opts ...option.RequestOption) (res *PlacementGroup, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&query.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&query.RegionID, precfg.CloudRegionID)
+	if !query.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !query.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	if groupID == "" {
+		err = errors.New("missing required group_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v1/servergroups/%v/%v/%s", query.ProjectID.Value, query.RegionID.Value, groupID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	return res, err
+}
+
+type PlacementGroup struct {
+	// The list of instances in this server group.
+	Instances []PlacementGroupInstance `json:"instances" api:"required"`
+	// The name of the server group.
+	Name string `json:"name" api:"required"`
+	// The server group policy. Options are: anti-affinity, affinity, or
+	// soft-anti-affinity.
+	Policy string `json:"policy" api:"required"`
+	// Project ID
+	ProjectID int64 `json:"project_id" api:"required"`
+	// Region name
+	Region string `json:"region" api:"required"`
+	// Region ID
+	RegionID int64 `json:"region_id" api:"required"`
+	// The ID of the server group.
+	ServergroupID string `json:"servergroup_id" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Instances     respjson.Field
+		Name          respjson.Field
+		Policy        respjson.Field
+		ProjectID     respjson.Field
+		Region        respjson.Field
+		RegionID      respjson.Field
+		ServergroupID respjson.Field
+		ExtraFields   map[string]respjson.Field
+		raw           string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r PlacementGroup) RawJSON() string { return r.JSON.raw }
+func (r *PlacementGroup) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type PlacementGroupInstance struct {
+	// The ID of the instance, corresponding to the attribute 'id'.
+	InstanceID string `json:"instance_id" api:"required"`
+	// The name of the instance, corresponding to the attribute 'name'.
+	InstanceName string `json:"instance_name" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		InstanceID   respjson.Field
+		InstanceName respjson.Field
+		ExtraFields  map[string]respjson.Field
+		raw          string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r PlacementGroupInstance) RawJSON() string { return r.JSON.raw }
+func (r *PlacementGroupInstance) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type PlacementGroupList struct {
+	// Number of objects
+	Count int64 `json:"count" api:"required"`
+	// Objects
+	Results []PlacementGroup `json:"results" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Count       respjson.Field
+		Results     respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r PlacementGroupList) RawJSON() string { return r.JSON.raw }
+func (r *PlacementGroupList) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type PlacementGroupNewParams struct {
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	RegionID  param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+	// The name of the server group.
+	Name string `json:"name" api:"required"`
+	// The server group policy.
+	//
+	// Any of "affinity", "anti-affinity", "soft-anti-affinity".
+	Policy PlacementGroupNewParamsPolicy `json:"policy,omitzero" api:"required"`
+	paramObj
+}
+
+func (r PlacementGroupNewParams) MarshalJSON() (data []byte, err error) {
+	type shadow PlacementGroupNewParams
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *PlacementGroupNewParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The server group policy.
+type PlacementGroupNewParamsPolicy string
+
+const (
+	PlacementGroupNewParamsPolicyAffinity         PlacementGroupNewParamsPolicy = "affinity"
+	PlacementGroupNewParamsPolicyAntiAffinity     PlacementGroupNewParamsPolicy = "anti-affinity"
+	PlacementGroupNewParamsPolicySoftAntiAffinity PlacementGroupNewParamsPolicy = "soft-anti-affinity"
+)
+
+type PlacementGroupListParams struct {
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	RegionID  param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+	// Limit the number of returned items
+	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
+	// Offset value is used to exclude the first set of records from the result
+	Offset param.Opt[int64] `query:"offset,omitzero" json:"-"`
+	paramObj
+}
+
+// URLQuery serializes [PlacementGroupListParams]'s query parameters as
+// `url.Values`.
+func (r PlacementGroupListParams) URLQuery() (v url.Values, err error) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatRepeat,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type PlacementGroupDeleteParams struct {
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	RegionID  param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+	paramObj
+}
+
+type PlacementGroupGetParams struct {
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	RegionID  param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+	paramObj
+}

@@ -1,0 +1,325 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+package cloud
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"net/http"
+	"net/url"
+	"slices"
+
+	"github.com/G-Core/gcore-go/internal/apijson"
+	"github.com/G-Core/gcore-go/internal/apiquery"
+	"github.com/G-Core/gcore-go/internal/requestconfig"
+	"github.com/G-Core/gcore-go/option"
+	"github.com/G-Core/gcore-go/packages/param"
+)
+
+// GPU virtual images are custom boot images for virtual GPU cluster instances.
+//
+// GPUVirtualClusterImageService contains methods and other services that help with
+// interacting with the gcore API.
+//
+// Note, unlike clients, this service does not read variables from the environment
+// automatically. You should not instantiate this service directly, and instead use
+// the [NewGPUVirtualClusterImageService] method instead.
+type GPUVirtualClusterImageService struct {
+	Options []option.RequestOption
+	tasks   TaskService
+}
+
+// NewGPUVirtualClusterImageService generates a new service that applies the given
+// options to each request. These options are applied after the parent client's
+// options (if there is one), and before any request-specific options.
+func NewGPUVirtualClusterImageService(opts ...option.RequestOption) (r GPUVirtualClusterImageService) {
+	r = GPUVirtualClusterImageService{}
+	r.Options = opts
+	r.tasks = NewTaskService(opts...)
+	return
+}
+
+// List virtual GPU images
+func (r *GPUVirtualClusterImageService) List(ctx context.Context, params GPUVirtualClusterImageListParams, opts ...option.RequestOption) (res *GPUImageList, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&params.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&params.RegionID, precfg.CloudRegionID)
+	if !params.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !params.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v3/gpu/virtual/%v/%v/images", params.ProjectID.Value, params.RegionID.Value)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, params, &res, opts...)
+	return res, err
+}
+
+// Delete virtual GPU image
+func (r *GPUVirtualClusterImageService) Delete(ctx context.Context, imageID string, body GPUVirtualClusterImageDeleteParams, opts ...option.RequestOption) (res *TaskIDList, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&body.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&body.RegionID, precfg.CloudRegionID)
+	if !body.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !body.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	if imageID == "" {
+		err = errors.New("missing required image_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v3/gpu/virtual/%v/%v/images/%s", body.ProjectID.Value, body.RegionID.Value, imageID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, &res, opts...)
+	return res, err
+}
+
+// Get virtual GPU image
+func (r *GPUVirtualClusterImageService) Get(ctx context.Context, imageID string, query GPUVirtualClusterImageGetParams, opts ...option.RequestOption) (res *GPUImage, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&query.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&query.RegionID, precfg.CloudRegionID)
+	if !query.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !query.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	if imageID == "" {
+		err = errors.New("missing required image_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v3/gpu/virtual/%v/%v/images/%s", query.ProjectID.Value, query.RegionID.Value, imageID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	return res, err
+}
+
+// Upload new virtual GPU image
+func (r *GPUVirtualClusterImageService) Upload(ctx context.Context, params GPUVirtualClusterImageUploadParams, opts ...option.RequestOption) (res *TaskIDList, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&params.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&params.RegionID, precfg.CloudRegionID)
+	if !params.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !params.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v3/gpu/virtual/%v/%v/images", params.ProjectID.Value, params.RegionID.Value)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
+	return res, err
+}
+
+// UploadAndPoll uploads a new virtual GPU image and polls for completion of the first task. Use the
+// [TaskService.Poll] method if you need to poll for all tasks.
+func (r *GPUVirtualClusterImageService) UploadAndPoll(ctx context.Context, params GPUVirtualClusterImageUploadParams, opts ...option.RequestOption) (v *GPUImage, err error) {
+	// Exclude WithResponseBodyInto for the action (Upload returns TaskIDList, must deserialize properly)
+	actionOpts := requestconfig.ExcludeResponseBodyInto(opts...)
+	resource, err := r.Upload(ctx, params, actionOpts...)
+	if err != nil {
+		return
+	}
+
+	precfg, err := requestconfig.PreRequestOptions(slices.Concat(r.Options, opts)...)
+	if err != nil {
+		return
+	}
+	var getParams GPUVirtualClusterImageGetParams
+	requestconfig.UseDefaultParam(&params.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&params.RegionID, precfg.CloudRegionID)
+	getParams.ProjectID = params.ProjectID
+	getParams.RegionID = params.RegionID
+
+	if len(resource.Tasks) == 0 {
+		return nil, errors.New("expected at least one task to be created")
+	}
+	taskID := resource.Tasks[0]
+	// Exclude WithResponseBodyInto and clear request body for Poll (returns Task, must deserialize properly)
+	pollOpts := slices.Concat(
+		requestconfig.ExcludeResponseBodyInto(opts...),
+		[]option.RequestOption{requestconfig.WithoutRequestBody()},
+	)
+	task, err := r.tasks.Poll(ctx, taskID, pollOpts...)
+	if err != nil {
+		return
+	}
+
+	if !task.JSON.CreatedResources.Valid() || len(task.CreatedResources.Images) != 1 {
+		return nil, errors.New("expected exactly one image to be created in a task")
+	}
+	resourceID := task.CreatedResources.Images[0]
+
+	// Clear request body for Get
+	getOpts := slices.Concat(opts, []option.RequestOption{requestconfig.WithoutRequestBody()})
+	return r.Get(ctx, resourceID, getParams, getOpts...)
+}
+
+// DeleteAndPoll deletes a virtual GPU image and polls for completion of the first task. Use the [TaskService.Poll]
+// method if you need to poll for all tasks.
+func (r *GPUVirtualClusterImageService) DeleteAndPoll(ctx context.Context, imageID string, body GPUVirtualClusterImageDeleteParams, opts ...option.RequestOption) error {
+	// Exclude WithResponseBodyInto for the action (Delete returns TaskIDList, must deserialize properly)
+	actionOpts := requestconfig.ExcludeResponseBodyInto(opts...)
+	resource, err := r.Delete(ctx, imageID, body, actionOpts...)
+	if err != nil {
+		return err
+	}
+
+	if len(resource.Tasks) == 0 {
+		return errors.New("expected at least one task to be created")
+	}
+	taskID := resource.Tasks[0]
+	// Exclude WithResponseBodyInto and clear request body for Poll (returns Task, must deserialize properly)
+	pollOpts := slices.Concat(
+		requestconfig.ExcludeResponseBodyInto(opts...),
+		[]option.RequestOption{requestconfig.WithoutRequestBody()},
+	)
+	_, err = r.tasks.Poll(ctx, taskID, pollOpts...)
+	return err
+}
+
+type GPUVirtualClusterImageListParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Region ID
+	RegionID param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+	// Optional. Limit the number of returned items
+	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
+	// Optional. Offset value is used to exclude the first set of records from the
+	// result
+	Offset param.Opt[int64] `query:"offset,omitzero" json:"-"`
+	paramObj
+}
+
+// URLQuery serializes [GPUVirtualClusterImageListParams]'s query parameters as
+// `url.Values`.
+func (r GPUVirtualClusterImageListParams) URLQuery() (v url.Values, err error) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatRepeat,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type GPUVirtualClusterImageDeleteParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Region ID
+	RegionID param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+	paramObj
+}
+
+type GPUVirtualClusterImageGetParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Region ID
+	RegionID param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+	paramObj
+}
+
+type GPUVirtualClusterImageUploadParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Region ID
+	RegionID param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+	// Image name
+	Name string `json:"name" api:"required"`
+	// Image URL
+	URL string `json:"url" api:"required" format:"uri"`
+	// OS Distribution, i.e. Debian, CentOS, Ubuntu, CoreOS etc.
+	OsDistro param.Opt[string] `json:"os_distro,omitzero"`
+	// OS version, i.e. 19.04 (for Ubuntu) or 9.4 for Debian
+	OsVersion param.Opt[string] `json:"os_version,omitzero"`
+	// When True, image cannot be deleted unless all volumes, created from it, are
+	// deleted.
+	CowFormat param.Opt[bool] `json:"cow_format,omitzero"`
+	// Image architecture type: aarch64, `x86_64`
+	//
+	// Any of "aarch64", "x86_64".
+	Architecture GPUVirtualClusterImageUploadParamsArchitecture `json:"architecture,omitzero"`
+	// Specifies the type of firmware with which to boot the guest.
+	//
+	// Any of "bios", "uefi".
+	HwFirmwareType GPUVirtualClusterImageUploadParamsHwFirmwareType `json:"hw_firmware_type,omitzero"`
+	// The operating system installed on the image. Linux by default
+	//
+	// Any of "linux", "windows".
+	OsType GPUVirtualClusterImageUploadParamsOsType `json:"os_type,omitzero"`
+	// Permission to use a ssh key in instances
+	//
+	// Any of "allow", "deny", "required".
+	SSHKey GPUVirtualClusterImageUploadParamsSSHKey `json:"ssh_key,omitzero"`
+	// Key-value tags to associate with the resource. A tag is a key-value pair that
+	// can be associated with a resource, enabling efficient filtering and grouping for
+	// better organization and management. Both tag keys and values have a maximum
+	// length of 255 characters. Some tags are read-only and cannot be modified by the
+	// user. Tags are also integrated with cost reports, allowing cost data to be
+	// filtered based on tag keys or values.
+	Tags map[string]string `json:"tags,omitzero"`
+	paramObj
+}
+
+func (r GPUVirtualClusterImageUploadParams) MarshalJSON() (data []byte, err error) {
+	type shadow GPUVirtualClusterImageUploadParams
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *GPUVirtualClusterImageUploadParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Image architecture type: aarch64, `x86_64`
+type GPUVirtualClusterImageUploadParamsArchitecture string
+
+const (
+	GPUVirtualClusterImageUploadParamsArchitectureAarch64 GPUVirtualClusterImageUploadParamsArchitecture = "aarch64"
+	GPUVirtualClusterImageUploadParamsArchitectureX86_64  GPUVirtualClusterImageUploadParamsArchitecture = "x86_64"
+)
+
+// Specifies the type of firmware with which to boot the guest.
+type GPUVirtualClusterImageUploadParamsHwFirmwareType string
+
+const (
+	GPUVirtualClusterImageUploadParamsHwFirmwareTypeBios GPUVirtualClusterImageUploadParamsHwFirmwareType = "bios"
+	GPUVirtualClusterImageUploadParamsHwFirmwareTypeUefi GPUVirtualClusterImageUploadParamsHwFirmwareType = "uefi"
+)
+
+// The operating system installed on the image. Linux by default
+type GPUVirtualClusterImageUploadParamsOsType string
+
+const (
+	GPUVirtualClusterImageUploadParamsOsTypeLinux   GPUVirtualClusterImageUploadParamsOsType = "linux"
+	GPUVirtualClusterImageUploadParamsOsTypeWindows GPUVirtualClusterImageUploadParamsOsType = "windows"
+)
+
+// Permission to use a ssh key in instances
+type GPUVirtualClusterImageUploadParamsSSHKey string
+
+const (
+	GPUVirtualClusterImageUploadParamsSSHKeyAllow    GPUVirtualClusterImageUploadParamsSSHKey = "allow"
+	GPUVirtualClusterImageUploadParamsSSHKeyDeny     GPUVirtualClusterImageUploadParamsSSHKey = "deny"
+	GPUVirtualClusterImageUploadParamsSSHKeyRequired GPUVirtualClusterImageUploadParamsSSHKey = "required"
+)

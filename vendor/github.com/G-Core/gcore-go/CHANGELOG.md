@@ -1,0 +1,1465 @@
+# Changelog
+
+## [0.50.0](https://github.com/G-Core/gcore-go/compare/v0.49.1...v0.50.0) (2026-07-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* **cdn:** update cdn OpenAPI spec
+* **waap:** JA4 support, multi-value analytics filters, exclusion filters
+
+### Features
+
+* **cdn:** support logs uploader configs in Terraform ([72c13b0](https://github.com/G-Core/gcore-go/commit/72c13b031dd1a12252dc46dc620cf09d15e8479c))
+* **cdn:** support logs uploader policies in Terraform ([4bb584a](https://github.com/G-Core/gcore-go/commit/4bb584ad55e459d8313f3c03bb324e44ddf3e239))
+* **cdn:** update cdn OpenAPI spec ([336282f](https://github.com/G-Core/gcore-go/commit/336282f3c2e7a2ce547ac80fac2b2cab26f6b235))
+* **dns:** DNSSEC status fields + PTR/SVCB/HTTPS/CAA/DS rrset types ([e79f69a](https://github.com/G-Core/gcore-go/commit/e79f69a2ab563aee5f2bcfb0f8a83dd6f0394b02))
+* **streaming:** add srt_passphrase for encrypted SRT PUSH ingest ([e27bfe2](https://github.com/G-Core/gcore-go/commit/e27bfe2a79d3fa9c41cb7503001df63a4f27ebfe))
+* **waap:** JA4 support, multi-value analytics filters, exclusion filters ([b3f9c14](https://github.com/G-Core/gcore-go/commit/b3f9c14b4ea11c2e0be7a17d21459d7e3dbca14c))
+
+
+### Bug Fixes
+
+* **cloud:** wait for instance image to become active in UploadAndPoll ([166ba7c](https://github.com/G-Core/gcore-go/commit/166ba7c12b14dea2d1b4d45b77f109894be0d16f))
+
+
+### Chores
+
+* bootstrap product specs and reformat openapi.yml ([bb57054](https://github.com/G-Core/gcore-go/commit/bb57054c27dc23cf352cb8080a533455328f9fa6))
+
+## [0.49.1](https://github.com/G-Core/gcore-go/compare/v0.49.0...v0.49.1) (2026-06-22)
+
+
+### Bug Fixes
+
+* **cloud:** pass service options when reading back pool member after creation ([0cd91a0](https://github.com/G-Core/gcore-go/commit/0cd91a09b611b634c569a3a6c9a47b74fbe1a533))
+
+## [0.49.0](https://github.com/G-Core/gcore-go/compare/v0.48.0...v0.49.0) (2026-06-19)
+
+
+### Features
+
+* **go:** setup release for go ([0573540](https://github.com/G-Core/gcore-go/commit/0573540f2d7e7901b47691782e2243e1dd657080))
+* initial stlc build ([ebb0e89](https://github.com/G-Core/gcore-go/commit/ebb0e89848ab2f3b5c3e4891d1e22873d610ba5e))
+
+
+### Reverts
+
+* "chore: change description" ([941e793](https://github.com/G-Core/gcore-go/commit/941e79373077e75b4140a64aacd592429c5b15fc))
+* "chore: change description" ([6dc1888](https://github.com/G-Core/gcore-go/commit/6dc1888a50105d87c706fcd7ec179c075f37bfaa))
+
+
+### Chores
+
+* change description ([0d8993c](https://github.com/G-Core/gcore-go/commit/0d8993ca3cee2b2f46335cf8caabd21192d42eee))
+* change description ([6091a18](https://github.com/G-Core/gcore-go/commit/6091a186111a01d2aa00bd99ac50a9b7fab669ba))
+* reseal custom code from G-Core/gcore-go-staging@4cf4626ebf37368e3a06ffe461e4a70aba449ea2 ([b4a87c9](https://github.com/G-Core/gcore-go/commit/b4a87c9b36958b08647305e803f1a0ecfdd9d1fe))
+
+## 0.48.0 (2026-05-20)
+
+Full Changelog: [v0.47.0...v0.48.0](https://github.com/G-Core/gcore-go/compare/v0.47.0...v0.48.0)
+
+### Features
+
+* **examples:** add CDN trusted CA certificate example ([61d7286](https://github.com/G-Core/gcore-go/commit/61d72866c26ceaebb62dddf895f311bf8efdaf74))
+* **storage:** support sftp storage in Terraform ([bc62c9d](https://github.com/G-Core/gcore-go/commit/bc62c9d88bf4b63587ccb4b5d8d5b3fd755d65a4))
+
+## 0.47.0 (2026-05-19)
+
+Full Changelog: [v0.46.0...v0.47.0](https://github.com/G-Core/gcore-go/compare/v0.46.0...v0.47.0)
+
+### Features
+
+* **api:** aggregated API specs update ([fd270e3](https://github.com/G-Core/gcore-go/commit/fd270e352cf3b3efd90d49480b59b3d329054ad9))
+* **client:** optimize json encoder for internal types ([107c4f8](https://github.com/G-Core/gcore-go/commit/107c4f81b0168c741535adf087697cf6cfc8949e))
+* **cloud:** add polling methods for GPU baremetal cluster server rebuild and replace ([78074b0](https://github.com/G-Core/gcore-go/commit/78074b0ecd40c09c3954abf8ec333bd40e56ffb8))
+* **cloud:** add replace method for GPU baremetal cluster server ([a03e588](https://github.com/G-Core/gcore-go/commit/a03e5886c8aebe85cb43adfa94065473c12fde42))
+* **examples:** add GPU baremetal server rebuild and replace polling examples ([6699576](https://github.com/G-Core/gcore-go/commit/6699576a7ea0d226b67da4d0d6091f22547fdcef))
+* **storage:** support storage access keys resource in Terraform ([01588d4](https://github.com/G-Core/gcore-go/commit/01588d477829eebacf034faca8e2d930245ae731))
+* **storage:** support TF for buckets ([e60f2aa](https://github.com/G-Core/gcore-go/commit/e60f2aa7ea94a276337f73816252292402d3d10b))
+* **storage:** support TF for object storages ([1cdd190](https://github.com/G-Core/gcore-go/commit/1cdd1906ae076f7a562e9ffa269d137c98a7e456))
+
+
+### Bug Fixes
+
+* **cloud:** honor WithResponseBodyInto in AndPoll methods that use List ([233f735](https://github.com/G-Core/gcore-go/commit/233f7354663cb1c51fa9f12bbdaa2311c6b00bf7))
+* **storage:** honor WithResponseBodyInto(*[]byte) in *AndPoll ([3ea4f03](https://github.com/G-Core/gcore-go/commit/3ea4f03cf284809e6fac23197e9f603ac6ac982e))
+* **storage:** keep polling on transient statuses in DeleteAndPoll ([7bdd4f7](https://github.com/G-Core/gcore-go/commit/7bdd4f7a0ad1db148b7331ec3e25e2051cc82972))
+
+
+### Refactors
+
+* **storage:** align RestoreAndPoll signature with generated Restore ([3e2d0bf](https://github.com/G-Core/gcore-go/commit/3e2d0bf62c7eb12cc92defda4a6b5113ad741564))
+
+## 0.46.0 (2026-05-11)
+
+Full Changelog: [v0.45.0...v0.46.0](https://github.com/G-Core/gcore-go/compare/v0.45.0...v0.46.0)
+
+### Features
+
+* add cross-SDK sync and relax CI breaking-change check for /release skill ([635d0cc](https://github.com/G-Core/gcore-go/commit/635d0cc51047942f9aa422720a15d692caed2c5f))
+* **api:** aggregated API specs update ([4f854ef](https://github.com/G-Core/gcore-go/commit/4f854efe4886fdf4d6b79d2f88b4327dca2da3e6))
+* **api:** aggregated API specs update ([7b7583f](https://github.com/G-Core/gcore-go/commit/7b7583fbd6236ffe9fbb25271bcab2c67ebb5b1f))
+* **api:** aggregated API specs update ([32f77f4](https://github.com/G-Core/gcore-go/commit/32f77f4e04273e693f3d5b07085b2a50f72810d5))
+* **api:** aggregated API specs update ([2dd795a](https://github.com/G-Core/gcore-go/commit/2dd795abe5d5f9ee0c0677555201e84bc65506a7))
+* **cdn:** add client_config SDK subresource for /cdn/clients/me ([7764b4f](https://github.com/G-Core/gcore-go/commit/7764b4f4c1bd58afe278c4d8da668614491a76c7))
+* **storage:** add DeleteAndPoll and RestoreAndPoll for ObjectStorageService ([0f45f46](https://github.com/G-Core/gcore-go/commit/0f45f46d95ad88975a6b0f6f9c8ee260457cbdd6))
+* **storage:** add NewAndPoll for ObjectStorageService ([c23e4f8](https://github.com/G-Core/gcore-go/commit/c23e4f8c386de4ff00ea651f0e9dc7807a57c670))
+* **storage:** add polling methods for SftpStorageService ([3cf6e01](https://github.com/G-Core/gcore-go/commit/3cf6e01e1ed9a3b4a54b205a04c0b7e06a00f69e))
+* **storage:** demonstrate Terraform-style options on SftpStorage examples ([dbfc4ab](https://github.com/G-Core/gcore-go/commit/dbfc4abf4a952cc958b97184bcd3585c599e2a4e))
+* **storage:** use new SftpStorage polling methods in examples ([c251d5d](https://github.com/G-Core/gcore-go/commit/c251d5d66466cbed0d09bfb91fdd85e6be177007))
+
+
+### Bug Fixes
+
+* **go:** avoid panic when http.DefaultTransport is wrapped ([289138d](https://github.com/G-Core/gcore-go/commit/289138debbd9f91578212314639f5fb1910c9ece))
+* **storage:** honor WithResponseBodyInto in ObjectStorage *AndPoll ([7c5478e](https://github.com/G-Core/gcore-go/commit/7c5478e88fc6090c408c6dbfdcc3d0431c7f6f7d))
+* **storage:** honor WithResponseBodyInto in SftpStorage *AndPoll ([284c1ec](https://github.com/G-Core/gcore-go/commit/284c1ece34e9017e2e354e4b2632716a07b4ac6c))
+* **storage:** rename bucket path param {bucket_name} -&gt; {name} ([0385de7](https://github.com/G-Core/gcore-go/commit/0385de73f41b7778849b71a08a52a016a75d2e5b))
+
+
+### Chores
+
+* **client:** rename cloud_polling_* opts to polling_* ([e5bf6ca](https://github.com/G-Core/gcore-go/commit/e5bf6cab49da084baf7d04490a096af9e1e56bf0))
+* redact api-key headers in debug logs ([f12f2d1](https://github.com/G-Core/gcore-go/commit/f12f2d1166d13b54a01152f70b8afae6917e5749))
+
+
+### Refactors
+
+* **storage:** align SftpStorage DeleteAndPoll with ObjectStorageService ([885250f](https://github.com/G-Core/gcore-go/commit/885250ffa9a6d9f1e2124932f054a92102b2d2cc))
+
+## 0.45.0 (2026-05-04)
+
+Full Changelog: [v0.44.0...v0.45.0](https://github.com/G-Core/gcore-go/compare/v0.44.0...v0.45.0)
+
+### ⚠ BREAKING CHANGES
+
+* **cloud:** switch routers update from v1 to v2
+* **cloud:** correct pg conf validation response model name
+
+### Features
+
+* **api:** aggregated API specs update ([96df4b3](https://github.com/G-Core/gcore-go/commit/96df4b3db2ed1bb54103b3765cfe296ceae375ca))
+* **api:** aggregated API specs update ([f77488d](https://github.com/G-Core/gcore-go/commit/f77488d68b253ba3e3ef102bfacfc2512e189e28))
+* **api:** aggregated API specs update ([b5c7b61](https://github.com/G-Core/gcore-go/commit/b5c7b6161fdba15121bf939efd3e03fa8bcddf0b))
+* **api:** aggregated API specs update ([4715b80](https://github.com/G-Core/gcore-go/commit/4715b8008543c14155a8f01be503c0f83d9ff7a1))
+* **api:** aggregated API specs update ([c536a90](https://github.com/G-Core/gcore-go/commit/c536a908d4a5673f016230e49dfb90831758e66c))
+* **cloud:** add UpdateAndPoll method for routers ([293c472](https://github.com/G-Core/gcore-go/commit/293c472a4b08df962f54ea04d8720e1b374b0cc9))
+* **cloud:** switch routers update from v1 to v2 ([f58ce59](https://github.com/G-Core/gcore-go/commit/f58ce5991d5e70689f6e19602a8703254a6e5a4f))
+* **cloud:** use routers UpdateAndPoll in network example ([fb3c17f](https://github.com/G-Core/gcore-go/commit/fb3c17f398ca990e9cbafa0839544e8026b22e60))
+* **iam:** migrate api_tokens to v2 endpoints ([18aa4e0](https://github.com/G-Core/gcore-go/commit/18aa4e013515d2b5cc3bd5e442c57515ee523a7e))
+* **storage:** add get method for access keys ([8e08812](https://github.com/G-Core/gcore-go/commit/8e0881239596f0715fc16aa56b8a0ff714dccd1b))
+* support setting headers via env ([1750401](https://github.com/G-Core/gcore-go/commit/1750401ec1d057da03e609f1e2bdf45bae05beca))
+
+
+### Bug Fixes
+
+* **cloud:** correct pg conf validation response model name ([3d91401](https://github.com/G-Core/gcore-go/commit/3d914010734b8d893821c1ad8a4105c91c94e7f8))
+
+
+### Chores
+
+* avoid embedding reflect.Type for dead code elimination ([86e3d9d](https://github.com/G-Core/gcore-go/commit/86e3d9d53b09f43cc42091924a254468f5e3e0f4))
+
+## 0.44.0 (2026-04-27)
+
+Full Changelog: [v0.43.0...v0.44.0](https://github.com/G-Core/gcore-go/compare/v0.43.0...v0.44.0)
+
+### Features
+
+* **api:** aggregated API specs update ([6ccf2d9](https://github.com/G-Core/gcore-go/commit/6ccf2d9b6b09929f4263ef9cb852da3263fd63f7))
+* **api:** aggregated API specs update ([57e9f6c](https://github.com/G-Core/gcore-go/commit/57e9f6cca6fca71a4a6943c99b2fd7117225850f))
+* **go:** add default http client with timeout ([f1faaf7](https://github.com/G-Core/gcore-go/commit/f1faaf7fdc53e194d8d9e9891fc7c7f03ded5b3a))
+* **storage:** support TF for ssh keys ([10bd55a](https://github.com/G-Core/gcore-go/commit/10bd55ae6569d32d0645350b0265d040b4f8bb71))
+
+
+### Chores
+
+* **internal:** more robust bootstrap script ([75728a0](https://github.com/G-Core/gcore-go/commit/75728a052de21ca8e28d85a3145f56f793100490))
+
+## 0.43.0 (2026-04-22)
+
+Full Changelog: [v0.42.0...v0.43.0](https://github.com/G-Core/gcore-go/compare/v0.42.0...v0.43.0)
+
+### Features
+
+* **api:** aggregated API specs update ([d3fb428](https://github.com/G-Core/gcore-go/commit/d3fb428a7a3a56360baa1e55e138392680752a09))
+* **api:** aggregated API specs update ([10db90d](https://github.com/G-Core/gcore-go/commit/10db90dbe4bbc55aee56219856d0202e45610aad))
+* **api:** aggregated API specs update ([e601c13](https://github.com/G-Core/gcore-go/commit/e601c1344e79b71fef59088868165d05f29ae429))
+* **api:** aggregated API specs update ([e753962](https://github.com/G-Core/gcore-go/commit/e7539623f827fbfe52bd2050f3905eab355ba9ac))
+* **cloud:** add runnable K8s cluster example ([3e7df8a](https://github.com/G-Core/gcore-go/commit/3e7df8a680cca68ae85185587988dc6c4350ab3c))
+* **cloud:** add upload/get/delete to GPU baremetal cluster image example ([43e9e67](https://github.com/G-Core/gcore-go/commit/43e9e67545830c28e03bb4439ce366d0c64f0341))
+* **storage:** support Terraform generation for locations ([15ee9c4](https://github.com/G-Core/gcore-go/commit/15ee9c437a95e52e4b1e906a7c7e60dd887fd5d9))
+
+
+### Bug Fixes
+
+* **cloud:** handle empty tasks in SecurityGroup UpdateAndPoll ([36ca505](https://github.com/G-Core/gcore-go/commit/36ca505ce285c101ed8b8c0108d73eb51327857f))
+* **cloud:** initialize SecurityGroupService with base r.Options in NewAndPoll ([8b72114](https://github.com/G-Core/gcore-go/commit/8b721140dd1b07b799b134525e4368bb9c3dc579))
+* omit doc-only changes from release notes ([b64ccda](https://github.com/G-Core/gcore-go/commit/b64ccda88b11286af8f28f9ecdc611ed3708720a))
+
+
+### Chores
+
+* **tests:** bump steady to v0.22.1 ([81c0c45](https://github.com/G-Core/gcore-go/commit/81c0c45b914f78b294b95fbf0180e1c928fe869a))
+
+## 0.42.0 (2026-04-17)
+
+Full Changelog: [v0.41.0...v0.42.0](https://github.com/G-Core/gcore-go/compare/v0.41.0...v0.42.0)
+
+### ⚠ BREAKING CHANGES
+
+* **cloud:** remove deprecated cloud.inference.deployments.get_api_key
+* **cloud:** support nullable map items
+
+### Features
+
+* **api:** aggregated API specs update ([98761fb](https://github.com/G-Core/gcore-go/commit/98761fb8f462caf95612d56d32a329c3d6c6c5ab))
+* **api:** aggregated API specs update ([6099abb](https://github.com/G-Core/gcore-go/commit/6099abb5028d18b11eedc9a07cd3f228ff06bce2))
+* **api:** aggregated API specs update ([5fe08f0](https://github.com/G-Core/gcore-go/commit/5fe08f0218ed170b8a8b5bcf0b34be3f02155979))
+* **api:** aggregated API specs update ([8ec1756](https://github.com/G-Core/gcore-go/commit/8ec17568dce60d5b760921231cad624a8db14097))
+* **api:** aggregated API specs update ([6ffcc6a](https://github.com/G-Core/gcore-go/commit/6ffcc6ab42c6f53090918d48d3018d54b4a5fdbf))
+* **api:** aggregated API specs update ([86a2262](https://github.com/G-Core/gcore-go/commit/86a226284ebd2583f07e73515660fe881b09bb3c))
+* **api:** aggregated API specs update ([a8ad9c6](https://github.com/G-Core/gcore-go/commit/a8ad9c643e86c29baadc4eeeba1067cb70e2f839))
+* **api:** fix(cdn): harmonize pagination across CDN list endpoints ([16ac69b](https://github.com/G-Core/gcore-go/commit/16ac69b5e9f133ab2c5fb259f2f29bd1800173be))
+* **cloud:** support nullable map items ([8521173](https://github.com/G-Core/gcore-go/commit/8521173ab71ca95ecd27a89c2fcc3c312fdac595))
+
+
+### Bug Fixes
+
+* better respect format tags from the spec ([20ff268](https://github.com/G-Core/gcore-go/commit/20ff2681bd89343c8b54219f6f20eec49db1e775))
+* **cloud:** filter options correctly in all polling methods ([be6f19c](https://github.com/G-Core/gcore-go/commit/be6f19c841e6e698e621ef9f79f84246db9f664d))
+* **cloud:** update baremetal image example to use BaremetalImage type ([31d6e71](https://github.com/G-Core/gcore-go/commit/31d6e710f86b8b5dfdb2784d1e67abc3c44c22fd))
+* correct test type mismatch and loadbalancer example ([b2e618e](https://github.com/G-Core/gcore-go/commit/b2e618e47074f99112883b755332e300c34b1eac))
+* **dns:** update network-mappings get_by_name to new endpoint path ([2da2571](https://github.com/G-Core/gcore-go/commit/2da25710db204d5225d6218853cedf3d203f5759))
+* fix bug that mixed up time.Time and string types ([a722b7b](https://github.com/G-Core/gcore-go/commit/a722b7b8b46beead96691b2d7804eac0c3559889))
+* fix for union type names ([ba1f39a](https://github.com/G-Core/gcore-go/commit/ba1f39a8e9b97f90a957b2b5f1601b3e8a370372))
+* pass tag values as pointers in examples ([eb1a4a7](https://github.com/G-Core/gcore-go/commit/eb1a4a7e7bb4e3c633601b89dff12b5571f75496))
+
+
+### Chores
+
+* **cloud:** remove deprecated cloud.inference.deployments.get_api_key ([0368c37](https://github.com/G-Core/gcore-go/commit/0368c37af03d37f4e2d564a5c2e1051bd171d0bc))
+* remove resolved codegen workaround comment ([4c97efb](https://github.com/G-Core/gcore-go/commit/4c97efb2cdab4c522b433f62e7e88566a64daa98))
+
+
+### Documentation
+
+* update examples ([00be485](https://github.com/G-Core/gcore-go/commit/00be48558e7bcfd9d555126a9b8ae7675ce71670))
+
+
+### Refactors
+
+* **cloud:** split instance and baremetal image models ([e0f8f99](https://github.com/G-Core/gcore-go/commit/e0f8f99039253c6773eb6730334f493d12ba01c9))
+
+## 0.41.0 (2026-04-03)
+
+Full Changelog: [v0.40.0...v0.41.0](https://github.com/G-Core/gcore-go/compare/v0.40.0...v0.41.0)
+
+### Features
+
+* **api:** aggregated API specs update ([5725eb4](https://github.com/G-Core/gcore-go/commit/5725eb4f1f1ea81bf579f6be222619f3b7910aa2))
+* **api:** aggregated API specs update ([2f51a60](https://github.com/G-Core/gcore-go/commit/2f51a60add64559e2cd7c24f5dc137359e084ef6))
+* **api:** aggregated API specs update ([7449391](https://github.com/G-Core/gcore-go/commit/7449391e8616f00628668c300970c281d459a417))
+* **api:** aggregated API specs update ([540adb6](https://github.com/G-Core/gcore-go/commit/540adb64ee18f4fe6e576c0fd358c0c352f16596))
+* **cloud:** add support for Baremetal servers in Terraform ([7b89861](https://github.com/G-Core/gcore-go/commit/7b89861f329ffb7074f2341f19c2bdac1f6c9c9c))
+
+
+### Bug Fixes
+
+* fix issue with unmarshaling in some cases ([266fced](https://github.com/G-Core/gcore-go/commit/266fced335270f469763ef23383a8d434cd30091))
+* **iam:** inject default limit on users list to ensure paginated response ([bd37033](https://github.com/G-Core/gcore-go/commit/bd370338cf8117c3794bb2f57ee316034e3572e1))
+
+
+### Chores
+
+* **tests:** bump steady to v0.20.1 ([0234a45](https://github.com/G-Core/gcore-go/commit/0234a45c38cda2258631d92c06a78101d1aeedb8))
+* **tests:** bump steady to v0.20.2 ([ecf2289](https://github.com/G-Core/gcore-go/commit/ecf2289da516103388a7b27a1be99bcf828f7e53))
+
+## 0.40.0 (2026-03-30)
+
+Full Changelog: [v0.39.0...v0.40.0](https://github.com/G-Core/gcore-go/compare/v0.39.0...v0.40.0)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** storage resource restructured — methods moved from storage.* to storage.object_storages.* and storage.sftp_storages.*, credentials.recreate replaced by access_keys CRUD, bucket subresources (cors, lifecycle, policy) removed in favor of buckets.update, link_ssh_key/unlink_ssh_key removed in favor of ssh_keys resource.
+
+### Features
+
+* **api:** aggregated API specs update ([7bc66a7](https://github.com/G-Core/gcore-go/commit/7bc66a7f000a2fc0843ec2be0579d2233703c87d))
+* **api:** aggregated API specs update ([1489c9e](https://github.com/G-Core/gcore-go/commit/1489c9e71715f8b270e99df1154e81c4399527fa))
+* **api:** aggregated API specs update ([e4d6f4e](https://github.com/G-Core/gcore-go/commit/e4d6f4e8532856c619b811f151bda04c9edbde01))
+* **api:** feat(storage)!: migrate storage endpoints from v1-v3 to v4 ([e111f1b](https://github.com/G-Core/gcore-go/commit/e111f1b3d58e765e401e98b42dc9cce050870dd3))
+* **cdn:** enable terraform support for cdn_rule_template ([fd7dadb](https://github.com/G-Core/gcore-go/commit/fd7dadba0a6ea98efe07a6065bd8223b60589c43))
+* **cloud:** enable Terraform data source for inference flavors ([b2a6211](https://github.com/G-Core/gcore-go/commit/b2a6211f84aeb439c2d2732e05c6b7b155e102ab))
+* **examples:** update storage examples for v4 API ([0687694](https://github.com/G-Core/gcore-go/commit/0687694994bb9152c85251bf2a79eb414e704489))
+* **fastedge:** enable fastedge_template for Terraform ([8793e38](https://github.com/G-Core/gcore-go/commit/8793e38c0e060e52f4e4f7b44fb9861b92ad676f))
+* **internal:** support comma format in multipart form encoding ([8f65d38](https://github.com/G-Core/gcore-go/commit/8f65d38015abe574069abe5b3b23233b3670fba9))
+
+
+### Bug Fixes
+
+* prevent duplicate ? in query params ([d166054](https://github.com/G-Core/gcore-go/commit/d1660547d64459861b89b07e1e1c948cb099ff67))
+* **tests:** skip tests failing due to OpenAPI spec issues ([09b189d](https://github.com/G-Core/gcore-go/commit/09b189dc42a7d869c810b48acfc8e99c2ea57b2e))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([82b1635](https://github.com/G-Core/gcore-go/commit/82b1635ad0b2cbada162131af771c53b1bdfdc7f))
+* **ci:** support opting out of skipping builds on metadata-only commits ([16f8b53](https://github.com/G-Core/gcore-go/commit/16f8b5368278dc341d0c0d99eaa40c7a57043b17))
+* **client:** fix multipart serialisation of Default() fields ([b7c0a12](https://github.com/G-Core/gcore-go/commit/b7c0a12eb5246386e01ff59ee4e71b950d5c587c))
+* **internal:** support default value struct tag ([784d813](https://github.com/G-Core/gcore-go/commit/784d813cd86043998fb2e3b6e8fa9daee8340029))
+* remove unnecessary error check for url parsing ([54c3490](https://github.com/G-Core/gcore-go/commit/54c34902e740bce49b0db86f289dd8642f149bed))
+* **tests:** bump steady to v0.19.6 ([1a04229](https://github.com/G-Core/gcore-go/commit/1a042293233061520c8d4ce320bc5f184d3200cb))
+* **tests:** bump steady to v0.19.7 ([c683c6d](https://github.com/G-Core/gcore-go/commit/c683c6dc4e2e0fd1ef28b597dfa75f99ae59a594))
+* update docs for api:"required" ([e3c2235](https://github.com/G-Core/gcore-go/commit/e3c22359c00d2284c0d20cc57e98c27f9b47b015))
+
+## 0.39.0 (2026-03-23)
+
+Full Changelog: [v0.38.0...v0.39.0](https://github.com/G-Core/gcore-go/compare/v0.38.0...v0.39.0)
+
+### ⚠ BREAKING CHANGES
+
+* **waap:** replace deprecated domain-scoped traffic/requests endpoints with account-scoped analytics
+
+### Features
+
+* **api:** aggregated API specs update ([5a42ce7](https://github.com/G-Core/gcore-go/commit/5a42ce7ce1aeaae94b6cc789be06a507f65bc98e))
+* **api:** aggregated API specs update ([612f567](https://github.com/G-Core/gcore-go/commit/612f5676ff53d995b3b4d88d40885bcb5e4c7dcb))
+* **api:** aggregated API specs update ([ff3b842](https://github.com/G-Core/gcore-go/commit/ff3b842ea47ed14fc16a18769b66ddda6305b6da))
+* **api:** Revert "feat(cdn): enable terraform support for cdn_rule_template" ([0737e56](https://github.com/G-Core/gcore-go/commit/0737e565c1e53da027ab66a1ba971cc9b150a694))
+* **cdn:** enable terraform support for cdn_rule_template ([73ff4a1](https://github.com/G-Core/gcore-go/commit/73ff4a10d67b486d45d348e6a795bfffb2f29fe0))
+* **cloud:** add notification_threshold subresource to quotas ([32a0a9d](https://github.com/G-Core/gcore-go/commit/32a0a9dc9ff8a3874fb22088fb1d7dee4b5b9902))
+* **waap:** replace deprecated domain-scoped traffic/requests endpoints with account-scoped analytics ([190f5c1](https://github.com/G-Core/gcore-go/commit/190f5c1277236c107e4cf2b886812f05e6a26ac5))
+
+
+### Chores
+
+* **internal:** tweak CI branches ([ac30425](https://github.com/G-Core/gcore-go/commit/ac3042580dfa91ca8b4e41965a9e2721ee6755f8))
+* **internal:** update gitignore ([8abb1e1](https://github.com/G-Core/gcore-go/commit/8abb1e1987de9cb95623ff20e1f38eb4951817bb))
+* **tests:** bump steady to v0.19.4 ([63bb07e](https://github.com/G-Core/gcore-go/commit/63bb07e8f4f9f2698f69e80752c6ec904adbb9d4))
+* **tests:** bump steady to v0.19.5 ([d064aac](https://github.com/G-Core/gcore-go/commit/d064aac5510ac0263bc51408ffa473e7d658e98c))
+
+
+### Refactors
+
+* **tests:** switch from prism to steady ([68de6a7](https://github.com/G-Core/gcore-go/commit/68de6a7f079a1a9b7d7b5fb7fc04e8e85582b8a4))
+
+## 0.38.0 (2026-03-16)
+
+Full Changelog: [v0.37.0...v0.38.0](https://github.com/G-Core/gcore-go/compare/v0.37.0...v0.38.0)
+
+### ⚠ BREAKING CHANGES
+
+* **cloud:** make kubeconfig as k8s cluster subresource
+
+### Features
+
+* **api:** aggregated API specs update ([c41ad08](https://github.com/G-Core/gcore-go/commit/c41ad0843c3f3c47214847490ea574fe81e8eb40))
+* **api:** aggregated API specs update ([50bbf88](https://github.com/G-Core/gcore-go/commit/50bbf88484996b3938049a3386ae4eb06ffa52fa))
+* **api:** aggregated API specs update ([97ee3d3](https://github.com/G-Core/gcore-go/commit/97ee3d3960d465f564452e744f7f379e70fc7027))
+* **api:** aggregated API specs update ([67bb5c7](https://github.com/G-Core/gcore-go/commit/67bb5c7fe42a7f7ba75cbe8c4b933b7facb683e3))
+* **api:** aggregated API specs update ([99e63d0](https://github.com/G-Core/gcore-go/commit/99e63d08673282ca8874a5f01271213b69b436cd))
+* **api:** aggregated API specs update ([a5136d3](https://github.com/G-Core/gcore-go/commit/a5136d3494372bb884b67920046ea32e2ecc59f7))
+* **cloud:** add AttachAndPoll/DetachAndPoll to GPU baremetal interfaces ([e031bba](https://github.com/G-Core/gcore-go/commit/e031bbaa23b14251fa71bac4439cfc2a4577f83b))
+* **cloud:** add DeleteAndPoll to BaremetalServerService ([95de999](https://github.com/G-Core/gcore-go/commit/95de99989cddebc0522e0e3c143766ee7e8e07cc))
+* **cloud:** add get, update, delete methods to baremetal servers ([dbd7174](https://github.com/G-Core/gcore-go/commit/dbd717437a2a860a466331239587ce0e754ebf3b))
+* **cloud:** add update method to GPU Baremetal clusters ([a737317](https://github.com/G-Core/gcore-go/commit/a73731784be7a52ef48242cf6b774ba2634aafb7))
+* **cloud:** make kubeconfig as k8s cluster subresource ([49ef00c](https://github.com/G-Core/gcore-go/commit/49ef00c9bc53cb31746b7ddcbd430cdf532a3739))
+
+
+### Bug Fixes
+
+* **cdn:** add missing getter methods on AzureBlobConfigAuthConfigUnion param types ([7d40020](https://github.com/G-Core/gcore-go/commit/7d4002029adb1f2328ac6ce58fc00f657d76acfa))
+* **fastedge:** rename path parameters to match updated OpenAPI spec ([fa1889d](https://github.com/G-Core/gcore-go/commit/fa1889d3e9791d6c29ade69f730fe2fae421866d))
+
+
+### Chores
+
+* **internal:** minor cleanup ([4b77f41](https://github.com/G-Core/gcore-go/commit/4b77f411a6382d850077874996c0f9cc36e9f464))
+* **internal:** use explicit returns ([d09ce75](https://github.com/G-Core/gcore-go/commit/d09ce751060a51e7e687f15b66b28b73052b29fa))
+* **internal:** use explicit returns in more places ([5644f63](https://github.com/G-Core/gcore-go/commit/5644f6397ec7880a10381bbe4904844158a83346))
+
+## 0.37.0 (2026-03-09)
+
+Full Changelog: [v0.36.0...v0.37.0](https://github.com/G-Core/gcore-go/compare/v0.36.0...v0.37.0)
+
+### Features
+
+* add descriptions for all Terraform-enabled resources ([351b75f](https://github.com/G-Core/gcore-go/commit/351b75fc3aebf4ad6ab6c00c1e758b3e567ab39e))
+* **api:** aggregated API specs update ([a5b4a2c](https://github.com/G-Core/gcore-go/commit/a5b4a2c82a567ffcd58168ea7ce2decb97232fc9))
+* **api:** aggregated API specs update ([d6443cc](https://github.com/G-Core/gcore-go/commit/d6443cc6424dd249e7e65661b21d11c3cab4c384))
+
+
+### Bug Fixes
+
+* fix request delays for retrying to be more respectful of high requested delays ([52c689e](https://github.com/G-Core/gcore-go/commit/52c689eabcacf52f0569ee18004e97843d818605))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([6cc05fb](https://github.com/G-Core/gcore-go/commit/6cc05fbd89fc0add189e5b75b5a76a1a01dd6c03))
+* **test:** do not count install time for mock server timeout ([d43fe7a](https://github.com/G-Core/gcore-go/commit/d43fe7acab2f48b7276a97fa3e77eead4a4fa0a4))
+* update placeholder string ([c466d4d](https://github.com/G-Core/gcore-go/commit/c466d4daac500a328406ee5360d6e41f2e239ce7))
+
+## 0.36.0 (2026-03-03)
+
+Full Changelog: [v0.35.0...v0.36.0](https://github.com/G-Core/gcore-go/compare/v0.35.0...v0.36.0)
+
+### ⚠ BREAKING CHANGES
+
+* **cloud:** update gpu baremetal endpoints to latest versions
+
+### Features
+
+* **api:** aggregated API specs update ([a2d33fa](https://github.com/G-Core/gcore-go/commit/a2d33fa54ab28f3707acf842197e5259aec94d7b))
+* **api:** aggregated API specs update ([c129b67](https://github.com/G-Core/gcore-go/commit/c129b67a9ef8a1162380262bbeaa888d67c542b9))
+* **api:** aggregated API specs update ([06bd89d](https://github.com/G-Core/gcore-go/commit/06bd89d38f6353be30028c822301daff5606e45e))
+* **api:** aggregated API specs update ([05fe2fb](https://github.com/G-Core/gcore-go/commit/05fe2fb515d8a848feedaeed303edeacfd49055e))
+* **cloud:** add DeleteAndPoll and ActionAndPoll for GPU bare metal clusters ([8ac53d1](https://github.com/G-Core/gcore-go/commit/8ac53d1b115b44a0e0a553716810c0d800464a1e))
+* **cloud:** update gpu baremetal endpoints to latest versions ([1a0702b](https://github.com/G-Core/gcore-go/commit/1a0702b2e7efe0e7f4d9686606cff92e54a2d82d))
+
+
+### Chores
+
+* **ci:** add build step ([1e83e77](https://github.com/G-Core/gcore-go/commit/1e83e77f2ea9668661b01b3b4eee97271cf9ea3c))
+* **docs:** add missing descriptions ([94bd2cd](https://github.com/G-Core/gcore-go/commit/94bd2cdf4623026ad4bfc8bac80d80102113ad09))
+* **internal:** move custom custom `json` tags to `api` ([374b0bc](https://github.com/G-Core/gcore-go/commit/374b0bc490e3febcf5eb2525218b3f9ccccd1b29))
+
+## 0.35.0 (2026-02-24)
+
+Full Changelog: [v0.34.0...v0.35.0](https://github.com/G-Core/gcore-go/compare/v0.34.0...v0.35.0)
+
+### Features
+
+* add /release skill ([d35a208](https://github.com/G-Core/gcore-go/commit/d35a208a82a1b33261911c4e687b22d121eb7d34))
+* **api:** aggregated API specs update ([10ab283](https://github.com/G-Core/gcore-go/commit/10ab283a4e4607e386cdc40ee408a71717e257f1))
+* **cloud:** get cluster_id from task created_resources instead of task data ([507e3f7](https://github.com/G-Core/gcore-go/commit/507e3f74e80721ee8523f62a13aac4d04c6f4c98))
+
+## 0.34.0 (2026-02-23)
+
+Full Changelog: [v0.33.0...v0.34.0](https://github.com/G-Core/gcore-go/compare/v0.33.0...v0.34.0)
+
+### ⚠ BREAKING CHANGES
+
+* **iam:** rename models and update examples
+* **iam:** rename models and update examples
+* **waap:** move domains.toggle_policy to domains.policies.toggle
+* **waap:** split api_discovery methods into scan_results, openapi, and settings subresources
+* **streaming:** move streams clip methods to streams.clips
+* **streaming:** move playlists.list_videos to playlists.videos.list
+* **cdn:** move ip_ranges.list_ips to ips.list
+
+### Features
+
+* **api:** aggregated API specs update ([df4ce9a](https://github.com/G-Core/gcore-go/commit/df4ce9af79a022abd5cd58862cece85e813d8f16))
+* **api:** aggregated API specs update ([f15bbe7](https://github.com/G-Core/gcore-go/commit/f15bbe7fb6b2bf394532ca6b4391f3b42440d8ca))
+* **api:** aggregated API specs update ([89a11c7](https://github.com/G-Core/gcore-go/commit/89a11c70c86d277964d4c06a0b7f757dfb6ef398))
+* **api:** aggregated API specs update ([857dd86](https://github.com/G-Core/gcore-go/commit/857dd86974e36d12b60af50f658c713a471aa481))
+* **api:** aggregated API specs update ([f09a741](https://github.com/G-Core/gcore-go/commit/f09a7414555cd7f18d93e0fe709161fdbb4f3f6b))
+* **api:** aggregated API specs update ([6085bf2](https://github.com/G-Core/gcore-go/commit/6085bf22f65ae5243882a4d57201fa577157d494))
+* **api:** aggregated API specs update ([31e99f9](https://github.com/G-Core/gcore-go/commit/31e99f9232b49bf5c5aa28a6aa680af081add1ff))
+* **api:** aggregated API specs update ([fb39eaa](https://github.com/G-Core/gcore-go/commit/fb39eaa0c9404a8fa9b7b89d69738ae3ebbf510d))
+* **api:** manual updates ([48fb410](https://github.com/G-Core/gcore-go/commit/48fb410450a820eeea7810d30908b442cd3d9dd9))
+* **cdn:** enable terraform generation for cdn rules ([c16d050](https://github.com/G-Core/gcore-go/commit/c16d0501aeddf79bf453391628c406c5775ceef5))
+* **cloud:** add NewAndPoll/DeleteAndPoll for SecurityGroupRuleService ([#196](https://github.com/G-Core/gcore-go/issues/196)) ([f74ab49](https://github.com/G-Core/gcore-go/commit/f74ab4937404ce419572d13e9d7e5debbfb356af))
+* **cloud:** enable terraform for security group rules (v2) ([fd257ad](https://github.com/G-Core/gcore-go/commit/fd257ad78df9dcb70ce6ca33c6c572bf13f7eb59))
+
+
+### Bug Fixes
+
+* allow canceling a request while it is waiting to retry ([a6c7ddc](https://github.com/G-Core/gcore-go/commit/a6c7ddc2c047ed863e8a10a936a470217699d574))
+* **api:** revert unnecessary changes to additionalProperties ([b173bf9](https://github.com/G-Core/gcore-go/commit/b173bf9ee63dde29dab91ec646f1b93f96390bf6))
+* **client:** mark count in offset pagination as required ([fbca021](https://github.com/G-Core/gcore-go/commit/fbca021074d00bbc1d83a2b56079365f3fcafb15))
+* **client:** use correct format specifier for header serialization ([3d7d300](https://github.com/G-Core/gcore-go/commit/3d7d300efa368a5a8da1c28f71b3177e8abe4c79))
+* **cloud:** keep v1 replace method for security group rules ([fe6b173](https://github.com/G-Core/gcore-go/commit/fe6b1732fb8ce25cfc9b8a584f3c6a249d0b9826))
+* **cloud:** update security group rule examples for /v2 endpoints ([#197](https://github.com/G-Core/gcore-go/issues/197)) ([24c801f](https://github.com/G-Core/gcore-go/commit/24c801ffd6c75b8bab9f4faba5a32e6837ba6591))
+* **storage:** update storage type in examples after renaming ([532a332](https://github.com/G-Core/gcore-go/commit/532a332ee22116d3c802cc01f91fa41a733f395b))
+* **waap:** split api_discovery methods into scan_results, openapi, and settings subresources ([4dcaaaf](https://github.com/G-Core/gcore-go/commit/4dcaaaf2c2eb70bf55c3f42b59d2416812c9790a))
+
+
+### Chores
+
+* update mock server docs ([4c7ce55](https://github.com/G-Core/gcore-go/commit/4c7ce55acdad61831901d533c6afb7daa2ff3c94))
+
+
+### Refactors
+
+* **cdn:** move ip_ranges.list_ips to ips.list ([2b56e18](https://github.com/G-Core/gcore-go/commit/2b56e189322d6d1ecc58d4c4a3fbd401a61bdbab))
+* **iam:** rename models and update examples ([a1adcf8](https://github.com/G-Core/gcore-go/commit/a1adcf86b850a3fd97e19ce0cf5ff95b56c2158c))
+* **iam:** rename models and update examples ([3f40544](https://github.com/G-Core/gcore-go/commit/3f40544e5234c1ec1a1c302eb2d9873bcdf3a78f))
+* **streaming:** move playlists.list_videos to playlists.videos.list ([c3466bd](https://github.com/G-Core/gcore-go/commit/c3466bd459b828be1c9d81d9b3a4eee37c69b1be))
+* **streaming:** move streams clip methods to streams.clips ([aacd4a2](https://github.com/G-Core/gcore-go/commit/aacd4a2c2f671e98111bed01f226eb90ddea104f))
+* **waap:** move domains.toggle_policy to domains.policies.toggle ([c0e602f](https://github.com/G-Core/gcore-go/commit/c0e602f4379a3ca526c1fd48348d0c2f25310178))
+
+## 0.33.0 (2026-02-16)
+
+Full Changelog: [v0.32.0...v0.33.0](https://github.com/G-Core/gcore-go/compare/v0.32.0...v0.33.0)
+
+### Features
+
+* **api:** aggregated API specs update ([ec94486](https://github.com/G-Core/gcore-go/commit/ec944861160ba13e62af9fd6d69cbd02a0c5988d))
+* **api:** aggregated API specs update ([bcc5dd9](https://github.com/G-Core/gcore-go/commit/bcc5dd98f1ec700694a210478b4bc7c09c5e6312))
+* **api:** aggregated API specs update ([65027c3](https://github.com/G-Core/gcore-go/commit/65027c3a3e19a40ffd6aab9de27329e3de266585))
+* **api:** revert(cdn): remove client_config subresource ([#207](https://github.com/G-Core/gcore-go/issues/207)) ([261e920](https://github.com/G-Core/gcore-go/commit/261e92070411f67fbe0f4494ed808e53db4b84c5))
+* **cdn:** add client_config subresource for terraform ([b6a0663](https://github.com/G-Core/gcore-go/commit/b6a06631f9db5e310efbd4bb699448a75655fbd5))
+
+
+### Bug Fixes
+
+* **cloud:** filter opts in inference deployment polling methods ([5e1ec87](https://github.com/G-Core/gcore-go/commit/5e1ec872443703e46251cbfccf595d9887ef1201))
+
+## 0.32.0 (2026-02-11)
+
+Full Changelog: [v0.31.0...v0.32.0](https://github.com/G-Core/gcore-go/compare/v0.31.0...v0.32.0)
+
+### Features
+
+* **api:** aggregated API specs update ([43d8e07](https://github.com/G-Core/gcore-go/commit/43d8e0712a09f72c152efb4c143662e2aa19db68))
+* **api:** aggregated API specs update ([2ed4eeb](https://github.com/G-Core/gcore-go/commit/2ed4eeb037a528be15a380244538b4f6455fa2e7))
+* **api:** aggregated API specs update ([6c723d4](https://github.com/G-Core/gcore-go/commit/6c723d4bf0354fe7af93e615a2d4d26f641022c4))
+* **api:** aggregated API specs update ([da2aaac](https://github.com/G-Core/gcore-go/commit/da2aaac9488e86c0812f63cdb520a5dd116e3716))
+* **api:** aggregated API specs update ([825af96](https://github.com/G-Core/gcore-go/commit/825af969066b64eac3ca19abdb0edc803929517c))
+* **api:** aggregated API specs update ([ffe5a60](https://github.com/G-Core/gcore-go/commit/ffe5a60a664070332e7874383d222ce3f88e4d08))
+* **api:** aggregated API specs update ([0d7e3ab](https://github.com/G-Core/gcore-go/commit/0d7e3abfe6a1f6ba93283fa65d426a1582e61eed))
+* **cdn:** add DeactivateAndDelete method to CDNResourceService ([1b71860](https://github.com/G-Core/gcore-go/commit/1b71860348b27ad9b2e829e40e47bef2086fe1cf))
+
+
+### Bug Fixes
+
+* **cdn:** use param.NewOpt for CDN resource OriginGroup field ([#190](https://github.com/G-Core/gcore-go/issues/190)) ([37f2c5d](https://github.com/G-Core/gcore-go/commit/37f2c5dc10804cfeed12f959c1b933f0cae1bf45))
+* **encoder:** correctly serialize NullStruct ([7a17796](https://github.com/G-Core/gcore-go/commit/7a177960b0b0311d93f5ca7816753b30ea29c4b9))
+* **fastedge:** remove readOnly name from app_store required fields ([191b1cc](https://github.com/G-Core/gcore-go/commit/191b1cc0035bef155d41826c89c8a9c71875c233))
+* **types:** correctly define false enum ([c8610c6](https://github.com/G-Core/gcore-go/commit/c8610c69b6ab1321b6e14e0094a17851b30383e8))
+
+
+### Chores
+
+* **api:** minor updates ([3358ac1](https://github.com/G-Core/gcore-go/commit/3358ac1e8f9a0e6e096bcd558f3e38911a2bb0e3))
+
+
+### Documentation
+
+* split `api.md` by standalone resources ([b002df6](https://github.com/G-Core/gcore-go/commit/b002df6ec5f9cb45568832c8fe6c51395e92a959))
+
+## 0.31.0 (2026-01-30)
+
+Full Changelog: [v0.30.0...v0.31.0](https://github.com/G-Core/gcore-go/compare/v0.30.0...v0.31.0)
+
+### ⚠ BREAKING CHANGES
+
+* **cdn:** rename resource to cdn_resource
+* **api:** change type casing from Cdn* to CDN*
+
+### Features
+
+* **api:** aggregated API specs update ([daa7b60](https://github.com/G-Core/gcore-go/commit/daa7b600e20880d02de7bdc5948d237ce574e8df))
+* **api:** aggregated API specs update ([6131945](https://github.com/G-Core/gcore-go/commit/613194525248799ed0a86a816b87be73e1806473))
+* **api:** manual upload of aggregated API specs ([0564f05](https://github.com/G-Core/gcore-go/commit/0564f0547f0e55ee05c9668046666e5724667815))
+* **api:** refactor(cdn)!: change type casing from Cdn* to CDN* ([c2a9319](https://github.com/G-Core/gcore-go/commit/c2a9319edc8dacfd7e52e3cec5b98907a4c0a979))
+* **client:** add a convenient param.SetJSON helper ([a7dd1da](https://github.com/G-Core/gcore-go/commit/a7dd1da354e0831e54753fe9c7538816c9fe3f7e))
+* **cloud:** add gpu cloud examples ([0cd51b2](https://github.com/G-Core/gcore-go/commit/0cd51b226f413e348da458aef2b78c21ccca318f))
+
+
+### Bug Fixes
+
+* **cloud:** extraction of clusterID in NewAndPoll for GPU baremetal clusters ([be114b2](https://github.com/G-Core/gcore-go/commit/be114b29bc0c1ae55f0d929949970e70f330261d))
+
+
+### Refactors
+
+* **cdn:** rename resource to cdn_resource ([28a5dce](https://github.com/G-Core/gcore-go/commit/28a5dce8c041cb238f115288af43bdc5f1e36c89))
+
+## 0.30.0 (2026-01-22)
+
+Full Changelog: [v0.29.0...v0.30.0](https://github.com/G-Core/gcore-go/compare/v0.29.0...v0.30.0)
+
+### ⚠ BREAKING CHANGES
+
+* **cloud:** use create and update v2 endpoints for security groups
+* **cloud:** use v2 endpoint for floating IPs updates
+
+### Features
+
+* **api:** aggregated API specs update ([cbbe4ca](https://github.com/G-Core/gcore-go/commit/cbbe4ca8ecc7c17f5032811d36377b614af19637))
+* **api:** aggregated API specs update ([58d174c](https://github.com/G-Core/gcore-go/commit/58d174cb4ee02c819cf74bdd5da372fb42f4115a))
+* **api:** aggregated API specs update ([78a097d](https://github.com/G-Core/gcore-go/commit/78a097d45e77b21e996e7e4d11e02bbf8fdc061e))
+* **cloud:** add polling methods for security groups ([a95ce62](https://github.com/G-Core/gcore-go/commit/a95ce622dd1123f80b4645b29250e36c92b89780))
+* **cloud:** add UpdateAndPoll method for floating IPs ([c71ea15](https://github.com/G-Core/gcore-go/commit/c71ea15b2e53f1a013bf492e1583518c5ee3528a))
+* **cloud:** use create and update v2 endpoints for security groups ([25f9183](https://github.com/G-Core/gcore-go/commit/25f9183d766cf402b7049337778bf78ad6fe32b2))
+* **cloud:** use v2 endpoint for floating IPs updates ([b20c495](https://github.com/G-Core/gcore-go/commit/b20c4950ccceb246b9f73b75d8db9ee8d606d99c))
+
+
+### Bug Fixes
+
+* **cloud:** filter options correctly in file share polling methods ([5a0b54e](https://github.com/G-Core/gcore-go/commit/5a0b54ed77f919b80d98d1b9705b87381bcc0851))
+* **cloud:** filter options correctly in floating IP polling methods ([3d9d77f](https://github.com/G-Core/gcore-go/commit/3d9d77fa782194f22fcb32386a8823018f9c6d91))
+
+## 0.29.0 (2026-01-16)
+
+Full Changelog: [v0.28.0...v0.29.0](https://github.com/G-Core/gcore-go/compare/v0.28.0...v0.29.0)
+
+### ⚠ BREAKING CHANGES
+
+* **cloud:** rename instance flavor model
+
+### Features
+
+* **api:** aggregated API specs update ([829c406](https://github.com/G-Core/gcore-go/commit/829c406aef99ac36dd667639dada8500d0dbd803))
+* **api:** aggregated API specs update ([5350d10](https://github.com/G-Core/gcore-go/commit/5350d10163c171a8a3e697ba1aecae76b0366172))
+* **api:** aggregated API specs update ([13c4492](https://github.com/G-Core/gcore-go/commit/13c4492cbe751c60b87939edf2750b032212fa62))
+* **api:** aggregated API specs update ([16c7802](https://github.com/G-Core/gcore-go/commit/16c78022030fca1b64099515b2571915ba05a94e))
+* **api:** aggregated API specs update ([07744bb](https://github.com/G-Core/gcore-go/commit/07744bb2d3c14169ba90a5c3e71a3a9e8b0f2c8c))
+* **api:** aggregated API specs update ([9b8f671](https://github.com/G-Core/gcore-go/commit/9b8f67124e06e83d649bb2816934ec9a39d29112))
+* **api:** aggregated API specs update ([f4105db](https://github.com/G-Core/gcore-go/commit/f4105db3d1260f731a66b7f80cd33dbb8a49d781))
+* **api:** aggregated API specs update ([f526e50](https://github.com/G-Core/gcore-go/commit/f526e509221674076b2b615cc2b40d80a81c6d86))
+* **api:** aggregated API specs update ([7d99890](https://github.com/G-Core/gcore-go/commit/7d9989033eea0989ecd5334c5bed86d1115f38e7))
+* **api:** aggregated API specs update ([bd91bd3](https://github.com/G-Core/gcore-go/commit/bd91bd3f02b8a689058b1150cd44ef071a4396af))
+* **cloud:** add polling methods to volume snapshot ([0aa60dc](https://github.com/G-Core/gcore-go/commit/0aa60dc8e4df070fd2c5144c5dc963a0be01260c))
+* **cloud:** add support for volume snapshots ([7c7a8fa](https://github.com/G-Core/gcore-go/commit/7c7a8faf4ea08b72fff7ac4df9419dbb40c134df))
+
+
+### Bug Fixes
+
+* **cloud:** extraction of clusterID in NewAndPoll for GPU virtual clusters ([e2cdc36](https://github.com/G-Core/gcore-go/commit/e2cdc3628601d46184f384275b85100a43545f29))
+* **cloud:** rename instance flavor model ([4484199](https://github.com/G-Core/gcore-go/commit/448419907f0f4fd5061e6835656ac3c747923b06))
+* **docs:** add missing pointer prefix to api.md return types ([ca0d973](https://github.com/G-Core/gcore-go/commit/ca0d973156ff4d0952e22213b01dcdbe291d05c4))
+* use correct collection models ([1c0ea66](https://github.com/G-Core/gcore-go/commit/1c0ea661f6c16594adfe40c3b9279f2a7e96c62c))
+
+
+### Chores
+
+* **internal:** update `actions/checkout` version ([317a1f1](https://github.com/G-Core/gcore-go/commit/317a1f136861cc1acb279a18e74749a6a0200942))
+
+## 0.28.0 (2025-12-30)
+
+Full Changelog: [v0.27.0...v0.28.0](https://github.com/G-Core/gcore-go/compare/v0.27.0...v0.28.0)
+
+### ⚠ BREAKING CHANGES
+
+* change naming for POST, PUT, PATCH, DELETE models
+
+### Chores
+
+* change naming for POST, PUT, PATCH, DELETE models ([d497626](https://github.com/G-Core/gcore-go/commit/d497626c356be9430da6d8c2bfd32d488eb1ec51))
+
+## 0.27.0 (2025-12-30)
+
+Full Changelog: [v0.26.0...v0.27.0](https://github.com/G-Core/gcore-go/compare/v0.26.0...v0.27.0)
+
+### Features
+
+* **api:** manual updates ([5f8fff8](https://github.com/G-Core/gcore-go/commit/5f8fff89b9a44c4c54444744a5e7aadc40ab1673))
+
+## 0.26.0 (2025-12-23)
+
+Full Changelog: [v0.25.0...v0.26.0](https://github.com/G-Core/gcore-go/compare/v0.25.0...v0.26.0)
+
+### ⚠ BREAKING CHANGES
+
+* **cloud:** move methods to gpu_baremetal_clusters.interfaces.attach()/detach()
+* **cloud:** restructure to be gpu_virtual.clusters
+
+### Features
+
+* **api:** aggregated API specs update ([84c4ada](https://github.com/G-Core/gcore-go/commit/84c4adaa0c8d393d9cd4d2a9cf1c5707e23e3d41))
+* **api:** aggregated API specs update ([d92461c](https://github.com/G-Core/gcore-go/commit/d92461cbd91686ff1c9a0cced20a3183fe052f5d))
+* **cloud:** add k8s cluster pools check quotas method ([80b7d5c](https://github.com/G-Core/gcore-go/commit/80b7d5c2a3762f90b575a7d37628618f2754361f))
+
+
+### Bug Fixes
+
+* **client:** properly marshal embedded structs ([e4ed37f](https://github.com/G-Core/gcore-go/commit/e4ed37ff5d788ae67a3ed1836b0a5543b021a5ff))
+* **cloud:** move methods to gpu_baremetal_clusters.interfaces.attach()/detach() ([5acef4d](https://github.com/G-Core/gcore-go/commit/5acef4d75415b4f3e073ba62b9aaaec754ecf562))
+* **cloud:** restructure to be gpu_virtual.clusters ([b858bb0](https://github.com/G-Core/gcore-go/commit/b858bb0d8347bbef3caa2def461af6f3d81e7fa8))
+
+
+### Chores
+
+* add float64 to valid types for RegisterFieldValidator ([6cf2379](https://github.com/G-Core/gcore-go/commit/6cf237997cf647011a3e2efaee4b6fecaf3cfb03))
+
+## 0.25.0 (2025-12-12)
+
+Full Changelog: [v0.24.0...v0.25.0](https://github.com/G-Core/gcore-go/compare/v0.24.0...v0.25.0)
+
+### ⚠ BREAKING CHANGES
+
+* **cloud:** streamline vip connected and candidate ports
+
+### Features
+
+* **encoder:** support bracket encoding form-data object members ([500138a](https://github.com/G-Core/gcore-go/commit/500138a4ecebb960bb936efb721ccadad523b986))
+
+
+### Bug Fixes
+
+* **cloud:** fix vip examples ([ddcaf80](https://github.com/G-Core/gcore-go/commit/ddcaf808d558b74e6ce50101852b7934454c876e))
+* **cloud:** streamline vip connected and candidate ports ([893c324](https://github.com/G-Core/gcore-go/commit/893c3242b4a1c9d1b89a0d6a4ea4b76a857d51e8))
+* **cloud:** use params.Name to get k8s clusters/pools in NewAndPoll ([6e21232](https://github.com/G-Core/gcore-go/commit/6e2123228ff96c41199ef635a413665fc4c0a519))
+
+## 0.24.0 (2025-12-10)
+
+Full Changelog: [v0.23.0...v0.24.0](https://github.com/G-Core/gcore-go/compare/v0.23.0...v0.24.0)
+
+### ⚠ BREAKING CHANGES
+
+* **cloud:** replace load balancer L7 policy ReplaceAndPoll() with UpdateAndPoll()
+* **cloud:** replace PUT /cloud/v1/l7policies with PATCH
+* **cdn:** streamline audit_logs naming
+* **cloud:** rename load balancer pool member methods to create/delete
+* streamline naming for create/replace models
+
+### Features
+
+* **api:** aggregated API specs update ([a9492d3](https://github.com/G-Core/gcore-go/commit/a9492d3b8979646770b2710410bc253235749dcd))
+* **api:** aggregated API specs update ([da031f6](https://github.com/G-Core/gcore-go/commit/da031f6250a18c0023c97bf60414ae528c1b5240))
+* **api:** aggregated API specs update ([5c06188](https://github.com/G-Core/gcore-go/commit/5c0618875beb731ab6418074139008b9b36ea52b))
+* **api:** aggregated API specs update ([c48a0d6](https://github.com/G-Core/gcore-go/commit/c48a0d67637a779a8fff28ec4aa5daf5a4cc750f))
+* **api:** aggregated API specs update ([5a59bd7](https://github.com/G-Core/gcore-go/commit/5a59bd7bd6fce5e57514abeeccae048bade6d3b9))
+* **cloud:** add polling methods to k8s clusters and pools ([9e741e1](https://github.com/G-Core/gcore-go/commit/9e741e1fc43e6c9a29e1641699e80dc4b6128654))
+* **dns:** enable terraform code generation for gcore_dns_network_mapping ([6fc50fb](https://github.com/G-Core/gcore-go/commit/6fc50fb3da80b8613958f48edf91e1167209c62f))
+
+
+### Bug Fixes
+
+* **cdn:** streamline audit_logs naming ([61061a9](https://github.com/G-Core/gcore-go/commit/61061a94e9dc71c9763068852082dbc6deb884e0))
+* **cloud:** adapt load balancer pool member *AndPoll methods to correspond to its base counterparts ([47c2505](https://github.com/G-Core/gcore-go/commit/47c250530bb02ff33553d194eaa1c68864295f99))
+* **cloud:** fix type in cloud projects example ([21336c1](https://github.com/G-Core/gcore-go/commit/21336c18d11a2c5590a3b28d21e69aca36608f68))
+* **cloud:** rename load balancer pool member methods to create/delete ([1ac24e7](https://github.com/G-Core/gcore-go/commit/1ac24e7489cc70c7c40c133498e57580cdef20a8))
+* **cloud:** replace load balancer L7 policy ReplaceAndPoll() with UpdateAndPoll() ([f976275](https://github.com/G-Core/gcore-go/commit/f9762755dafad50dfdf6e37a751c17052dbe05b1))
+* **cloud:** replace PUT /cloud/v1/l7policies with PATCH ([76ce329](https://github.com/G-Core/gcore-go/commit/76ce329edd87d764b86f4c6004efb5ad67b96c9b))
+* **cloud:** use PATCH /cloud/v1/projects ([01cf2e0](https://github.com/G-Core/gcore-go/commit/01cf2e0ef6aaca4452bce5248d0b47c614acc97d))
+* **mcp:** correct code tool API endpoint ([b15bf97](https://github.com/G-Core/gcore-go/commit/b15bf97cb481fb5d60ef6accaefcfaaf9346d26c))
+* rename param to avoid collision ([b37c90a](https://github.com/G-Core/gcore-go/commit/b37c90af8fb49a42366125233f02b80b27584874))
+* streamline naming for create/replace models ([f167858](https://github.com/G-Core/gcore-go/commit/f167858b25f012b073a670bc0d67ae76744997ac))
+
+
+### Chores
+
+* elide duplicate aliases ([15ed877](https://github.com/G-Core/gcore-go/commit/15ed8776baa4b6ca688b54f014063a8ad6a0ae87))
+* **internal:** codegen related update ([ff89ad2](https://github.com/G-Core/gcore-go/commit/ff89ad23fef93ef2e66d322be50b188e6ca3d28b))
+
+## 0.23.0 (2025-12-01)
+
+Full Changelog: [v0.22.0...v0.23.0](https://github.com/G-Core/gcore-go/compare/v0.22.0...v0.23.0)
+
+### Features
+
+* **api:** aggregated API specs update ([1113ddf](https://github.com/G-Core/gcore-go/commit/1113ddfcf934371d417044677ba6569920f33dd3))
+* **api:** aggregated API specs update ([c1a50c9](https://github.com/G-Core/gcore-go/commit/c1a50c92c8b2e5b076e11c783f794d20e3f4982a))
+
+
+### Bug Fixes
+
+* **cloud:** remove flavor.ReservedInStock reference in examples ([796f842](https://github.com/G-Core/gcore-go/commit/796f842f7fa396c5ce99f2cd7df276a947a4dc68))
+
+## 0.22.0 (2025-11-25)
+
+Full Changelog: [v0.21.0...v0.22.0](https://github.com/G-Core/gcore-go/compare/v0.21.0...v0.22.0)
+
+### ⚠ BREAKING CHANGES
+
+* **cloud:** k8s references from k8 to k8s
+* **cloud:** updates to get/list LB l7 policy/rules models
+* **cloud:** updates to get/list LB l7 policy/rules models
+* **cloud:** updates to get/list LB l7 policy/rules models
+
+### Features
+
+* **api:** aggregated API specs update ([bd20645](https://github.com/G-Core/gcore-go/commit/bd20645510519e5c78d4912749ae2c2424689774))
+* **api:** aggregated API specs update ([53cc5fb](https://github.com/G-Core/gcore-go/commit/53cc5fb144855f818dbca6404f311d3ddffefdbd))
+* **api:** aggregated API specs update ([885872b](https://github.com/G-Core/gcore-go/commit/885872b5ae3bbd3ab927070b90a19917ee26d8c5))
+* **cloud:** updates to get/list LB l7 policy/rules models ([f379e4c](https://github.com/G-Core/gcore-go/commit/f379e4c9e2a0f962496da34e1b6d62afd08d2e27))
+* **cloud:** updates to get/list LB l7 policy/rules models ([28c64ce](https://github.com/G-Core/gcore-go/commit/28c64cea6a9739bb7c520e632ddcea634ed8e72b))
+* **cloud:** updates to get/list LB l7 policy/rules models ([3f3f123](https://github.com/G-Core/gcore-go/commit/3f3f123ca5a1917662bae39f9ddfe1c28824cb8f))
+
+
+### Bug Fixes
+
+* **client:** correctly specify Accept header with */* instead of empty ([b3be1c8](https://github.com/G-Core/gcore-go/commit/b3be1c89ed77bdb8a42db8e33f5807d0bc6e2184))
+* **cloud:** k8s references from k8 to k8s ([77ff542](https://github.com/G-Core/gcore-go/commit/77ff542326c3f0d3d8869f026578f7574d1149bb))
+* **cloud:** remove duplicate LoadBalancer type definitions ([#164](https://github.com/G-Core/gcore-go/issues/164)) ([ec1a7e7](https://github.com/G-Core/gcore-go/commit/ec1a7e73e28e62a71b7b10cc68b5d983f1e85bf1))
+* **cloud:** remove duplicate LoadBalancerL7Policy and related types ([#166](https://github.com/G-Core/gcore-go/issues/166)) ([48d62a0](https://github.com/G-Core/gcore-go/commit/48d62a0b802d12d515ea8736eb30187aab542da7))
+
+
+### Chores
+
+* fix empty interfaces ([4ff161c](https://github.com/G-Core/gcore-go/commit/4ff161c40fde3280fec58eb29ef35830d7e6d960))
+
+## 0.21.0 (2025-11-17)
+
+Full Changelog: [v0.20.0...v0.21.0](https://github.com/G-Core/gcore-go/compare/v0.20.0...v0.21.0)
+
+### Features
+
+* **api:** aggregated API specs update ([2b7ffb7](https://github.com/G-Core/gcore-go/commit/2b7ffb784f783fac21535053535bc8101f2cb14e))
+
+## 0.20.0 (2025-11-11)
+
+Full Changelog: [v0.19.0...v0.20.0](https://github.com/G-Core/gcore-go/compare/v0.19.0...v0.20.0)
+
+### Features
+
+* **api:** aggregated API specs update ([eca759c](https://github.com/G-Core/gcore-go/commit/eca759c54b9a09ac2e77040fdd3c7098e34c7918))
+* **cloud:** add polling methods for GPU virtual clusters ([2b191d7](https://github.com/G-Core/gcore-go/commit/2b191d706ea835b74dab73aa7e957a00261ba2f5))
+* **cloud:** add polling methods to file shares ([99a6917](https://github.com/G-Core/gcore-go/commit/99a6917736f33b2b8d9003a8d6fbb71f92b0317b))
+* **cloud:** add support for GPU virtual clusters ([ed186c7](https://github.com/G-Core/gcore-go/commit/ed186c7c30925452f8b8ee7c40ba9909ca388664))
+
+
+### Chores
+
+* bump gjson version ([2513026](https://github.com/G-Core/gcore-go/commit/2513026b5a823e6201c9250a1a9b65be7aa3b79a))
+
+## 0.19.0 (2025-11-07)
+
+Full Changelog: [v0.18.0...v0.19.0](https://github.com/G-Core/gcore-go/compare/v0.18.0...v0.19.0)
+
+### Features
+
+* **api:** aggregated API specs update ([843bd35](https://github.com/G-Core/gcore-go/commit/843bd35bdccd4d12990e0e11a1e946e5db0880a3))
+* **api:** aggregated API specs update ([9dc8473](https://github.com/G-Core/gcore-go/commit/9dc84730118a792f55b46d05cffe8202e3cc20c6))
+* **api:** aggregated API specs update ([003cd96](https://github.com/G-Core/gcore-go/commit/003cd966ae4af17a478366171561898f17c4faeb))
+* **api:** aggregated API specs update ([d73045f](https://github.com/G-Core/gcore-go/commit/d73045fda8dd183f066933290c7801088af3ba4c))
+
+
+### Bug Fixes
+
+* **examples:** update storage location to string ([e9ea78e](https://github.com/G-Core/gcore-go/commit/e9ea78e94a6876fe8b0295647db1eb6eb90a0363))
+* remove readonly parameters from request params ([825a766](https://github.com/G-Core/gcore-go/commit/825a766a2cbfeff545359b277d2e6d1025d28ebc))
+
+## 0.18.0 (2025-11-04)
+
+Full Changelog: [v0.17.0...v0.18.0](https://github.com/G-Core/gcore-go/compare/v0.17.0...v0.18.0)
+
+### Features
+
+* **api:** aggregated API specs update ([410ee99](https://github.com/G-Core/gcore-go/commit/410ee99998501fae43838121e4ae6cef7efaf379))
+* **api:** aggregated API specs update ([bbecad5](https://github.com/G-Core/gcore-go/commit/bbecad533162983e18ef394c1225c5623aefb35d))
+* **api:** aggregated API specs update ([16853b1](https://github.com/G-Core/gcore-go/commit/16853b10dfb9fd3dc6b922296eaa821fd2cd3e68))
+* **api:** aggregated API specs update ([d6ea9ad](https://github.com/G-Core/gcore-go/commit/d6ea9ad1c3c42caf8aa946479524af7b1e31b826))
+* **api:** aggregated API specs update ([4c37826](https://github.com/G-Core/gcore-go/commit/4c3782693de7e65edb98fd743b0794b5f1e4253f))
+* **api:** aggregated API specs update ([417769e](https://github.com/G-Core/gcore-go/commit/417769e6cff42f234a7a8ee053970d23a0078ec3))
+* **api:** aggregated API specs update ([2202759](https://github.com/G-Core/gcore-go/commit/220275985846733c431453ef8d9b539a9aeb0839))
+* **api:** aggregated API specs update ([c10e1b8](https://github.com/G-Core/gcore-go/commit/c10e1b8e5ee2b5a00192aadf638c1ee11d3a27d9))
+* **api:** aggregated API specs update ([993f01a](https://github.com/G-Core/gcore-go/commit/993f01a2a86fb6e0f35d626c4a345d81022c4bbf))
+* **cloud:** add polling methods to postgres clusters ([3d06488](https://github.com/G-Core/gcore-go/commit/3d06488064032dc77f1c589376c5fa28ff12c03b))
+* **cloud:** add support for postgres ([da38400](https://github.com/G-Core/gcore-go/commit/da384003a4237eec8cec624f279d6cbf5be5f383))
+
+
+### Bug Fixes
+
+* **client:** make sure to import param package when used ([a689cfd](https://github.com/G-Core/gcore-go/commit/a689cfd3b21e99e0e8841eeb68c9c97eafbd650a))
+* **cloud:** internal task service initialization in instance ([8dc5dd0](https://github.com/G-Core/gcore-go/commit/8dc5dd0ff71119dadbab850df4acd8b3c6071bd8))
+
+
+### Chores
+
+* **internal:** grammar fix (it's -&gt; its) ([53e9730](https://github.com/G-Core/gcore-go/commit/53e9730eb72a5a621734ade0c73d52fc9c742df0))
+
+## 0.17.0 (2025-10-21)
+
+Full Changelog: [v0.16.0...v0.17.0](https://github.com/G-Core/gcore-go/compare/v0.16.0...v0.17.0)
+
+### ⚠ BREAKING CHANGES
+
+* **cloud:** rename to projects update
+* **cloud:** use new PATCH files shares endpoint
+
+### Features
+
+* **api:** aggregated API specs update ([558fa44](https://github.com/G-Core/gcore-go/commit/558fa447f33919c7ac06e66cc2d21584db51c9b5))
+* **cdn:** add methods to list aws and alibaba regions ([4ee3849](https://github.com/G-Core/gcore-go/commit/4ee3849d2ee55a8b620bea84b2bd2fcd235eb856))
+* **client:** add client opt for cloud polling timeout ([95edc63](https://github.com/G-Core/gcore-go/commit/95edc639b26fa1f8786aff68514f6ba9bff779a3))
+* **cloud:** add DeleteAndPoll to placement groups ([a287293](https://github.com/G-Core/gcore-go/commit/a287293020adad577b035a23661d3144fa78d7cc))
+* **cloud:** add DeleteAndPoll to projects ([16f7b78](https://github.com/G-Core/gcore-go/commit/16f7b78eaa7b44c5d99af98d214949514d53190a))
+* **cloud:** add Secret.DeleteAndPoll method ([#146](https://github.com/G-Core/gcore-go/issues/146)) ([4267ffd](https://github.com/G-Core/gcore-go/commit/4267ffd4fa26e734e02c8eec45b78fe77ed3f0ef))
+* **cloud:** enable TF for placement groups ([8c81678](https://github.com/G-Core/gcore-go/commit/8c81678e22ea49f8fdfefd94d1440cd6d97c6af8))
+
+
+### Chores
+
+* **cloud:** rename to projects update ([d17ea13](https://github.com/G-Core/gcore-go/commit/d17ea13bcf4f4511e562d0236d0f9352c583d418))
+* **cloud:** use new PATCH files shares endpoint ([1c63726](https://github.com/G-Core/gcore-go/commit/1c637263aff81c5251731fede31901dfa5d3030c))
+
+
+### Refactors
+
+* **cloud:** improve opts concatenation in poll methods ([dc3204c](https://github.com/G-Core/gcore-go/commit/dc3204cbf684712ddd754e62b3aff87aa401a73e))
+* **spec:** remove CDN deprecated endpoints ([2608b61](https://github.com/G-Core/gcore-go/commit/2608b6171c4d782bdc41ff65531c2f4ae1c35146))
+
+## 0.16.0 (2025-10-16)
+
+Full Changelog: [v0.15.0...v0.16.0](https://github.com/G-Core/gcore-go/compare/v0.15.0...v0.16.0)
+
+### ⚠ BREAKING CHANGES
+
+* **cloud:** remove get and update list method for billing reservations
+* **cloud:** rename to load_balancer_id path param
+* **cloud:** rename inference applications deployments update method
+
+### Features
+
+* **api:** aggregated API specs update ([888df9e](https://github.com/G-Core/gcore-go/commit/888df9ec0d4f282d6a70cd95fe718a9f019015e5))
+* **api:** aggregated API specs update ([9b66b72](https://github.com/G-Core/gcore-go/commit/9b66b72da0c1ad78b63d4ca6729105a153b4e347))
+* **api:** aggregated API specs update ([554de1e](https://github.com/G-Core/gcore-go/commit/554de1e99f089f0910eddf54f99462fea753346f))
+* **api:** aggregated API specs update ([0a0de0b](https://github.com/G-Core/gcore-go/commit/0a0de0befb37e9254afb70b9a5edbca65e6684c8))
+* **api:** aggregated API specs update ([e663d7a](https://github.com/G-Core/gcore-go/commit/e663d7ac6bc5c338e3251fb01da45c59702e0e19))
+* **api:** aggregated API specs update ([37bd6ab](https://github.com/G-Core/gcore-go/commit/37bd6ab35fba956455bd60d4ec92ac7b6e6fe800))
+* **api:** aggregated API specs update ([e6fc584](https://github.com/G-Core/gcore-go/commit/e6fc584ade819d92e17497d8b64cd3f3534b4522))
+* **api:** aggregated API specs update ([fb41f9f](https://github.com/G-Core/gcore-go/commit/fb41f9f73d2846e276219d49e3b3923622d1376e))
+* **api:** aggregated API specs update ([9197fbf](https://github.com/G-Core/gcore-go/commit/9197fbf615634b2c165e82e3344c3fc828f43441))
+* **cloud:** add NewAndPoll and DeleteAndPoll methods to NetworkRouterService ([#136](https://github.com/G-Core/gcore-go/issues/136)) ([53b38be](https://github.com/G-Core/gcore-go/commit/53b38beaed90e595819d28c191f3fd4fb76b563e))
+* **cloude:** remove cloud_lbmember name ([00d3139](https://github.com/G-Core/gcore-go/commit/00d313988440ba6782325932fe74f07b65962d47))
+* **cloud:** implement AddAndPoll and RemoveAndPoll methods for LoadBalancerPoolMemberService ([#137](https://github.com/G-Core/gcore-go/issues/137)) ([3314f5b](https://github.com/G-Core/gcore-go/commit/3314f5bd889ec0cb8ce5dfccefe8b6c09db2614c))
+* **cloud:** remove get and update list method for billing reservations ([58d2841](https://github.com/G-Core/gcore-go/commit/58d2841510f0e147da56e42e0ccc9d5c1e3a6ccd))
+
+
+### Bug Fixes
+
+* **cloud:** rename to load_balancer_id path param ([ec29fce](https://github.com/G-Core/gcore-go/commit/ec29fce204368ac71d36d4c23a6a751bb3c40729))
+* **examples:** make name optional in cloud instance update ([9072242](https://github.com/G-Core/gcore-go/commit/9072242e9f8b84c3f606108a55a2b91ac3187eeb))
+
+
+### Chores
+
+* add pull request template ([1375c8c](https://github.com/G-Core/gcore-go/commit/1375c8c18b2315a79a79b961262751399d635e26))
+* **ci:** add fossa ([252fef9](https://github.com/G-Core/gcore-go/commit/252fef94dc187569fb70fef1e50e3623ffa26be7))
+* **cloud:** rename inference applications deployments update method ([ce36a20](https://github.com/G-Core/gcore-go/commit/ce36a20667c7c9bb4b80ec00f5c012b208e664bf))
+* **cloud:** rename loadBalancerID parameter ([a516645](https://github.com/G-Core/gcore-go/commit/a51664588e91947b12250c5f214c6ab10f57f39a))
+
+## 0.15.0 (2025-10-02)
+
+Full Changelog: [v0.14.0...v0.15.0](https://github.com/G-Core/gcore-go/compare/v0.14.0...v0.15.0)
+
+### Features
+
+* **api:** Add missing reserved_fixed_ips update method ([67057ab](https://github.com/G-Core/gcore-go/commit/67057abac2c98dbe1ac6a53e7fa3b988b4c80b19))
+* **api:** aggregated API specs update ([f635f85](https://github.com/G-Core/gcore-go/commit/f635f8570d532431857d505fd46e2e0d8259720f))
+* **api:** aggregated API specs update ([ab636ba](https://github.com/G-Core/gcore-go/commit/ab636bac399f5da60ec0e50163539148fc8cdb01))
+* **api:** aggregated API specs update ([974cae5](https://github.com/G-Core/gcore-go/commit/974cae5fa07bd88c3b5cfa98d005dfdb0fc8bbd6))
+* **cloud:** add DeleteAndPoll for subnets ([578d222](https://github.com/G-Core/gcore-go/commit/578d2222ebf5299930965c1b7023d93afc1c568c))
+
+
+### Bug Fixes
+
+* **examples:** update examples to match updated SDK signatures ([#123](https://github.com/G-Core/gcore-go/issues/123)) ([4b536bd](https://github.com/G-Core/gcore-go/commit/4b536bde1bc6677d49023c2ae45bfc57d5cf59a4))
+
+## 0.14.0 (2025-09-30)
+
+Full Changelog: [v0.13.0...v0.14.0](https://github.com/G-Core/gcore-go/compare/v0.13.0...v0.14.0)
+
+### Features
+
+* **api:** aggregated API specs update ([9563541](https://github.com/G-Core/gcore-go/commit/95635416cf5835eca96e2741a54ccf008d41d39b))
+* **api:** aggregated API specs update ([ff36e57](https://github.com/G-Core/gcore-go/commit/ff36e573b89d11a5a4fa3291dc1ea9eff1bd4cd6))
+* **api:** aggregated API specs update ([27a0d29](https://github.com/G-Core/gcore-go/commit/27a0d29637f4413e1bff44ed971ac92cbc6e2521))
+* **api:** aggregated API specs update ([5722309](https://github.com/G-Core/gcore-go/commit/5722309174710cf4567fa7f76c7fe456208fd517))
+* **api:** aggregated API specs update ([225f9e2](https://github.com/G-Core/gcore-go/commit/225f9e2616eb940261fa5e979babbfd97c6d00f3))
+* **cdn:** add API support ([e33a359](https://github.com/G-Core/gcore-go/commit/e33a3593b7bf7d54a8d72b5e079d7f3371766415))
+* **cloud:** enable TF for floating IPs ([77c64f0](https://github.com/G-Core/gcore-go/commit/77c64f00c492ffd84a8d8168783dadae20bde17a))
+* **storage:** add examples ([855c53b](https://github.com/G-Core/gcore-go/commit/855c53b7b408f0004877581b7628019e9182288c))
+
+
+### Bug Fixes
+
+* bugfix for setting JSON keys with special characters ([2de8afe](https://github.com/G-Core/gcore-go/commit/2de8afe98cab189fa4426d56ecb4452c6bc16d09))
+* **client:** correctly generate K8sClusterSlurmAddonV2Serializers ([562e94d](https://github.com/G-Core/gcore-go/commit/562e94dc6b700dbc82e4286ed7b2884940b644e7))
+* use slices.Concat instead of sometimes modifying r.Options ([0ba8706](https://github.com/G-Core/gcore-go/commit/0ba87060842833644f5574037ac4018b53de9ddf))
+
+
+### Chores
+
+* bump minimum go version to 1.22 ([e233cc3](https://github.com/G-Core/gcore-go/commit/e233cc3089abcb83b1e0b58d4abfe16dea0e6dfa))
+* do not install brew dependencies in ./scripts/bootstrap by default ([0bdb83b](https://github.com/G-Core/gcore-go/commit/0bdb83b6211f83f7b5b93d6955391f252342a1ce))
+* improve example values ([7b94270](https://github.com/G-Core/gcore-go/commit/7b94270ac1443b6ae7d38953993b93bbf965ad68))
+* update more docs for 1.22 ([983e697](https://github.com/G-Core/gcore-go/commit/983e697c23318ff9a1fbfc69d9ac156c32675ca1))
+
+## 0.13.0 (2025-09-16)
+
+Full Changelog: [v0.12.0...v0.13.0](https://github.com/G-Core/gcore-go/compare/v0.12.0...v0.13.0)
+
+### ⚠ BREAKING CHANGES
+
+* **waap:** model references
+
+### Features
+
+* **api:** aggregated API specs update ([3a6f913](https://github.com/G-Core/gcore-go/commit/3a6f9130b631a95cc358d4dd28db56219eb59e7f))
+* **api:** aggregated API specs update ([1ef659c](https://github.com/G-Core/gcore-go/commit/1ef659c9187ddc2c0567952cbb67bf439681c073))
+* **api:** aggregated API specs update ([2fd148e](https://github.com/G-Core/gcore-go/commit/2fd148ee9349d222f6fd02701289109d656295bb))
+* **api:** aggregated API specs update ([b5b74dd](https://github.com/G-Core/gcore-go/commit/b5b74ddf140edd99ada4922bedb113ef40dfb28e))
+* **cloud:** support floating IPs update ([f6665c0](https://github.com/G-Core/gcore-go/commit/f6665c0b0ecc1c0a5c6a85cca4326f5e937e525d))
+* **dns:** replace post with get in check delegation status ([d45f9a5](https://github.com/G-Core/gcore-go/commit/d45f9a5261df3e8e399f5e48cc47e13bec9b7804))
+
+
+### Bug Fixes
+
+* **waap:** model references ([ec1e84e](https://github.com/G-Core/gcore-go/commit/ec1e84e1c862511899b7eb0b0a86da5af334d0a7))
+
+## 0.12.0 (2025-09-11)
+
+Full Changelog: [v0.11.0...v0.12.0](https://github.com/G-Core/gcore-go/compare/v0.11.0...v0.12.0)
+
+### Features
+
+* **api:** aggregated API specs update ([b7792f7](https://github.com/G-Core/gcore-go/commit/b7792f7fd405f1ef222724ea181a49cb74606ff7))
+* **cloud:** add DeleteAndPoll() for reserved fixed ip ([84c4297](https://github.com/G-Core/gcore-go/commit/84c42971e672e257dc5eda7468ac12afc1718cce))
+* **cloud:** add polling methods to volumes ([1d9acc3](https://github.com/G-Core/gcore-go/commit/1d9acc307040f44bf63b75df3c9a24d727693646))
+
+
+### Refactors
+
+* **storage:** use v2 endpoint ([9637ab9](https://github.com/G-Core/gcore-go/commit/9637ab9a494966011a0bb1b8749e5d339907a312))
+
+## 0.11.0 (2025-09-09)
+
+Full Changelog: [v0.10.0...v0.11.0](https://github.com/G-Core/gcore-go/compare/v0.10.0...v0.11.0)
+
+### ⚠ BREAKING CHANGES
+
+* **cloud:** migrate baremetal gpu cluster from v1 to v3
+* **cloud:** support inference applications
+
+### Features
+
+* **api:** aggregated API specs update ([99c1e45](https://github.com/G-Core/gcore-go/commit/99c1e459efb53a699f637ac035104f2ff5843d28))
+* **api:** aggregated API specs update ([3377fd7](https://github.com/G-Core/gcore-go/commit/3377fd76fa6207e368f193428b022c95dd3a1d58))
+* **api:** aggregated API specs update ([b66b088](https://github.com/G-Core/gcore-go/commit/b66b0887cb34a4139bff60a78c8dfe234fe94eda))
+* **api:** aggregated API specs update ([6994f5d](https://github.com/G-Core/gcore-go/commit/6994f5d1ed046b38c533c2a07f0fd860510291dd))
+* **api:** aggregated API specs update ([12fc447](https://github.com/G-Core/gcore-go/commit/12fc447a91e20325bfd98db446e3ab4b2cbe6930))
+* **api:** aggregated API specs update ([66442b4](https://github.com/G-Core/gcore-go/commit/66442b4582d4e1307502faa11f7d6537d7f8cd41))
+* **api:** aggregated API specs update ([b437753](https://github.com/G-Core/gcore-go/commit/b43775377b9afe0d7fdf511c81b885ad5c43e913))
+* **api:** aggregated API specs update ([e3e2989](https://github.com/G-Core/gcore-go/commit/e3e29891210e597e91d1affe31800e8e19c1ae18))
+* **api:** aggregated API specs update ([8f064ef](https://github.com/G-Core/gcore-go/commit/8f064ef675929a32520d62b60392752e7961bf1c))
+* **api:** aggregated API specs update ([277b318](https://github.com/G-Core/gcore-go/commit/277b318dc2012500722626754ab31b2d37ca8645))
+* **api:** aggregated API specs update ([3c33290](https://github.com/G-Core/gcore-go/commit/3c332904c5249d4af49cb7b7f8c4fc9653a541a6))
+* **api:** aggregated API specs update ([6e56534](https://github.com/G-Core/gcore-go/commit/6e56534fed327c6aae6b87263494c92cf14e90a2))
+* **api:** aggregated API specs update ([2770f2c](https://github.com/G-Core/gcore-go/commit/2770f2c2dd5546d2217810b21b3421ed7761ad75))
+* **api:** aggregated API specs update ([d87d6b1](https://github.com/G-Core/gcore-go/commit/d87d6b1866719abbb9d544906ebba515bdd3d491))
+* **api:** aggregated API specs update ([6c44f8a](https://github.com/G-Core/gcore-go/commit/6c44f8a6cdc738320f3d7d516f087f758df95f3f))
+* **api:** aggregated API specs update ([8643fe8](https://github.com/G-Core/gcore-go/commit/8643fe8df688758015a04f97b810ab2a8b9be886))
+* **api:** aggregated API specs update ([7043dc0](https://github.com/G-Core/gcore-go/commit/7043dc00f239f352b19f5d19d37502fde6bd18f7))
+* **api:** api update ([d3d64b3](https://github.com/G-Core/gcore-go/commit/d3d64b3d3215551bb123ad77010776151b8766bc))
+* **api:** manual updates ([8a55e76](https://github.com/G-Core/gcore-go/commit/8a55e766e0075c12abde3b506b1f2b9fb6f96206))
+* **api:** manual upload of aggregated API specs ([fc2cc17](https://github.com/G-Core/gcore-go/commit/fc2cc17f98a62222de4fd1dac2115103cc392609))
+* **api:** manual upload of aggregated API specs ([b0adde7](https://github.com/G-Core/gcore-go/commit/b0adde7eca2ed186c6121eb3ed2e72070c78c07b))
+* **api:** update field_value type ([591847e](https://github.com/G-Core/gcore-go/commit/591847e4582d6402bd31306858c91686d722ef46))
+* **cloud:** add managed k8s ([8a25bd4](https://github.com/G-Core/gcore-go/commit/8a25bd49ea615e2300746786cc4e676ab6e645b1))
+* **cloud:** add NewAndPoll() and DeleteAndPoll() for floating ips ([2798254](https://github.com/G-Core/gcore-go/commit/27982547cc49f1d7e2b8fd8aab35625763d52665))
+* **cloud:** add NewAndPoll() and DeleteAndPoll() for networks ([b787f73](https://github.com/G-Core/gcore-go/commit/b787f7374b9c7e28e313733fe3caddf641e99800))
+* **cloud:** add NewAndPoll() for subnets ([3a64336](https://github.com/G-Core/gcore-go/commit/3a6433661e5173bb5f2357ac67908e6b0845b246))
+* **cloud:** fetch client_id from iam in cloud quotas examples ([0aab78e](https://github.com/G-Core/gcore-go/commit/0aab78e76fb9833c7e43e3c5a7ed33105aa29045))
+* **cloud:** migrate baremetal gpu cluster from v1 to v3 ([b9f3997](https://github.com/G-Core/gcore-go/commit/b9f3997fcd8d049c713cba316fcb4cc1ddc03bed))
+* **cloud:** remove inference model examples ([58221cb](https://github.com/G-Core/gcore-go/commit/58221cbb31ae86ec49273eb3a0b9ae348eae57d4))
+* **cloud:** support inference applications ([31c00d6](https://github.com/G-Core/gcore-go/commit/31c00d643e7fcebb084b480d5dd88c57a9156b3b))
+* **cloud:** use PATCH /v2/lbpools ([4ed5b55](https://github.com/G-Core/gcore-go/commit/4ed5b552f58708bb38c308970656ba095085975f))
+* **s3:** add object storage ([b258b9a](https://github.com/G-Core/gcore-go/commit/b258b9afc8c6ef37b3e79c36ef8610cd2dca124a))
+* **storage:** make list storage locations paginated ([53f76bf](https://github.com/G-Core/gcore-go/commit/53f76bf96287ba5a153aafcc2ced681b5f0dd23f))
+
+
+### Bug Fixes
+
+* close body before retrying ([4aa95c1](https://github.com/G-Core/gcore-go/commit/4aa95c145147ef4e3c3d1373b5310be103755b52))
+* **dns:** fix dns methods ([24c71bd](https://github.com/G-Core/gcore-go/commit/24c71bd87377d6f5829654f52849ac1048037fb3))
+* **internal:** unmarshal correctly when there are multiple discriminators ([db7b996](https://github.com/G-Core/gcore-go/commit/db7b9967959dad6ad23c8755af7f3fec398881f6))
+* remove null from release please manifest ([9de166b](https://github.com/G-Core/gcore-go/commit/9de166b82fc37cf7e239047b7d3ba2704f6c0941))
+* use release please annotations on more places ([1549cda](https://github.com/G-Core/gcore-go/commit/1549cda8e66331bfbfbfdaf9c5bd8faf4feffc8a))
+* **waap:** fix component name ([41f5fca](https://github.com/G-Core/gcore-go/commit/41f5fcaf2093b92d8dd26ae836c84d80c8c02a88))
+
+
+### Chores
+
+* **internal:** codegen related update ([ed63ff2](https://github.com/G-Core/gcore-go/commit/ed63ff2ed044bbdeeaa0578694b88b2bf31d730e))
+* **internal:** detect breaking changes when removing endpoints ([1edc306](https://github.com/G-Core/gcore-go/commit/1edc306a797456fb7876952b707389fc64dea91b))
+* **internal:** update comment in script ([19e7f4a](https://github.com/G-Core/gcore-go/commit/19e7f4ae96857b9c7cd08f82386fa548533ad6f6))
+* update @stainless-api/prism-cli to v5.15.0 ([ec528d1](https://github.com/G-Core/gcore-go/commit/ec528d179d42becbf3f0f576a7f0d6f0e265fc6a))
+
+## 0.10.0 (2025-08-07)
+
+Full Changelog: [v0.9.0...v0.10.0](https://github.com/G-Core/gcore-go/compare/v0.9.0...v0.10.0)
+
+### ⚠ BREAKING CHANGES
+
+* **security:** rename bgp_announces change() to toggle()
+* **waap:** refactor WAAP models
+
+### Features
+
+* add example snippet to invite user and assign cloud role ([9edcaf7](https://github.com/G-Core/gcore-go/commit/9edcaf786326f751b73a63dee517a0b9e3d467c8))
+* **api:** aggregated API specs update ([1c847a5](https://github.com/G-Core/gcore-go/commit/1c847a5c4ea9b9b2748e7e466e0a2f5db96dc6ad))
+* **api:** aggregated API specs update ([659c741](https://github.com/G-Core/gcore-go/commit/659c741a78d9c94714e87142edbacedc814280cb))
+* **client:** support optional json html escaping ([7917576](https://github.com/G-Core/gcore-go/commit/7917576809148638a6d82eaae5c7ecf1f0d087a5))
+
+
+### Bug Fixes
+
+* **security:** rename bgp_announces change() to toggle() ([561648c](https://github.com/G-Core/gcore-go/commit/561648c57050f4136d19dee618e13f5c8fa2f14c))
+
+
+### Refactors
+
+* **waap:** refactor WAAP models ([b07cb4f](https://github.com/G-Core/gcore-go/commit/b07cb4f0daa4e01306fa09d0df34ef97a8bca798))
+
+## 0.9.0 (2025-07-31)
+
+Full Changelog: [v0.8.0...v0.9.0](https://github.com/G-Core/gcore-go/compare/v0.8.0...v0.9.0)
+
+### Features
+
+* **api:** aggregated API specs update ([3599a2a](https://github.com/G-Core/gcore-go/commit/3599a2ab610a6aedb498b0427b877410caf35132))
+* **api:** aggregated API specs update ([763343d](https://github.com/G-Core/gcore-go/commit/763343d73c3cc14cf923c5c4a58a530442c31fa3))
+* **fastedge:** add binaries create method ([7b4ca39](https://github.com/G-Core/gcore-go/commit/7b4ca39e49487aca3dc3a222a9309309c1602f47))
+* **security:** add security api ([f5d1461](https://github.com/G-Core/gcore-go/commit/f5d146115fb04f3d0a4a20c41ecf91be5f4c18a4))
+
+## 0.8.0 (2025-07-29)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/G-Core/gcore-go/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* **api:** aggregated API specs update ([4f640ce](https://github.com/G-Core/gcore-go/commit/4f640ce257ee8738bfbaf3a9c92da307842b4d28))
+* **api:** aggregated API specs update ([0255eb0](https://github.com/G-Core/gcore-go/commit/0255eb0a2bf68d657f98a914e46898c813198bb6))
+
+
+### Bug Fixes
+
+* **iam:** remove obsolete pagination scheme ([8a20964](https://github.com/G-Core/gcore-go/commit/8a209643372a49fa77cba95b823ea407ae9e9faf))
+* **iam:** user model path ([e11de38](https://github.com/G-Core/gcore-go/commit/e11de38530c01f43186b6313ec2f567aae8505e0))
+
+## 0.7.0 (2025-07-24)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/G-Core/gcore-go/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** aggregated API specs update ([d09df2a](https://github.com/G-Core/gcore-go/commit/d09df2a7a3d988a489f9131e416c16cbaa65231e))
+* **api:** aggregated API specs update ([623ce0a](https://github.com/G-Core/gcore-go/commit/623ce0aff79f0cb17857cac57d3f587ebdfdb7dd))
+* **cloud:** add cost and usage reports ([49f7536](https://github.com/G-Core/gcore-go/commit/49f75366c2af49d806a08262bc4198abc124960f))
+* **streaming:** add streaming api ([eec84c8](https://github.com/G-Core/gcore-go/commit/eec84c865d4c958f61c776ce380348906cf79abd))
+
+
+### Bug Fixes
+
+* **client:** process custom base url ahead of time ([26874df](https://github.com/G-Core/gcore-go/commit/26874df5ef23f2f1d045ac2fbd5c344b5fb3481a))
+* **cloud:** update example of replacing inference registry credential ([943b201](https://github.com/G-Core/gcore-go/commit/943b2016aa713d315696b1663c47876d018040fa))
+
+## 0.6.0 (2025-07-21)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/G-Core/gcore-go/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* **api:** aggregated API specs update ([ec9c7b9](https://github.com/G-Core/gcore-go/commit/ec9c7b948b6fb3936525be03bf895274a5ed24fc))
+* **api:** aggregated API specs update ([56dd867](https://github.com/G-Core/gcore-go/commit/56dd867a75bb81a68715556bb7bb1dfc5c703b9f))
+* **cloud:** add audit logs ([31eb179](https://github.com/G-Core/gcore-go/commit/31eb17931efa44e0920a8eed7cac78a304438d03))
+* **cloud:** add baremetal examples ([e876469](https://github.com/G-Core/gcore-go/commit/e876469cdfe033042ca684d694d4adaf72f08ea2))
+* **cloud:** add inference api_keys subresource ([d025d80](https://github.com/G-Core/gcore-go/commit/d025d8027028069e55d91a552719bc17f9caa0f6))
+
+
+### Bug Fixes
+
+* **cloud:** make name optional in file share update example ([c8f03a8](https://github.com/G-Core/gcore-go/commit/c8f03a8552f417d6dda76f2ade6cb22b22887bad))
+
+## 0.5.0 (2025-07-14)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/G-Core/gcore-go/compare/v0.4.0...v0.5.0)
+
+### ⚠ BREAKING CHANGES
+
+* **cloud:** remove deprecated secrets NewAndPoll method
+* **cloud:** refactor cloud inference models
+
+### Features
+
+* **api:** aggregated API specs update ([8e885ea](https://github.com/G-Core/gcore-go/commit/8e885ea585de4a91f4d5057d34d9e7852db233c4))
+* **api:** aggregated API specs update ([93b112d](https://github.com/G-Core/gcore-go/commit/93b112d32a6b39130d3b091e12c4874ee72a1767))
+* **api:** manual updates ([4ca75cc](https://github.com/G-Core/gcore-go/commit/4ca75cc27e04576fc4e9e369895c66a3122e64dd))
+* **api:** manual upload of aggregated API specs ([7193379](https://github.com/G-Core/gcore-go/commit/7193379c170faf959cd54afc8528f6b1befad16c))
+* **cloud:** add inference examples ([cdb2685](https://github.com/G-Core/gcore-go/commit/cdb268583ddfab449742b1adaf5cd56faa2ae721))
+* **cloud:** add UploadTlsCertificateAndPoll method for secrets ([4c768f7](https://github.com/G-Core/gcore-go/commit/4c768f78f93ec6fce51031d91869a79bb457fa13))
+* **fastedge:** add api ([b5c6ad4](https://github.com/G-Core/gcore-go/commit/b5c6ad4fd0a3499c2df99f2500e523290ee8ba78))
+
+
+### Bug Fixes
+
+* **cloud:** remove deprecated secrets NewAndPoll method ([e01efb7](https://github.com/G-Core/gcore-go/commit/e01efb726742a2bd99bd988d351de4b9f5860613))
+
+
+### Chores
+
+* **internal:** fix lint script for tests ([558c5da](https://github.com/G-Core/gcore-go/commit/558c5da71b5a1491814fc96a4999bc11d77a8d2a))
+* lint tests ([a496baf](https://github.com/G-Core/gcore-go/commit/a496baf9678f5075048f319aa6736bbfeff0ee00))
+* lint tests in subpackages ([1f71f43](https://github.com/G-Core/gcore-go/commit/1f71f434a3e048e47204d7548d745ddfe6363c45))
+
+
+### Refactors
+
+* **cloud:** refactor cloud inference models ([ab17e97](https://github.com/G-Core/gcore-go/commit/ab17e97c7e6fc3d72f487ddc83bcd52cf3c8a3d4))
+
+## 0.4.0 (2025-07-04)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/G-Core/gcore-go/compare/v0.3.0...v0.4.0)
+
+### ⚠ BREAKING CHANGES
+
+* **cloud:** remove list suitable from bm flavors
+* remove list suitable and list for resize from instance flavors
+
+### Features
+
+* **api:** aggregated API specs update ([1e48d08](https://github.com/G-Core/gcore-go/commit/1e48d0817df211333522b45adba4a7db08ef5a14))
+* **api:** aggregated API specs update ([6d3c18b](https://github.com/G-Core/gcore-go/commit/6d3c18b6b6d3d8bac27d9d2820233ef5bcfdad4c))
+* **api:** aggregated API specs update ([f3a4e7b](https://github.com/G-Core/gcore-go/commit/f3a4e7bf1229e5924a6f4b0d31c8e8a7f7685a12))
+* **api:** aggregated API specs update ([f91a4ef](https://github.com/G-Core/gcore-go/commit/f91a4ef15c3ff5143c5e1d8bc251f8491c826bb8))
+* **api:** aggregated API specs update ([2546f6a](https://github.com/G-Core/gcore-go/commit/2546f6a5c3526783421aa65ddf5755411413f700))
+* **api:** aggregated API specs update ([4b00db0](https://github.com/G-Core/gcore-go/commit/4b00db038beb3b1458912dcb8fb1c71054b3a80e))
+* **client:** add escape hatch for null slice & maps ([a7eddc2](https://github.com/G-Core/gcore-go/commit/a7eddc28b2a70062147e288cd401e1a898856aab))
+* **iam:** add IAM ([6257c1a](https://github.com/G-Core/gcore-go/commit/6257c1aa14437102e1662767c2ff2ce11a7a9475))
+
+
+### Bug Fixes
+
+* **cloud:** fix type in volume example ([c1a6818](https://github.com/G-Core/gcore-go/commit/c1a6818d94672ec1fa782131735f32da2862ed16))
+* **cloud:** name is optional in update network ([a421627](https://github.com/G-Core/gcore-go/commit/a421627ad863d4abb176a8789dd6e83cb15db7d0))
+* don't try to deserialize as json when ResponseBodyInto is []byte ([4183a08](https://github.com/G-Core/gcore-go/commit/4183a0838d99fbac53ad045a84c67dad832c9d5b))
+* **pagination:** check if page data is empty in GetNextPage ([832e6f7](https://github.com/G-Core/gcore-go/commit/832e6f7c6173737adf43bc14877fcc3d014bc169))
+* **waap:** remove duplicate method for acct overview ([ed1a8fe](https://github.com/G-Core/gcore-go/commit/ed1a8fe6fca7fdb2bf8225f0ca94ea896fbc0a1c))
+
+
+### Chores
+
+* **ci:** only run for pushes and fork pull requests ([4780623](https://github.com/G-Core/gcore-go/commit/478062347a5b54288f75082d31d065fea17f0673))
+* **cloud:** use port id env in floating ip example ([#82](https://github.com/G-Core/gcore-go/issues/82)) ([2a3b963](https://github.com/G-Core/gcore-go/commit/2a3b96346d65905d4762ac61fb61c01aab524cf6))
+* fix documentation of null map ([2911457](https://github.com/G-Core/gcore-go/commit/2911457a6b6b42cacc74b7dc096f0f8aa36fa784))
+* **internal:** updates ([ba988ac](https://github.com/G-Core/gcore-go/commit/ba988ac5c0e5b7b4621c0e6a18926664a98ee52e))
+
+
+### Refactors
+
+* **cloud:** remove list suitable from bm flavors ([3869a14](https://github.com/G-Core/gcore-go/commit/3869a143a6ffd36745832116dbf22a7db3e5955a))
+* remove list suitable and list for resize from instance flavors ([ab849fa](https://github.com/G-Core/gcore-go/commit/ab849fa81e81af3d2ee844cfbfd08a28ccd50a15))
+* remove list suitable flavors from examples ([c6e0213](https://github.com/G-Core/gcore-go/commit/c6e021361a919d163480688efb63961994b2d789))
+
+## 0.3.0 (2025-06-17)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/G-Core/gcore-go/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** aggregated API specs update ([c6e1502](https://github.com/G-Core/gcore-go/commit/c6e1502b417c5903d9e8c3e919267501eab56a8a))
+* **api:** aggregated API specs update ([bc5dd64](https://github.com/G-Core/gcore-go/commit/bc5dd6460a07248d5661fc41aa8b5e7cb6161aaa))
+* **api:** manual upload of aggregated API specs ([2ee8aeb](https://github.com/G-Core/gcore-go/commit/2ee8aebe900d1481d0a0feba573e803a532b8355))
+* **api:** manual upload of aggregated API specs ([5ba0d9c](https://github.com/G-Core/gcore-go/commit/5ba0d9c30393d03c3b7e5ff4ae5861a77b257064))
+* **client:** add debug log helper ([a0fb055](https://github.com/G-Core/gcore-go/commit/a0fb05502ff9ee51a2afb19d1f09622de361cb33))
+* **client:** allow overriding unions ([3f5ba85](https://github.com/G-Core/gcore-go/commit/3f5ba8548708290885441fe4cd211055692ba340))
+* **cloud,ssh_keys:** pass envs for SSH key examples ([#69](https://github.com/G-Core/gcore-go/issues/69)) ([04f9c92](https://github.com/G-Core/gcore-go/commit/04f9c921bac748ddd0955c88c7e22a57715c47ba))
+* **cloud:** add file share access rules examples ([2c6c7c1](https://github.com/G-Core/gcore-go/commit/2c6c7c1aa66583a28f380a1a4c124c940a8f0d42))
+* **cloud:** add file shares examples ([#60](https://github.com/G-Core/gcore-go/issues/60)) ([7c0534b](https://github.com/G-Core/gcore-go/commit/7c0534b2843926fcf5661d01c04cc40871aef780))
+* **cloud:** add floating IPs example ([#67](https://github.com/G-Core/gcore-go/issues/67)) ([dda87a6](https://github.com/G-Core/gcore-go/commit/dda87a6dce05ed91dd882473ca8084a671efb76c))
+* **cloud:** add images examples ([#61](https://github.com/G-Core/gcore-go/issues/61)) ([adc3dce](https://github.com/G-Core/gcore-go/commit/adc3dcef99d59c575246bde2ad3cf94a34c71174))
+* **cloud:** add instances examples ([99a2e89](https://github.com/G-Core/gcore-go/commit/99a2e89c6eaa2b81d6b5a42dfc24432d89cc24cd))
+* **cloud:** add loadbalancers examples ([9e55398](https://github.com/G-Core/gcore-go/commit/9e553989c28f3a137b4b13bff717926535b19edf))
+* **cloud:** add networks and subnets examples ([7db4151](https://github.com/G-Core/gcore-go/commit/7db4151c459231048e09e9fcb08e26a4e914921e))
+* **cloud:** add quotas examples ([#57](https://github.com/G-Core/gcore-go/issues/57)) ([d038e72](https://github.com/G-Core/gcore-go/commit/d038e72a2642d58c73322ef0fce7ffef27d606a4))
+* **cloud:** add volumes examples ([#51](https://github.com/G-Core/gcore-go/issues/51)) ([fa4f0b0](https://github.com/G-Core/gcore-go/commit/fa4f0b04d3313c89f9a0a754ef9883123d24a8e1))
+* **cloud:** implement routers examples ([#56](https://github.com/G-Core/gcore-go/issues/56)) ([74bec88](https://github.com/G-Core/gcore-go/commit/74bec8827e7af08bdbaa0de3669f13aa10263203))
+* **cloud:** move all network examples into 1 dir ([af8160b](https://github.com/G-Core/gcore-go/commit/af8160bddab7fa7b3ff36aa66e0058e4957cfabb))
+* **cloud:** rename network examples dir ([52940c6](https://github.com/G-Core/gcore-go/commit/52940c665ea0ef1d4663d4357ed70b9980663e12))
+* **cloud:** rename tag in floating ips example ([#73](https://github.com/G-Core/gcore-go/issues/73)) ([c448846](https://github.com/G-Core/gcore-go/commit/c448846691fa4037e61a0bba9d6b2df0974e1e40))
+* **cloud:** unify naming in examples ([#75](https://github.com/G-Core/gcore-go/issues/75)) ([0b7eb27](https://github.com/G-Core/gcore-go/commit/0b7eb271c2f5338352c59ddc25397a3342e1a391))
+* **cloud:** use *AndPoll methods in images examples ([#74](https://github.com/G-Core/gcore-go/issues/74)) ([5a863ce](https://github.com/G-Core/gcore-go/commit/5a863ce75d42b38b006e5099562252828b920e61))
+* **reserved_ips:** adapt examples for reserved fixed IPs ([#66](https://github.com/G-Core/gcore-go/issues/66)) ([239e47c](https://github.com/G-Core/gcore-go/commit/239e47cb4cdf5e9c172bd874f3da29fbca84edee))
+* **security_groups:** implement security groups example ([#68](https://github.com/G-Core/gcore-go/issues/68)) ([245fad4](https://github.com/G-Core/gcore-go/commit/245fad46bdfb7aa9ecd92d12acb81e780b45f464))
+* **waap:** add domain analytics, api_paths, insights and insight_silences; and ip_info ([2d8985f](https://github.com/G-Core/gcore-go/commit/2d8985fe47e02e8a6384f4064b78ea79d04b425a))
+* **waap:** add domain custom, firewall and advanced rules; custom page sets, advanced rules and tags ([94727ea](https://github.com/G-Core/gcore-go/commit/94727ea439330ba09de47b4c226e15a692dc3113))
+
+
+### Bug Fixes
+
+* **client:** cast to raw message when converting to params ([e4b7ca1](https://github.com/G-Core/gcore-go/commit/e4b7ca1dc57ca9f24b8628a773e9588120897a6a))
+* **cloud:** fix GCORE_BASE_URL env name in examples ([7ffed44](https://github.com/G-Core/gcore-go/commit/7ffed440d1afb7aaf50975e4b6616292f3046504))
+
+
+### Chores
+
+* **change-detection:** filter newly generated files ([f5afaca](https://github.com/G-Core/gcore-go/commit/f5afaca1ad7c39001c5f45e9bf2c7a86f7c13f5e))
+* **ci:** enable for pull requests ([6b54e43](https://github.com/G-Core/gcore-go/commit/6b54e43c57e2660dbc6c42193f09f7f38ef62985))
+* **cloud:** rename example files ([a4bd5bc](https://github.com/G-Core/gcore-go/commit/a4bd5bc009560b05d76a8e9fbe59a17f7ffed668))
+* **cloud:** split examples into multiple files ([824c5ba](https://github.com/G-Core/gcore-go/commit/824c5ba10b20e2ee9fc5b9d179c9f9ce73036b86))
+
+## 0.2.0 (2025-05-31)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/G-Core/gcore-go/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* **api:** aggregated API specs update ([305ca08](https://github.com/G-Core/gcore-go/commit/305ca085feb74b165189478e3db2b698c7a9a7a2))
+* **api:** aggregated API specs update ([2773920](https://github.com/G-Core/gcore-go/commit/277392043efa9455f073245893bdafb63a5cd85a))
+* **api:** aggregated API specs update ([baf23f3](https://github.com/G-Core/gcore-go/commit/baf23f364f20ea963c9c0bc27114c19418142f88))
+* **api:** aggregated API specs update ([6edcefd](https://github.com/G-Core/gcore-go/commit/6edcefd749a376c763b6539ae0ced377de002d9f))
+* **api:** aggregated API specs update ([b0ef96e](https://github.com/G-Core/gcore-go/commit/b0ef96e07096fb42689ec38775f29e9fb530c4c6))
+* **api:** aggregated API specs update ([08a51f0](https://github.com/G-Core/gcore-go/commit/08a51f0af8f09cc2edad98519724f2063489e1df))
+* **baremetal:** add polling methods ([#44](https://github.com/G-Core/gcore-go/issues/44)) ([8ecfae6](https://github.com/G-Core/gcore-go/commit/8ecfae61c990cef04009f147fb189577fdfa68eb))
+* **client:** add support for endpoint-specific base URLs in python ([c4544bf](https://github.com/G-Core/gcore-go/commit/c4544bf5b6de1a6130122c82b86474cabb250ced))
+* **gpu_cloud:** add polling methods ([#48](https://github.com/G-Core/gcore-go/issues/48)) ([29120d3](https://github.com/G-Core/gcore-go/commit/29120d343b3f5aebabeffef18a3af56d1d5bc29f))
+* **inference:** add polling methods ([#47](https://github.com/G-Core/gcore-go/issues/47)) ([701ac2d](https://github.com/G-Core/gcore-go/commit/701ac2dec8b816a472e0557f4081fcafc1c9e107))
+* **loadbalancers:** add polling methods ([#46](https://github.com/G-Core/gcore-go/issues/46)) ([06b83ed](https://github.com/G-Core/gcore-go/commit/06b83ed4db6b0f89bab7e7ba9402969d1884a1d2))
+
+
+### Bug Fixes
+
+* **ci:** do not always skip breaking change detection ([09df252](https://github.com/G-Core/gcore-go/commit/09df252f58c27a46a23edca36e53600976967aba))
+* **client:** correctly set stream key for multipart ([12358b0](https://github.com/G-Core/gcore-go/commit/12358b02ba69ea667aabe16444bf9aba202790cf))
+* **client:** don't panic on marshal with extra null field ([8d58bb5](https://github.com/G-Core/gcore-go/commit/8d58bb5b48c78f21fe33b7eae7d33d2bfabc1d0e))
+* correct unmarshalling of root body params ([14f5785](https://github.com/G-Core/gcore-go/commit/14f57856f77acf5edde9453cdc1e0b572138475a))
+* fix error ([3283861](https://github.com/G-Core/gcore-go/commit/32838616080bacdadd68cb58f38c8f366cefa6cd))
+* **instances,baremetal,loadbalancers,inference,gpu_cloud:** don't fail if nr tasks gt 1 ([ab92204](https://github.com/G-Core/gcore-go/commit/ab9220404ac62b430b603adc7689356f75a8df4e))
+
+
+### Chores
+
+* **api:** mark some methods as deprecated ([44e481e](https://github.com/G-Core/gcore-go/commit/44e481e0661d563a2c184393af02a9099c4a6ca4))
+* **docs:** grammar improvements ([d620989](https://github.com/G-Core/gcore-go/commit/d62098926b2b66925667a38e24527307d0d700a2))
+* improve devcontainer setup ([327fbee](https://github.com/G-Core/gcore-go/commit/327fbee5d54ceee8cc2a0c7482d397193af95ca6))
+* **internal:** codegen related update ([7eb57b9](https://github.com/G-Core/gcore-go/commit/7eb57b9cb996447db74f75f716f0486b3be75af5))
+* make go mod tidy continue on error ([6312a23](https://github.com/G-Core/gcore-go/commit/6312a23250cdb8ecd2f6e949b880bbfb950adb76))
+
+
+### Refactors
+
+* **instances,secrets,reserved_ips:** harmonize polling methods ([#50](https://github.com/G-Core/gcore-go/issues/50)) ([918660c](https://github.com/G-Core/gcore-go/commit/918660c91fda57cfd3742c7c498aba223a4db2fe))
+* **loadbalancers:** change oas schema names ([a3595c5](https://github.com/G-Core/gcore-go/commit/a3595c50e185b15d3cdda8bc5433b602ec670188))
+* **loadbalancers:** use correct schema for loadbalancer pool ([7bedefc](https://github.com/G-Core/gcore-go/commit/7bedefc237d163e153ad2f0e1246316cff53b4f2))
+
+## 0.1.0 (2025-05-08)
+
+Full Changelog: [v0.1.0-alpha.2...v0.1.0](https://github.com/G-Core/gcore-go/compare/v0.1.0-alpha.2...v0.1.0)
+
+### Features
+
+* **api:** aggregated API specs update ([25ef71e](https://github.com/G-Core/gcore-go/commit/25ef71edc7712eb81350f2bf71d313d4192dcb33))
+* **client:** experimental support for unmarshalling into param structs ([efcbafb](https://github.com/G-Core/gcore-go/commit/efcbafb002002b2b29ac5a8ba4f7f1481893420d))
+
+
+### Bug Fixes
+
+* **client:** clean up reader resources ([6a70d50](https://github.com/G-Core/gcore-go/commit/6a70d5044390fc7e459bda20118657ac5b94d5d6))
+* **client:** correctly update body in WithJSONSet ([f9c6ace](https://github.com/G-Core/gcore-go/commit/f9c6ace9a743446071759c92731e07cc3c4ebbb5))
+* **client:** unmarshal responses properly ([4be7a0c](https://github.com/G-Core/gcore-go/commit/4be7a0c66414b11a645f6f1660a58090bed5c0d3))
+
+## 0.1.0-alpha.2 (2025-05-06)
+
+Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/G-Core/gcore-go/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
+
+### Documentation
+
+* update links ([f0389fc](https://github.com/G-Core/gcore-go/commit/f0389fcb22dde17bc38373d51cd0a01c618f0814))
+
+## 0.1.0-alpha.1 (2025-05-06)
+
+Full Changelog: [v0.0.1-alpha.0...v0.1.0-alpha.1](https://github.com/G-Core/gcore-go/compare/v0.0.1-alpha.0...v0.1.0-alpha.1)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** rename resp package
+* **client:** improve core function names
+* **client:** better method root unions
+* **client:** improve param subunions & deduplicate types
+
+### Features
+
+* **api:** add nested_params readme example ([878507f](https://github.com/G-Core/gcore-go/commit/878507f35f70fbc247d2fd7529ed1925b2f403d4))
+* **api:** aggregated API specs update ([8a3c701](https://github.com/G-Core/gcore-go/commit/8a3c701e184a544db2408f3656e3e3bfe80449ab))
+* **api:** aggregated API specs update ([016497c](https://github.com/G-Core/gcore-go/commit/016497c30b981d9e084cd8e0cc6d4f3fcb571133))
+* **api:** aggregated API specs update ([36425c2](https://github.com/G-Core/gcore-go/commit/36425c23f26b71cf768b0d7abe0636cd7d2fab20))
+* **api:** aggregated API specs update ([adf5ad9](https://github.com/G-Core/gcore-go/commit/adf5ad940c01bf7fc92ce70754eeea68145d83b3))
+* **api:** aggregated API specs update ([e5c21e7](https://github.com/G-Core/gcore-go/commit/e5c21e7e341f04a07b3486ae8db7bed77c6deac4))
+* **api:** aggregated API specs update ([30868dc](https://github.com/G-Core/gcore-go/commit/30868dc26d267ed5f8efda527dee35e2539aea14))
+* **api:** aggregated API specs update ([947e8dd](https://github.com/G-Core/gcore-go/commit/947e8dd7597a763e396f44e31d8f47ccfbbad394))
+* **api:** aggregated API specs update ([e1e05fc](https://github.com/G-Core/gcore-go/commit/e1e05fc01c88288b3e42b507d87bf8bce8368602))
+* **api:** aggregated API specs update ([e6aeb64](https://github.com/G-Core/gcore-go/commit/e6aeb644d4a854a3dfb693f00052758715113390))
+* **api:** aggregated API specs update ([703d896](https://github.com/G-Core/gcore-go/commit/703d896562734edf40afdb512acfbfa10dd0ead2))
+* **api:** aggregated API specs update ([92672fe](https://github.com/G-Core/gcore-go/commit/92672fe282e8c6056e9653787be578927d6d686f))
+* **api:** aggregated API specs update ([ffd390e](https://github.com/G-Core/gcore-go/commit/ffd390e842968b159faa524ab15835f11638046b))
+* **api:** aggregated API specs update ([fd27c71](https://github.com/G-Core/gcore-go/commit/fd27c71e29acf3f07f0a59e9bdf777b568f8f8dc))
+* **api:** aggregated API specs update ([3b44923](https://github.com/G-Core/gcore-go/commit/3b44923c0ecb13c9b95e407a6375db50026d8791))
+* **api:** cloud and projects as standalone apis ([1c0809e](https://github.com/G-Core/gcore-go/commit/1c0809e940bdb3a6bb00f99b4dada861da1b61e4))
+* **api:** Config update for algis-dumbris/cloud-quotas ([3930e04](https://github.com/G-Core/gcore-go/commit/3930e04b8b80cea1ead5458a6e36b9b77fd11167))
+* **api:** manual updates ([5796ff2](https://github.com/G-Core/gcore-go/commit/5796ff2a6bf30e3a7325f3a3af045fa8ebdfb43b))
+* **api:** manual updates ([7e746ef](https://github.com/G-Core/gcore-go/commit/7e746ef733032ede1b1846da7997c87f49ccbeed))
+* **api:** manual updates ([f9e5ca1](https://github.com/G-Core/gcore-go/commit/f9e5ca1202f3c8e8178b472668a7bc5ffd8277a5))
+* **api:** manual updates ([f48fb2f](https://github.com/G-Core/gcore-go/commit/f48fb2ffedb86a7da740e92fde370c545bc3eccc))
+* **api:** manual updates ([1d93144](https://github.com/G-Core/gcore-go/commit/1d93144c59fd492f7c992c6ca03749b24c559567))
+* **api:** manual updates ([90a0cbc](https://github.com/G-Core/gcore-go/commit/90a0cbc484eb7a5bf91fd63f6b09cfd914217cf5))
+* **api:** manual updates ([8a916ba](https://github.com/G-Core/gcore-go/commit/8a916ba238944feade9ad4a815ed9f4904e58519))
+* **api:** manual upload of aggregated API specs ([c7badf3](https://github.com/G-Core/gcore-go/commit/c7badf30801c408727d2bdc72e2fd8b26460997e))
+* **api:** remove duplicates ([63f3f37](https://github.com/G-Core/gcore-go/commit/63f3f376ca81ab3831ec6322e98258e36e000ec4))
+* **api:** remove quotas ([b1458a3](https://github.com/G-Core/gcore-go/commit/b1458a34db79da01062df79685baec52d061fd32))
+* **api:** rename regions.retrieve() to rregions.get() ([a89247f](https://github.com/G-Core/gcore-go/commit/a89247f9ae0cb76e9e745bdd382be6b48ce8e945))
+* **api:** simplify env vars ([dde81ad](https://github.com/G-Core/gcore-go/commit/dde81ad4d73c33259de4fc4900250a57b0db2a22))
+* **api:** trigger codegen ([0ec3a6a](https://github.com/G-Core/gcore-go/commit/0ec3a6aa503e597bd567ebfe265374eaa322aab2))
+* changes for loadbalancers-renaming ([623bee0](https://github.com/G-Core/gcore-go/commit/623bee0f1f0b799141ca55cb4a53a1e2ddaa454c))
+* **client:** add escape hatch to omit required param fields ([6fca194](https://github.com/G-Core/gcore-go/commit/6fca194f5a18becad17443cc53f529b428fa4baf))
+* **client:** add helper method to generate constant structs ([c035982](https://github.com/G-Core/gcore-go/commit/c0359824ee549004889d9b979306f3c51258c5e9))
+* **client:** add support for reading base URL from environment variable ([59f386d](https://github.com/G-Core/gcore-go/commit/59f386d07dbebae8fa887a9cba9336d520a01c05))
+* **client:** better method root unions ([77086ad](https://github.com/G-Core/gcore-go/commit/77086ad2de51a6442678df6990b859800f0dc05d))
+* **client:** improve param subunions & deduplicate types ([c7b77f5](https://github.com/G-Core/gcore-go/commit/c7b77f5d457ccdf151ba22a7b33d1c3c0d4ddd28))
+* **client:** rename resp package ([4a60dcf](https://github.com/G-Core/gcore-go/commit/4a60dcf2255f3ff85fefdaefc69366aa5319dd3d))
+* **client:** support custom http clients ([368158e](https://github.com/G-Core/gcore-go/commit/368158ee2d4009b519f0208329eb342ced9f2b01))
+* **client:** support more time formats ([2b0fb7d](https://github.com/G-Core/gcore-go/commit/2b0fb7d5992908e528868e563939080156bb96d7))
+* **client:** support unions in query and forms ([8de2d1f](https://github.com/G-Core/gcore-go/commit/8de2d1f87ab5c39a01545e4148769bd1cae85378))
+* **instances:** add polling methods ([#40](https://github.com/G-Core/gcore-go/issues/40)) ([a7f5912](https://github.com/G-Core/gcore-go/commit/a7f5912b09349784a3ab610862d9fa809befd3ae))
+* **ipranges:** add examples ([#13](https://github.com/G-Core/gcore-go/issues/13)) ([8d75e9e](https://github.com/G-Core/gcore-go/commit/8d75e9e9e4a836958caa661e39a9c146fb17a8c3))
+* **oas:** update to v14.150.0 ([a17fdda](https://github.com/G-Core/gcore-go/commit/a17fdda4b0544f5f12068f79f6edf0091c613ef9))
+* **opts:** polling interval in secs ([2ee7b70](https://github.com/G-Core/gcore-go/commit/2ee7b7025009b8247b83f979608f6956ea22ebe6))
+* **projects:** add examples ([#1](https://github.com/G-Core/gcore-go/issues/1)) ([2caa4e1](https://github.com/G-Core/gcore-go/commit/2caa4e17f0f173f2a7ccdbffd02f9c1d8ef7d377))
+* **regions:** move regions examples ([#14](https://github.com/G-Core/gcore-go/issues/14)) ([e1e153d](https://github.com/G-Core/gcore-go/commit/e1e153da2561d56011597a0ef6b424b753787db5))
+* **reserved_fixed_ips:** add NewAndPoll and examples ([#20](https://github.com/G-Core/gcore-go/issues/20)) ([68d35cb](https://github.com/G-Core/gcore-go/commit/68d35cbf93083eda1e032786ac25ffb5bdb67928))
+* **secrets:** add NewAndPoll method ([#10](https://github.com/G-Core/gcore-go/issues/10)) ([b2fd175](https://github.com/G-Core/gcore-go/commit/b2fd175922fc67fcf0265858cbaba94c1bd1c271))
+* **ssh_keys:** add examples ([#11](https://github.com/G-Core/gcore-go/issues/11)) ([188ba48](https://github.com/G-Core/gcore-go/commit/188ba482fbf15a3c85115a34ac3709c25a19653d))
+* **tasks:** add Poll method ([#7](https://github.com/G-Core/gcore-go/issues/7)) ([a340e49](https://github.com/G-Core/gcore-go/commit/a340e49122606a0f7f87cf93dc630a56eb4d4fa8))
+* **tasks:** make polling interval in secs ([#39](https://github.com/G-Core/gcore-go/issues/39)) ([2af355c](https://github.com/G-Core/gcore-go/commit/2af355c5b6da276bfe0becf1ed6df22efb608781))
+
+
+### Bug Fixes
+
+* **client:** custom code after opt rename ([#42](https://github.com/G-Core/gcore-go/issues/42)) ([91653b9](https://github.com/G-Core/gcore-go/commit/91653b94020111a7794a91dd5699024998e237b9))
+* **client:** improve core function names ([894a36a](https://github.com/G-Core/gcore-go/commit/894a36a83fa39d15fda4079467967e52108dea68))
+* **client:** improve docs ([276e21f](https://github.com/G-Core/gcore-go/commit/276e21f311ce902cadee07185aca28963c943ad4))
+* **client:** renamed client opts ([88b66f9](https://github.com/G-Core/gcore-go/commit/88b66f9d35e9843ead00c0cdc22b723fc9d83793))
+* **client:** resolve issue with optional multipart files ([627f832](https://github.com/G-Core/gcore-go/commit/627f83288e44c072289eb612d1db230d9bea2efc))
+* **client:** time format encoding fix ([bf6ba85](https://github.com/G-Core/gcore-go/commit/bf6ba852dfb91a86d01fabe56240bc5f5b78f808))
+* **cloud:** move and/or rename models ([2c247bf](https://github.com/G-Core/gcore-go/commit/2c247bfdc61cd4ee247f549c3da06507a9f3bf22))
+* **cloud:** remove workaround ([bac0f24](https://github.com/G-Core/gcore-go/commit/bac0f24fd117cfadf3dd35b0c9e4e0803339f389))
+* **examples:** adapt to breaking changes on root unions ([#34](https://github.com/G-Core/gcore-go/issues/34)) ([ace8d9e](https://github.com/G-Core/gcore-go/commit/ace8d9ece37e4202f7271832970bc63de8f6f9ab))
+* **examples:** correct environment variable name for region ID and add task management example ([#36](https://github.com/G-Core/gcore-go/issues/36)) ([b4d5fb2](https://github.com/G-Core/gcore-go/commit/b4d5fb2fd12d9eb0654ff6542b4379a4f6548308))
+* **examples:** update environment variable references for region ID and add task management example ([0c8820c](https://github.com/G-Core/gcore-go/commit/0c8820c453eed42876f5f736e3c1a85d3b21aee0))
+* **floating_ips:** workaround ([c10823c](https://github.com/G-Core/gcore-go/commit/c10823c7a2114e1020003f6e1458f7030a375699))
+* handle empty bodies in WithJSONSet ([9d4b1ed](https://github.com/G-Core/gcore-go/commit/9d4b1eda800f559c4fce4fffaaaaceb82a319d5d))
+* **opts:** fix custom code after opts rename ([#31](https://github.com/G-Core/gcore-go/issues/31)) ([87edd17](https://github.com/G-Core/gcore-go/commit/87edd176bec1eb7dad1f2ad59bca4d008061a45d))
+* **pagination:** handle errors when applying options ([335f127](https://github.com/G-Core/gcore-go/commit/335f12732a478c08a5ab0e8c3d267f780868cca2))
+* **secrets:** validation on created resources ([#19](https://github.com/G-Core/gcore-go/issues/19)) ([fda9520](https://github.com/G-Core/gcore-go/commit/fda9520a869d505b8798d55a3080323c611b9bd7))
+
+
+### Chores
+
+* **ci:** add timeout thresholds for CI jobs ([b44aaf3](https://github.com/G-Core/gcore-go/commit/b44aaf373269ef194777330af36088183af340e5))
+* **ci:** fix formatting for debug mode ([d155849](https://github.com/G-Core/gcore-go/commit/d155849935cf4c54c3e1ca68a5c97dc857443afd))
+* **ci:** only use depot for staging repos ([99ad139](https://github.com/G-Core/gcore-go/commit/99ad13975e96e5eec072d189fd58e5ea104524d2))
+* **docs:** doc improvements ([0d2424f](https://github.com/G-Core/gcore-go/commit/0d2424ff07e91f69aab325218bf97a29bba914be))
+* **docs:** document pre-request options ([b8f54dc](https://github.com/G-Core/gcore-go/commit/b8f54dc89b331d134acde224eaac5b88eee3af62))
+* **docs:** readme improvements ([eb5de32](https://github.com/G-Core/gcore-go/commit/eb5de326ca12ce76331e364b8781c593efb6d804))
+* **docs:** update respjson package name ([9e3c117](https://github.com/G-Core/gcore-go/commit/9e3c117bbfee29be2f27e8b968b2efb4fd60d450))
+* **internal:** codegen related update ([cf8cfac](https://github.com/G-Core/gcore-go/commit/cf8cfac3a4e653556ef272f02d2379309dc47a84))
+* **internal:** expand CI branch coverage ([68f8aca](https://github.com/G-Core/gcore-go/commit/68f8aca3e44ecd041cbd0ec60966a3fc1df2b6c9))
+* **internal:** reduce CI branch coverage ([c0fa359](https://github.com/G-Core/gcore-go/commit/c0fa35997a920d2c3f6b0a063d921fc367a2a793))
+* **readme:** improve formatting ([4a0cb95](https://github.com/G-Core/gcore-go/commit/4a0cb956b84eefd5deef28e5a9a7706333fafd55))
+* **tests:** improve enum examples ([bbfb3f3](https://github.com/G-Core/gcore-go/commit/bbfb3f3fba04026af90463a274f80eeca3a74997))
+* update SDK settings ([311a915](https://github.com/G-Core/gcore-go/commit/311a915c45d60825490959237a9555c93975f036))
+* update SDK settings ([e6f71ec](https://github.com/G-Core/gcore-go/commit/e6f71ecdc24f13b80087ed60275aef92466bc202))
+* **utils:** add internal resp to param utility ([a2f0b87](https://github.com/G-Core/gcore-go/commit/a2f0b873458092537728b91e4d9bb1da9dad6011))
+
+
+### Documentation
+
+* update documentation links to be more uniform ([a1b4e08](https://github.com/G-Core/gcore-go/commit/a1b4e08a46d2b38684bb0e19470b468df379304e))

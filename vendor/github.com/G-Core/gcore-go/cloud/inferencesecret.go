@@ -1,0 +1,307 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+package cloud
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"net/http"
+	"net/url"
+	"slices"
+
+	"github.com/G-Core/gcore-go/internal/apijson"
+	"github.com/G-Core/gcore-go/internal/apiquery"
+	"github.com/G-Core/gcore-go/internal/requestconfig"
+	"github.com/G-Core/gcore-go/option"
+	"github.com/G-Core/gcore-go/packages/pagination"
+	"github.com/G-Core/gcore-go/packages/param"
+	"github.com/G-Core/gcore-go/packages/respjson"
+)
+
+// Inference secrets store sensitive values such as AWS credentials used for
+// SQS-based autoscaling triggers in deployments.
+//
+// InferenceSecretService contains methods and other services that help with
+// interacting with the gcore API.
+//
+// Note, unlike clients, this service does not read variables from the environment
+// automatically. You should not instantiate this service directly, and instead use
+// the [NewInferenceSecretService] method instead.
+type InferenceSecretService struct {
+	Options []option.RequestOption
+}
+
+// NewInferenceSecretService generates a new service that applies the given options
+// to each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
+func NewInferenceSecretService(opts ...option.RequestOption) (r InferenceSecretService) {
+	r = InferenceSecretService{}
+	r.Options = opts
+	return
+}
+
+// Create inference secret
+func (r *InferenceSecretService) New(ctx context.Context, params InferenceSecretNewParams, opts ...option.RequestOption) (res *InferenceSecret, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&params.ProjectID, precfg.CloudProjectID)
+	if !params.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v3/inference/%v/secrets", params.ProjectID.Value)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
+	return res, err
+}
+
+// List inference secrets
+func (r *InferenceSecretService) List(ctx context.Context, params InferenceSecretListParams, opts ...option.RequestOption) (res *pagination.OffsetPage[InferenceSecret], err error) {
+	var raw *http.Response
+	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&params.ProjectID, precfg.CloudProjectID)
+	if !params.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v3/inference/%v/secrets", params.ProjectID.Value)
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, params, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List inference secrets
+func (r *InferenceSecretService) ListAutoPaging(ctx context.Context, params InferenceSecretListParams, opts ...option.RequestOption) *pagination.OffsetPageAutoPager[InferenceSecret] {
+	return pagination.NewOffsetPageAutoPager(r.List(ctx, params, opts...))
+}
+
+// Delete Inference Secret
+func (r *InferenceSecretService) Delete(ctx context.Context, secretName string, body InferenceSecretDeleteParams, opts ...option.RequestOption) (err error) {
+	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return err
+	}
+	requestconfig.UseDefaultParam(&body.ProjectID, precfg.CloudProjectID)
+	if !body.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return err
+	}
+	if secretName == "" {
+		err = errors.New("missing required secret_name parameter")
+		return err
+	}
+	path := fmt.Sprintf("cloud/v3/inference/%v/secrets/%s", body.ProjectID.Value, secretName)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, nil, opts...)
+	return err
+}
+
+// Get inference secret
+func (r *InferenceSecretService) Get(ctx context.Context, secretName string, query InferenceSecretGetParams, opts ...option.RequestOption) (res *InferenceSecret, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&query.ProjectID, precfg.CloudProjectID)
+	if !query.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if secretName == "" {
+		err = errors.New("missing required secret_name parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v3/inference/%v/secrets/%s", query.ProjectID.Value, secretName)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	return res, err
+}
+
+// Replace inference secret
+func (r *InferenceSecretService) Replace(ctx context.Context, secretName string, params InferenceSecretReplaceParams, opts ...option.RequestOption) (res *InferenceSecret, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&params.ProjectID, precfg.CloudProjectID)
+	if !params.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if secretName == "" {
+		err = errors.New("missing required secret_name parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v3/inference/%v/secrets/%s", params.ProjectID.Value, secretName)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, params, &res, opts...)
+	return res, err
+}
+
+type InferenceSecret struct {
+	// Secret data.
+	Data InferenceSecretData `json:"data" api:"required"`
+	// Secret name.
+	Name string `json:"name" api:"required"`
+	// Secret type.
+	Type string `json:"type" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Data        respjson.Field
+		Name        respjson.Field
+		Type        respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r InferenceSecret) RawJSON() string { return r.JSON.raw }
+func (r *InferenceSecret) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Secret data.
+type InferenceSecretData struct {
+	// AWS IAM key ID.
+	AwsAccessKeyID string `json:"aws_access_key_id" api:"required"`
+	// AWS IAM secret key.
+	AwsSecretAccessKey string `json:"aws_secret_access_key" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		AwsAccessKeyID     respjson.Field
+		AwsSecretAccessKey respjson.Field
+		ExtraFields        map[string]respjson.Field
+		raw                string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r InferenceSecretData) RawJSON() string { return r.JSON.raw }
+func (r *InferenceSecretData) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type InferenceSecretNewParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Secret data.
+	Data InferenceSecretNewParamsData `json:"data,omitzero" api:"required"`
+	// Secret name.
+	Name string `json:"name" api:"required"`
+	// Secret type. Currently only `aws-iam` is supported.
+	Type string `json:"type" api:"required"`
+	paramObj
+}
+
+func (r InferenceSecretNewParams) MarshalJSON() (data []byte, err error) {
+	type shadow InferenceSecretNewParams
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *InferenceSecretNewParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Secret data.
+//
+// The properties AwsAccessKeyID, AwsSecretAccessKey are required.
+type InferenceSecretNewParamsData struct {
+	// AWS IAM key ID.
+	AwsAccessKeyID string `json:"aws_access_key_id" api:"required"`
+	// AWS IAM secret key.
+	AwsSecretAccessKey string `json:"aws_secret_access_key" api:"required"`
+	paramObj
+}
+
+func (r InferenceSecretNewParamsData) MarshalJSON() (data []byte, err error) {
+	type shadow InferenceSecretNewParamsData
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *InferenceSecretNewParamsData) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type InferenceSecretListParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Optional. Limit the number of returned items
+	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
+	// Optional. Offset value is used to exclude the first set of records from the
+	// result
+	Offset param.Opt[int64] `query:"offset,omitzero" json:"-"`
+	paramObj
+}
+
+// URLQuery serializes [InferenceSecretListParams]'s query parameters as
+// `url.Values`.
+func (r InferenceSecretListParams) URLQuery() (v url.Values, err error) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatRepeat,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type InferenceSecretDeleteParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	paramObj
+}
+
+type InferenceSecretGetParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	paramObj
+}
+
+type InferenceSecretReplaceParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Secret data.
+	Data InferenceSecretReplaceParamsData `json:"data,omitzero" api:"required"`
+	// Secret type.
+	Type string `json:"type" api:"required"`
+	paramObj
+}
+
+func (r InferenceSecretReplaceParams) MarshalJSON() (data []byte, err error) {
+	type shadow InferenceSecretReplaceParams
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *InferenceSecretReplaceParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Secret data.
+//
+// The properties AwsAccessKeyID, AwsSecretAccessKey are required.
+type InferenceSecretReplaceParamsData struct {
+	// AWS IAM key ID.
+	AwsAccessKeyID string `json:"aws_access_key_id" api:"required"`
+	// AWS IAM secret key.
+	AwsSecretAccessKey string `json:"aws_secret_access_key" api:"required"`
+	paramObj
+}
+
+func (r InferenceSecretReplaceParamsData) MarshalJSON() (data []byte, err error) {
+	type shadow InferenceSecretReplaceParamsData
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *InferenceSecretReplaceParamsData) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}

@@ -21,6 +21,10 @@ import (
 	"software.sslmate.com/src/go-pkcs12"
 
 	"github.com/fastnetmon/fastnetmon-go"
+
+	"github.com/G-Core/gcore-go"
+	gcore_option "github.com/G-Core/gcore-go/option"
+	gcore_security "github.com/G-Core/gcore-go/security"
 )
 
 // TODO NB! PLEASE DO NOT TOUCH NAMES OF FIELDS HERE AS IT WILL BREAK CONFIGURATION INTEGRATION WITH FASTNETMON
@@ -370,57 +374,26 @@ func main() {
 			fast_logger.Fatal("Please set gcore_api_token field in configuration")
 		}
 
+		clientGcore := gcore.NewClient(
+			gcore_option.WithAPIKey(conf.Gcore_api_token), // defaults to os.LookupEnv("GCORE_API_KEY")
+		)
+
+		ctxTemplates, cancelTemplates := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancelTemplates()
 		// Special command to get all profile templates for our information
 		if os.Getenv("LIST_PROFILE_TEMPLATES") != "" {
-			apiURL := "https://api.gcore.com/security/iaas/profile-templates"
 
-			client := &http.Client{
-				Timeout: 10 * time.Second,
-			}
-
-			req, err := http.NewRequest("GET", apiURL, nil)
+			//apiURL := "https://api.gcore.com/security/iaas/profile-templates"
+			templates, err := clientGcore.Security.ProfileTemplates.List(ctxTemplates)
 			if err != nil {
-				fast_logger.Printf("Error creating request: %s\n", err)
+				fast_logger.Printf("cannot get templates: %v\n", err)
 				return
 			}
 
-			// Set the Authorization header
-			req.Header.Set("Authorization", "APIKey "+conf.Gcore_api_token)
-			req.Header.Set("Accept", "application/json")
-
-			// Send the request
-			resp, err := client.Do(req)
-			if err != nil {
-				fast_logger.Printf("Error sending request: %s\n", err)
-				return
-			}
-			defer resp.Body.Close() // Ensure the response body is closed
-
-			// Read the response body
-			body, err := io.ReadAll(resp.Body)
-			if err != nil {
-				fast_logger.Printf("Error reading response body: %s\n", err)
-				return
-			}
-
-			if resp.StatusCode != http.StatusOK {
-				fast_logger.Printf("API returned non-200 status: %d %s\n", resp.StatusCode, resp.Status)
-				fast_logger.Printf("Response body: %s\n", body)
-				return
-			}
-
-			var templates []GcoreProfileTemplate
-
-			err = json.Unmarshal(body, &templates)
-
-			if err != nil {
-				log.Fatalf("Error unmarshaling JSON: %s\n", err)
-				return
-			}
-
-			for _, template := range templates {
+			for _, template := range *templates {
 				fmt.Printf("ID: %d, Name: %s, Description: %s, Version: %s\n", template.ID, template.Name, template.Description, template.Version)
 			}
+
 		}
 
 		type AnnounceConfig struct {
@@ -436,46 +409,22 @@ func main() {
 			announceConfig.Enabled = true
 		}
 
-		announceURL := "https://api.gcore.com/security/sifter/v2/protected_addresses/announces"
+		//announceURL := "https://api.gcore.com/security/sifter/v2/protected_addresses/announces"
+		ctxAnnounce, cancelAnnounce := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancelAnnounce()
 
-		client := &http.Client{
-			Timeout: 10 * time.Second,
-		}
-
-		announce_json, err := json.Marshal(announceConfig)
-
+		response, err := clientGcore.Security.BgpAnnounces.Toggle(
+			ctxAnnounce,
+			gcore_security.BgpAnnounceToggleParams{
+				Announce: announceConfig.Announce,
+				Enabled:  announceConfig.Enabled,
+			},
+		)
 		if err != nil {
-			fast_logger.Fatalf("Cannot marshal announce document: %v", err)
-		}
-
-		req, err := http.NewRequest(http.MethodPost, announceURL, bytes.NewReader(announce_json))
-
-		if err != nil {
-			fast_logger.Fatalf("Cannot create POST request: %v", err)
-		}
-
-		// Set the Authorization header
-		req.Header.Set("Authorization", "APIKey "+conf.Gcore_api_token)
-		req.Header.Set("Accept", "application/json")
-
-		// Send the request
-		resp, err := client.Do(req)
-		if err != nil {
-			log.Fatalf("Error sending request: %s\n", err)
-		}
-		defer resp.Body.Close() // Ensure the response body is closed
-
-		// Read the response body
-		body, err := io.ReadAll(resp.Body)
-		if err != nil {
-			fast_logger.Fatalf("Error reading response body: %s\n", err)
-		}
-
-		if resp.StatusCode != http.StatusOK {
-			fast_logger.Printf("API returned non-200 status: %d %s\n", resp.StatusCode, resp.Status)
-			fast_logger.Fatalf("Response body: %s\n", body)
+			fast_logger.Printf("Cannot create announce: %v\n", err)
 			return
 		}
+		fast_logger.Printf("Gcore answer: %+v\n", response)
 
 		fast_logger.Printf("Successfully sent query")
 		// Well, in case of success and when we send same announce as already existent one we will receive code 200 and "null" in response

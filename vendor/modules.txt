@@ -1,3 +1,30 @@
+# github.com/G-Core/gcore-go v0.50.0
+## explicit; go 1.22
+github.com/G-Core/gcore-go
+github.com/G-Core/gcore-go/cdn
+github.com/G-Core/gcore-go/cloud
+github.com/G-Core/gcore-go/dns
+github.com/G-Core/gcore-go/fastedge
+github.com/G-Core/gcore-go/iam
+github.com/G-Core/gcore-go/internal
+github.com/G-Core/gcore-go/internal/apierror
+github.com/G-Core/gcore-go/internal/apiform
+github.com/G-Core/gcore-go/internal/apijson
+github.com/G-Core/gcore-go/internal/apiquery
+github.com/G-Core/gcore-go/internal/encoding/json
+github.com/G-Core/gcore-go/internal/encoding/json/sentinel
+github.com/G-Core/gcore-go/internal/encoding/json/shims
+github.com/G-Core/gcore-go/internal/polling
+github.com/G-Core/gcore-go/internal/requestconfig
+github.com/G-Core/gcore-go/option
+github.com/G-Core/gcore-go/packages/pagination
+github.com/G-Core/gcore-go/packages/param
+github.com/G-Core/gcore-go/packages/respjson
+github.com/G-Core/gcore-go/security
+github.com/G-Core/gcore-go/shared/constant
+github.com/G-Core/gcore-go/storage
+github.com/G-Core/gcore-go/streaming
+github.com/G-Core/gcore-go/waap
 # github.com/cloudflare/cloudflare-go v0.54.0
 ## explicit; go 1.17
 github.com/cloudflare/cloudflare-go
@@ -16,8 +43,20 @@ github.com/hashicorp/go-retryablehttp
 # github.com/levigross/grequests v0.0.0-20190908174114-253788527a1a
 ## explicit
 github.com/levigross/grequests
-# golang.org/x/crypto v0.35.0
+# github.com/tidwall/gjson v1.19.0
 ## explicit; go 1.23
+github.com/tidwall/gjson
+# github.com/tidwall/match v1.2.0
+## explicit; go 1.15
+github.com/tidwall/match
+# github.com/tidwall/pretty v1.2.1
+## explicit; go 1.16
+github.com/tidwall/pretty
+# github.com/tidwall/sjson v1.2.5
+## explicit; go 1.14
+github.com/tidwall/sjson
+# golang.org/x/crypto v0.35.0
+## explicit; go 1.23.0
 golang.org/x/crypto/pbkdf2
 # golang.org/x/net v0.33.0
 ## explicit; go 1.18

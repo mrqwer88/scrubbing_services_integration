@@ -1,2 +1,2 @@
 build:
-	CGO_ENABLED=0 go build -o bin/scrubbing_services_integration
+	CGO_ENABLED=0 go build -ldflags="-s -w" -o bin/scrubbing_services_integration
