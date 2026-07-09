@@ -1,0 +1,616 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+package cloud
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"net/http"
+	"net/url"
+	"slices"
+	"time"
+
+	"github.com/G-Core/gcore-go/internal/apijson"
+	"github.com/G-Core/gcore-go/internal/apiquery"
+	"github.com/G-Core/gcore-go/internal/requestconfig"
+	"github.com/G-Core/gcore-go/option"
+	"github.com/G-Core/gcore-go/packages/pagination"
+	"github.com/G-Core/gcore-go/packages/param"
+	"github.com/G-Core/gcore-go/packages/respjson"
+	"github.com/G-Core/gcore-go/shared/constant"
+)
+
+// Reserved fixed IPs are static IP addresses that persist independently of
+// instances and can be used as virtual IPs (VIPs) for high availability.
+//
+// ReservedFixedIPService contains methods and other services that help with
+// interacting with the gcore API.
+//
+// Note, unlike clients, this service does not read variables from the environment
+// automatically. You should not instantiate this service directly, and instead use
+// the [NewReservedFixedIPService] method instead.
+type ReservedFixedIPService struct {
+	Options []option.RequestOption
+	Vip     ReservedFixedIPVipService
+	tasks   TaskService
+}
+
+// NewReservedFixedIPService generates a new service that applies the given options
+// to each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
+func NewReservedFixedIPService(opts ...option.RequestOption) (r ReservedFixedIPService) {
+	r = ReservedFixedIPService{}
+	r.Options = opts
+	r.Vip = NewReservedFixedIPVipService(opts...)
+	r.tasks = NewTaskService(opts...)
+	return
+}
+
+// Create a new reserved fixed IP with the specified configuration.
+func (r *ReservedFixedIPService) New(ctx context.Context, params ReservedFixedIPNewParams, opts ...option.RequestOption) (res *TaskIDList, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&params.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&params.RegionID, precfg.CloudRegionID)
+	if !params.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !params.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v1/reserved_fixed_ips/%v/%v", params.ProjectID.Value, params.RegionID.Value)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
+	return res, err
+}
+
+// Create reserved fixed IP and poll for the result
+func (r *ReservedFixedIPService) NewAndPoll(ctx context.Context, params ReservedFixedIPNewParams, opts ...option.RequestOption) (v *ReservedFixedIP, err error) {
+	// Exclude WithResponseBodyInto for the action (New returns TaskIDList, must deserialize properly)
+	actionOpts := requestconfig.ExcludeResponseBodyInto(opts...)
+	resource, err := r.New(ctx, params, actionOpts...)
+	if err != nil {
+		return
+	}
+
+	precfg, err := requestconfig.PreRequestOptions(slices.Concat(r.Options, opts)...)
+	if err != nil {
+		return
+	}
+	var getParams ReservedFixedIPGetParams
+	requestconfig.UseDefaultParam(&params.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&params.RegionID, precfg.CloudRegionID)
+	getParams.ProjectID = params.ProjectID
+	getParams.RegionID = params.RegionID
+
+	if len(resource.Tasks) != 1 {
+		return nil, errors.New("expected exactly one task to be created")
+	}
+	taskID := resource.Tasks[0]
+	// Exclude WithResponseBodyInto and clear request body for Poll (returns Task, must deserialize properly)
+	pollOpts := slices.Concat(
+		requestconfig.ExcludeResponseBodyInto(opts...),
+		[]option.RequestOption{requestconfig.WithoutRequestBody()},
+	)
+	task, err := r.tasks.Poll(ctx, taskID, pollOpts...)
+	if err != nil {
+		return
+	}
+
+	if !task.JSON.CreatedResources.Valid() || len(task.CreatedResources.Ports) != 1 {
+		return nil, errors.New("expected exactly one port to be created in a task")
+	}
+	resourceID := task.CreatedResources.Ports[0]
+
+	// Clear request body for Get
+	getOpts := slices.Concat(opts, []option.RequestOption{requestconfig.WithoutRequestBody()})
+	return r.Get(ctx, resourceID, getParams, getOpts...)
+}
+
+// Update the VIP status of a reserved fixed IP.
+func (r *ReservedFixedIPService) Update(ctx context.Context, portID string, params ReservedFixedIPUpdateParams, opts ...option.RequestOption) (res *ReservedFixedIP, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&params.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&params.RegionID, precfg.CloudRegionID)
+	if !params.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !params.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	if portID == "" {
+		err = errors.New("missing required port_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v1/reserved_fixed_ips/%v/%v/%s", params.ProjectID.Value, params.RegionID.Value, portID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, params, &res, opts...)
+	return res, err
+}
+
+// List all reserved fixed IPs in the specified project and region.
+func (r *ReservedFixedIPService) List(ctx context.Context, params ReservedFixedIPListParams, opts ...option.RequestOption) (res *pagination.OffsetPage[ReservedFixedIP], err error) {
+	var raw *http.Response
+	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&params.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&params.RegionID, precfg.CloudRegionID)
+	if !params.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !params.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v1/reserved_fixed_ips/%v/%v", params.ProjectID.Value, params.RegionID.Value)
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, params, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List all reserved fixed IPs in the specified project and region.
+func (r *ReservedFixedIPService) ListAutoPaging(ctx context.Context, params ReservedFixedIPListParams, opts ...option.RequestOption) *pagination.OffsetPageAutoPager[ReservedFixedIP] {
+	return pagination.NewOffsetPageAutoPager(r.List(ctx, params, opts...))
+}
+
+// Delete a specific reserved fixed IP and all its associated resources.
+func (r *ReservedFixedIPService) Delete(ctx context.Context, portID string, body ReservedFixedIPDeleteParams, opts ...option.RequestOption) (res *TaskIDList, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&body.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&body.RegionID, precfg.CloudRegionID)
+	if !body.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !body.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	if portID == "" {
+		err = errors.New("missing required port_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v1/reserved_fixed_ips/%v/%v/%s", body.ProjectID.Value, body.RegionID.Value, portID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, &res, opts...)
+	return res, err
+}
+
+// DeleteAndPoll deletes a reserved fixed IP and polls for completion of the first task. Use the
+// [TaskService.Poll] method if you need to poll for all tasks.
+func (r *ReservedFixedIPService) DeleteAndPoll(ctx context.Context, portID string, body ReservedFixedIPDeleteParams, opts ...option.RequestOption) error {
+	// Exclude WithResponseBodyInto for the action (Delete returns TaskIDList, must deserialize properly)
+	actionOpts := requestconfig.ExcludeResponseBodyInto(opts...)
+	resource, err := r.Delete(ctx, portID, body, actionOpts...)
+	if err != nil {
+		return err
+	}
+
+	if len(resource.Tasks) == 0 {
+		return errors.New("expected at least one task to be created")
+	}
+	taskID := resource.Tasks[0]
+	// Exclude WithResponseBodyInto and clear request body for Poll (returns Task, must deserialize properly)
+	pollOpts := slices.Concat(
+		requestconfig.ExcludeResponseBodyInto(opts...),
+		[]option.RequestOption{requestconfig.WithoutRequestBody()},
+	)
+	_, err = r.tasks.Poll(ctx, taskID, pollOpts...)
+	return err
+}
+
+// Get detailed information about a specific reserved fixed IP.
+func (r *ReservedFixedIPService) Get(ctx context.Context, portID string, query ReservedFixedIPGetParams, opts ...option.RequestOption) (res *ReservedFixedIP, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&query.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&query.RegionID, precfg.CloudRegionID)
+	if !query.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !query.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	if portID == "" {
+		err = errors.New("missing required port_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v1/reserved_fixed_ips/%v/%v/%s", query.ProjectID.Value, query.RegionID.Value, portID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	return res, err
+}
+
+type ReservedFixedIP struct {
+	// Group of subnet masks and/or IP addresses that share the current IP as VIP
+	AllowedAddressPairs []AllowedAddressPairs `json:"allowed_address_pairs" api:"required"`
+	// Reserved fixed IP attachment entities
+	Attachments []ReservedFixedIPAttachment `json:"attachments" api:"required"`
+	// Datetime when the reserved fixed IP was created
+	CreatedAt time.Time `json:"created_at" api:"required" format:"date-time"`
+	// If reserved fixed IP belongs to a public network
+	IsExternal bool `json:"is_external" api:"required"`
+	// If reserved fixed IP is a VIP
+	IsVip bool `json:"is_vip" api:"required"`
+	// Reserved fixed IP name
+	Name string `json:"name" api:"required"`
+	// Network details
+	Network Network `json:"network" api:"required"`
+	// ID of the network the port is attached to
+	NetworkID string `json:"network_id" api:"required" format:"uuid4"`
+	// ID of the port underlying the reserved fixed IP
+	PortID string `json:"port_id" api:"required" format:"uuid4"`
+	// Region name
+	Region string `json:"region" api:"required"`
+	// Region ID
+	RegionID int64 `json:"region_id" api:"required"`
+	// Reserved fixed IP status with resource type and ID it is attached to
+	Reservation ReservedFixedIPReservation `json:"reservation" api:"required"`
+	// Underlying port status
+	Status string `json:"status" api:"required"`
+	// Datetime when the reserved fixed IP was last updated
+	UpdatedAt time.Time `json:"updated_at" api:"required" format:"date-time"`
+	// Task that created this entity
+	CreatorTaskID string `json:"creator_task_id" api:"nullable" format:"uuid4"`
+	// IPv4 address of the reserved fixed IP
+	FixedIPAddress string `json:"fixed_ip_address" api:"nullable" format:"ipv4"`
+	// IPv6 address of the reserved fixed IP
+	FixedIpv6Address string `json:"fixed_ipv6_address" api:"nullable" format:"ipv6"`
+	// Project ID
+	ProjectID int64 `json:"project_id" api:"nullable"`
+	// ID of the subnet that owns the IP address
+	SubnetID string `json:"subnet_id" api:"nullable" format:"uuid4"`
+	// ID of the subnet that owns the IPv6 address
+	SubnetV6ID string `json:"subnet_v6_id" api:"nullable" format:"uuid4"`
+	// The UUID of the active task that currently holds a lock on the resource. This
+	// lock prevents concurrent modifications to ensure consistency. If `null`, the
+	// resource is not locked.
+	TaskID string `json:"task_id" api:"nullable" format:"uuid4"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		AllowedAddressPairs respjson.Field
+		Attachments         respjson.Field
+		CreatedAt           respjson.Field
+		IsExternal          respjson.Field
+		IsVip               respjson.Field
+		Name                respjson.Field
+		Network             respjson.Field
+		NetworkID           respjson.Field
+		PortID              respjson.Field
+		Region              respjson.Field
+		RegionID            respjson.Field
+		Reservation         respjson.Field
+		Status              respjson.Field
+		UpdatedAt           respjson.Field
+		CreatorTaskID       respjson.Field
+		FixedIPAddress      respjson.Field
+		FixedIpv6Address    respjson.Field
+		ProjectID           respjson.Field
+		SubnetID            respjson.Field
+		SubnetV6ID          respjson.Field
+		TaskID              respjson.Field
+		ExtraFields         map[string]respjson.Field
+		raw                 string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r ReservedFixedIP) RawJSON() string { return r.JSON.raw }
+func (r *ReservedFixedIP) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type ReservedFixedIPAttachment struct {
+	// Resource ID
+	ResourceID string `json:"resource_id" api:"nullable"`
+	// Resource type
+	ResourceType string `json:"resource_type" api:"nullable"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		ResourceID   respjson.Field
+		ResourceType respjson.Field
+		ExtraFields  map[string]respjson.Field
+		raw          string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r ReservedFixedIPAttachment) RawJSON() string { return r.JSON.raw }
+func (r *ReservedFixedIPAttachment) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Reserved fixed IP status with resource type and ID it is attached to
+type ReservedFixedIPReservation struct {
+	// ID of the instance or load balancer the IP is attached to
+	ResourceID string `json:"resource_id" api:"nullable" format:"uuid4"`
+	// Resource type of the resource the IP is attached to
+	ResourceType string `json:"resource_type" api:"nullable"`
+	// IP reservation status
+	Status string `json:"status" api:"nullable"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		ResourceID   respjson.Field
+		ResourceType respjson.Field
+		Status       respjson.Field
+		ExtraFields  map[string]respjson.Field
+		raw          string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r ReservedFixedIPReservation) RawJSON() string { return r.JSON.raw }
+func (r *ReservedFixedIPReservation) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type ReservedFixedIPNewParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Region ID
+	RegionID param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+
+	//
+	// Request body variants
+	//
+
+	// This field is a request body variant, only one variant field can be set.
+	OfExternal *ReservedFixedIPNewParamsBodyExternal `json:",inline"`
+	// This field is a request body variant, only one variant field can be set.
+	OfSubnet *ReservedFixedIPNewParamsBodySubnet `json:",inline"`
+	// This field is a request body variant, only one variant field can be set.
+	OfAnySubnet *ReservedFixedIPNewParamsBodyAnySubnet `json:",inline"`
+	// This field is a request body variant, only one variant field can be set.
+	OfIPAddress *ReservedFixedIPNewParamsBodyIPAddress `json:",inline"`
+	// This field is a request body variant, only one variant field can be set.
+	OfPort *ReservedFixedIPNewParamsBodyPort `json:",inline"`
+
+	paramObj
+}
+
+func (u ReservedFixedIPNewParams) MarshalJSON() ([]byte, error) {
+	return param.MarshalUnion(u, u.OfExternal,
+		u.OfSubnet,
+		u.OfAnySubnet,
+		u.OfIPAddress,
+		u.OfPort)
+}
+func (r *ReservedFixedIPNewParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The property Type is required.
+type ReservedFixedIPNewParamsBodyExternal struct {
+	// If reserved fixed IP is a VIP
+	IsVip param.Opt[bool] `json:"is_vip,omitzero"`
+	// Which subnets should be selected: IPv4, IPv6 or use dual stack.
+	//
+	// Any of "dual", "ipv4", "ipv6".
+	IPFamily InterfaceIPFamily `json:"ip_family,omitzero"`
+	// Must be 'external'
+	//
+	// This field can be elided, and will marshal its zero value as "external".
+	Type constant.External `json:"type" default:"external"`
+	paramObj
+}
+
+func (r ReservedFixedIPNewParamsBodyExternal) MarshalJSON() (data []byte, err error) {
+	type shadow ReservedFixedIPNewParamsBodyExternal
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *ReservedFixedIPNewParamsBodyExternal) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The properties SubnetID, Type are required.
+type ReservedFixedIPNewParamsBodySubnet struct {
+	// Reserved fixed IP will be allocated in this subnet
+	SubnetID string `json:"subnet_id" api:"required" format:"uuid4"`
+	// If reserved fixed IP is a VIP
+	IsVip param.Opt[bool] `json:"is_vip,omitzero"`
+	// Must be 'subnet'.
+	//
+	// This field can be elided, and will marshal its zero value as "subnet".
+	Type constant.Subnet `json:"type" default:"subnet"`
+	paramObj
+}
+
+func (r ReservedFixedIPNewParamsBodySubnet) MarshalJSON() (data []byte, err error) {
+	type shadow ReservedFixedIPNewParamsBodySubnet
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *ReservedFixedIPNewParamsBodySubnet) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The properties NetworkID, Type are required.
+type ReservedFixedIPNewParamsBodyAnySubnet struct {
+	// Reserved fixed IP will be allocated in a subnet of this network
+	NetworkID string `json:"network_id" api:"required" format:"uuid4"`
+	// If reserved fixed IP is a VIP
+	IsVip param.Opt[bool] `json:"is_vip,omitzero"`
+	// Which subnets should be selected: IPv4, IPv6 or use dual stack.
+	//
+	// Any of "dual", "ipv4", "ipv6".
+	IPFamily InterfaceIPFamily `json:"ip_family,omitzero"`
+	// Must be 'any_subnet'.
+	//
+	// This field can be elided, and will marshal its zero value as "any_subnet".
+	Type constant.AnySubnet `json:"type" default:"any_subnet"`
+	paramObj
+}
+
+func (r ReservedFixedIPNewParamsBodyAnySubnet) MarshalJSON() (data []byte, err error) {
+	type shadow ReservedFixedIPNewParamsBodyAnySubnet
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *ReservedFixedIPNewParamsBodyAnySubnet) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The properties IPAddress, NetworkID, Type are required.
+type ReservedFixedIPNewParamsBodyIPAddress struct {
+	// Reserved fixed IP will be allocated the given IP address
+	IPAddress string `json:"ip_address" api:"required" format:"ipvanyaddress"`
+	// Reserved fixed IP will be allocated in a subnet of this network
+	NetworkID string `json:"network_id" api:"required" format:"uuid4"`
+	// If reserved fixed IP is a VIP
+	IsVip param.Opt[bool] `json:"is_vip,omitzero"`
+	// Must be 'ip_address'.
+	//
+	// This field can be elided, and will marshal its zero value as "ip_address".
+	Type constant.IPAddress `json:"type" default:"ip_address"`
+	paramObj
+}
+
+func (r ReservedFixedIPNewParamsBodyIPAddress) MarshalJSON() (data []byte, err error) {
+	type shadow ReservedFixedIPNewParamsBodyIPAddress
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *ReservedFixedIPNewParamsBodyIPAddress) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The properties PortID, Type are required.
+type ReservedFixedIPNewParamsBodyPort struct {
+	// Port ID to make a reserved fixed IP (for example, `vip_port_id` of the Load
+	// Balancer entity).
+	PortID string `json:"port_id" api:"required" format:"uuid4"`
+	// Must be 'port'.
+	//
+	// This field can be elided, and will marshal its zero value as "port".
+	Type constant.Port `json:"type" default:"port"`
+	paramObj
+}
+
+func (r ReservedFixedIPNewParamsBodyPort) MarshalJSON() (data []byte, err error) {
+	type shadow ReservedFixedIPNewParamsBodyPort
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *ReservedFixedIPNewParamsBodyPort) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type ReservedFixedIPUpdateParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Region ID
+	RegionID param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+	// If reserved fixed IP should be a VIP
+	IsVip bool `json:"is_vip" api:"required"`
+	paramObj
+}
+
+func (r ReservedFixedIPUpdateParams) MarshalJSON() (data []byte, err error) {
+	type shadow ReservedFixedIPUpdateParams
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *ReservedFixedIPUpdateParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type ReservedFixedIPListParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Region ID
+	RegionID param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+	// Set True if response should only list IP addresses that are not attached to any
+	// instance
+	AvailableOnly param.Opt[bool] `query:"available_only,omitzero" json:"-"`
+	// Filter IPs by device ID it is attached to
+	DeviceID param.Opt[string] `query:"device_id,omitzero" json:"-"`
+	// Set to true if the response should only list public IP addresses
+	ExternalOnly param.Opt[bool] `query:"external_only,omitzero" json:"-"`
+	// Set to true if the response should only list private IP addresses
+	InternalOnly param.Opt[bool] `query:"internal_only,omitzero" json:"-"`
+	// Optional. An IPv4 address to filter results by. Regular expression allowed
+	IPAddress param.Opt[string] `query:"ip_address,omitzero" json:"-"`
+	// Optional. Limit the number of returned items
+	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
+	// Optional. Offset value is used to exclude the first set of records from the
+	// result
+	Offset param.Opt[int64] `query:"offset,omitzero" json:"-"`
+	// Set to true if the response should only list VIPs
+	VipOnly param.Opt[bool] `query:"vip_only,omitzero" json:"-"`
+	// Optional. Ordering reserved fixed IP list result by name, status, `updated_at`,
+	// `fixed_ip_address` or `created_at` fields of the reserved fixed IP and
+	// directions (status.asc).
+	//
+	// Any of "created_at.asc", "created_at.desc", "fixed_ip_address.asc",
+	// "fixed_ip_address.desc", "name.asc", "name.desc", "status.asc", "status.desc",
+	// "updated_at.asc", "updated_at.desc".
+	OrderBy ReservedFixedIPListParamsOrderBy `query:"order_by,omitzero" json:"-"`
+	paramObj
+}
+
+// URLQuery serializes [ReservedFixedIPListParams]'s query parameters as
+// `url.Values`.
+func (r ReservedFixedIPListParams) URLQuery() (v url.Values, err error) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatRepeat,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+// Optional. Ordering reserved fixed IP list result by name, status, `updated_at`,
+// `fixed_ip_address` or `created_at` fields of the reserved fixed IP and
+// directions (status.asc).
+type ReservedFixedIPListParamsOrderBy string
+
+const (
+	ReservedFixedIPListParamsOrderByCreatedAtAsc       ReservedFixedIPListParamsOrderBy = "created_at.asc"
+	ReservedFixedIPListParamsOrderByCreatedAtDesc      ReservedFixedIPListParamsOrderBy = "created_at.desc"
+	ReservedFixedIPListParamsOrderByFixedIPAddressAsc  ReservedFixedIPListParamsOrderBy = "fixed_ip_address.asc"
+	ReservedFixedIPListParamsOrderByFixedIPAddressDesc ReservedFixedIPListParamsOrderBy = "fixed_ip_address.desc"
+	ReservedFixedIPListParamsOrderByNameAsc            ReservedFixedIPListParamsOrderBy = "name.asc"
+	ReservedFixedIPListParamsOrderByNameDesc           ReservedFixedIPListParamsOrderBy = "name.desc"
+	ReservedFixedIPListParamsOrderByStatusAsc          ReservedFixedIPListParamsOrderBy = "status.asc"
+	ReservedFixedIPListParamsOrderByStatusDesc         ReservedFixedIPListParamsOrderBy = "status.desc"
+	ReservedFixedIPListParamsOrderByUpdatedAtAsc       ReservedFixedIPListParamsOrderBy = "updated_at.asc"
+	ReservedFixedIPListParamsOrderByUpdatedAtDesc      ReservedFixedIPListParamsOrderBy = "updated_at.desc"
+)
+
+type ReservedFixedIPDeleteParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Region ID
+	RegionID param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+	paramObj
+}
+
+type ReservedFixedIPGetParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Region ID
+	RegionID param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+	paramObj
+}

@@ -1,0 +1,128 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+package fastedge
+
+import (
+	"context"
+	"net/http"
+	"slices"
+
+	"github.com/G-Core/gcore-go/internal/apijson"
+	"github.com/G-Core/gcore-go/internal/requestconfig"
+	"github.com/G-Core/gcore-go/option"
+	"github.com/G-Core/gcore-go/packages/respjson"
+)
+
+// Client-level settings and limits
+//
+// FastedgeService contains methods and other services that help with interacting
+// with the gcore API.
+//
+// Note, unlike clients, this service does not read variables from the environment
+// automatically. You should not instantiate this service directly, and instead use
+// the [NewFastedgeService] method instead.
+type FastedgeService struct {
+	Options []option.RequestOption
+	// FastEdge templates encapsulate reusable configurations for FastEdge
+	// applications, including a WebAssembly binary reference and configurable
+	// parameters.
+	Templates TemplateService
+	// FastEdge secrets store sensitive values such as API keys and tokens that can be
+	// referenced by FastEdge applications.
+	Secrets SecretService
+	// FastEdge binaries are immutable WebAssembly modules that implement edge
+	// application logic.
+	Binaries BinaryService
+	// Statistics of edge app use
+	Statistics StatisticService
+	// FastEdge applications combine a WebAssembly binary with configuration,
+	// environment variables, and secrets for deployment at the CDN edge.
+	Apps AppService
+	// Key-value edge storage for apps
+	KvStores KvStoreService
+}
+
+// NewFastedgeService generates a new service that applies the given options to
+// each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
+func NewFastedgeService(opts ...option.RequestOption) (r FastedgeService) {
+	r = FastedgeService{}
+	r.Options = opts
+	r.Templates = NewTemplateService(opts...)
+	r.Secrets = NewSecretService(opts...)
+	r.Binaries = NewBinaryService(opts...)
+	r.Statistics = NewStatisticService(opts...)
+	r.Apps = NewAppService(opts...)
+	r.KvStores = NewKvStoreService(opts...)
+	return
+}
+
+// Retrieve the authenticated client's account status, resource quotas, and usage
+// limits. Shows current plan, available resources, and any active restrictions.
+func (r *FastedgeService) GetAccountOverview(ctx context.Context, opts ...option.RequestOption) (res *Client, err error) {
+	opts = slices.Concat(r.Options, opts)
+	path := "fastedge/v1/me"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	return res, err
+}
+
+type Client struct {
+	// Actual allowed number of apps
+	AppCount int64 `json:"app_count" api:"required"`
+	// Actual number of calls for all apps during the current day (UTC)
+	DailyConsumption int64 `json:"daily_consumption" api:"required"`
+	// Actual number of calls for all apps during the current hour
+	HourlyConsumption int64 `json:"hourly_consumption" api:"required"`
+	// Actual number of calls for all apps during the current calendar month (UTC)
+	MonthlyConsumption int64 `json:"monthly_consumption" api:"required"`
+	// List of enabled networks
+	Networks []ClientNetwork `json:"networks" api:"required"`
+	// Plan ID
+	PlanID int64 `json:"plan_id" api:"required"`
+	// Status code:
+	// 1 - enabled
+	// 2 - disabled
+	// 5 - suspended
+	Status int64 `json:"status" api:"required"`
+	// Plan name
+	Plan string `json:"plan"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		AppCount           respjson.Field
+		DailyConsumption   respjson.Field
+		HourlyConsumption  respjson.Field
+		MonthlyConsumption respjson.Field
+		Networks           respjson.Field
+		PlanID             respjson.Field
+		Status             respjson.Field
+		Plan               respjson.Field
+		ExtraFields        map[string]respjson.Field
+		raw                string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r Client) RawJSON() string { return r.JSON.raw }
+func (r *Client) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type ClientNetwork struct {
+	// Is network is default
+	IsDefault bool `json:"is_default" api:"required"`
+	// Network name
+	Name string `json:"name" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		IsDefault   respjson.Field
+		Name        respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r ClientNetwork) RawJSON() string { return r.JSON.raw }
+func (r *ClientNetwork) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}

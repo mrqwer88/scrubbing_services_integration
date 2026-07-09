@@ -1,0 +1,619 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+package cloud
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"net/http"
+	"net/url"
+	"slices"
+
+	"github.com/G-Core/gcore-go/internal/apijson"
+	"github.com/G-Core/gcore-go/internal/apiquery"
+	"github.com/G-Core/gcore-go/internal/requestconfig"
+	"github.com/G-Core/gcore-go/option"
+	"github.com/G-Core/gcore-go/packages/param"
+	"github.com/G-Core/gcore-go/shared/constant"
+)
+
+// LoadBalancerL7PolicyService contains methods and other services that help with
+// interacting with the gcore API.
+//
+// Note, unlike clients, this service does not read variables from the environment
+// automatically. You should not instantiate this service directly, and instead use
+// the [NewLoadBalancerL7PolicyService] method instead.
+type LoadBalancerL7PolicyService struct {
+	Options []option.RequestOption
+	Rules   LoadBalancerL7PolicyRuleService
+	tasks   TaskService
+}
+
+// NewLoadBalancerL7PolicyService generates a new service that applies the given
+// options to each request. These options are applied after the parent client's
+// options (if there is one), and before any request-specific options.
+func NewLoadBalancerL7PolicyService(opts ...option.RequestOption) (r LoadBalancerL7PolicyService) {
+	r = LoadBalancerL7PolicyService{}
+	r.Options = opts
+	r.Rules = NewLoadBalancerL7PolicyRuleService(opts...)
+	r.tasks = NewTaskService(opts...)
+	return
+}
+
+// Create load balancer L7 policy
+func (r *LoadBalancerL7PolicyService) New(ctx context.Context, params LoadBalancerL7PolicyNewParams, opts ...option.RequestOption) (res *TaskIDList, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&params.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&params.RegionID, precfg.CloudRegionID)
+	if !params.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !params.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v1/l7policies/%v/%v", params.ProjectID.Value, params.RegionID.Value)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
+	return res, err
+}
+
+// Updates only provided fields; omitted ones stay unchanged.
+func (r *LoadBalancerL7PolicyService) Update(ctx context.Context, l7policyID string, params LoadBalancerL7PolicyUpdateParams, opts ...option.RequestOption) (res *TaskIDList, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&params.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&params.RegionID, precfg.CloudRegionID)
+	if !params.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !params.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	if l7policyID == "" {
+		err = errors.New("missing required l7policy_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v1/l7policies/%v/%v/%s", params.ProjectID.Value, params.RegionID.Value, l7policyID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, params, &res, opts...)
+	return res, err
+}
+
+// List load balancer L7 policies
+func (r *LoadBalancerL7PolicyService) List(ctx context.Context, params LoadBalancerL7PolicyListParams, opts ...option.RequestOption) (res *LoadBalancerL7PolicyList, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&params.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&params.RegionID, precfg.CloudRegionID)
+	if !params.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !params.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v1/l7policies/%v/%v", params.ProjectID.Value, params.RegionID.Value)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, params, &res, opts...)
+	return res, err
+}
+
+// Delete load balancer L7 policy
+func (r *LoadBalancerL7PolicyService) Delete(ctx context.Context, l7policyID string, body LoadBalancerL7PolicyDeleteParams, opts ...option.RequestOption) (res *TaskIDList, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&body.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&body.RegionID, precfg.CloudRegionID)
+	if !body.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !body.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	if l7policyID == "" {
+		err = errors.New("missing required l7policy_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v1/l7policies/%v/%v/%s", body.ProjectID.Value, body.RegionID.Value, l7policyID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, &res, opts...)
+	return res, err
+}
+
+// Get load balancer L7 policy
+func (r *LoadBalancerL7PolicyService) Get(ctx context.Context, l7policyID string, query LoadBalancerL7PolicyGetParams, opts ...option.RequestOption) (res *LoadBalancerL7Policy, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&query.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&query.RegionID, precfg.CloudRegionID)
+	if !query.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !query.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	if l7policyID == "" {
+		err = errors.New("missing required l7policy_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v1/l7policies/%v/%v/%s", query.ProjectID.Value, query.RegionID.Value, l7policyID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	return res, err
+}
+
+// NewAndPoll creates a new L7 policy and polls for completion
+func (r *LoadBalancerL7PolicyService) NewAndPoll(ctx context.Context, params LoadBalancerL7PolicyNewParams, opts ...option.RequestOption) (v *LoadBalancerL7Policy, err error) {
+	// Exclude WithResponseBodyInto for the action (New returns TaskIDList, must deserialize properly)
+	actionOpts := requestconfig.ExcludeResponseBodyInto(opts...)
+	resource, err := r.New(ctx, params, actionOpts...)
+	if err != nil {
+		return
+	}
+
+	precfg, err := requestconfig.PreRequestOptions(slices.Concat(r.Options, opts)...)
+	if err != nil {
+		return
+	}
+	var getParams LoadBalancerL7PolicyGetParams
+	requestconfig.UseDefaultParam(&params.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&params.RegionID, precfg.CloudRegionID)
+	getParams.ProjectID = params.ProjectID
+	getParams.RegionID = params.RegionID
+
+	if len(resource.Tasks) != 1 {
+		return nil, errors.New("expected exactly one task to be created")
+	}
+	taskID := resource.Tasks[0]
+	// Exclude WithResponseBodyInto and clear request body for Poll (returns Task, must deserialize properly)
+	pollOpts := slices.Concat(
+		requestconfig.ExcludeResponseBodyInto(opts...),
+		[]option.RequestOption{requestconfig.WithoutRequestBody()},
+	)
+	task, err := r.tasks.Poll(ctx, taskID, pollOpts...)
+	if err != nil {
+		return
+	}
+
+	if !task.JSON.CreatedResources.Valid() || len(task.CreatedResources.L7polices) != 1 {
+		return nil, errors.New("expected exactly one L7 policy to be created in a task")
+	}
+	resourceID := task.CreatedResources.L7polices[0]
+
+	// Clear request body for Get
+	getOpts := slices.Concat(opts, []option.RequestOption{requestconfig.WithoutRequestBody()})
+	return r.Get(ctx, resourceID, getParams, getOpts...)
+}
+
+// DeleteAndPoll deletes an L7 policy and polls for completion of the first task. Use the [TaskService.Poll] method if you
+// need to poll for all tasks.
+func (r *LoadBalancerL7PolicyService) DeleteAndPoll(ctx context.Context, l7policyID string, body LoadBalancerL7PolicyDeleteParams, opts ...option.RequestOption) error {
+	// Exclude WithResponseBodyInto for the action (Delete returns TaskIDList, must deserialize properly)
+	actionOpts := requestconfig.ExcludeResponseBodyInto(opts...)
+	resource, err := r.Delete(ctx, l7policyID, body, actionOpts...)
+	if err != nil {
+		return err
+	}
+
+	if len(resource.Tasks) == 0 {
+		return errors.New("expected at least one task to be created")
+	}
+	taskID := resource.Tasks[0]
+	// Exclude WithResponseBodyInto and clear request body for Poll (returns Task, must deserialize properly)
+	pollOpts := slices.Concat(
+		requestconfig.ExcludeResponseBodyInto(opts...),
+		[]option.RequestOption{requestconfig.WithoutRequestBody()},
+	)
+	_, err = r.tasks.Poll(ctx, taskID, pollOpts...)
+	return err
+}
+
+// UpdateAndPoll updates an L7 policy and polls for completion of the first task. Use the [TaskService.Poll] method if
+// you need to poll for all tasks.
+func (r *LoadBalancerL7PolicyService) UpdateAndPoll(ctx context.Context, l7policyID string, params LoadBalancerL7PolicyUpdateParams, opts ...option.RequestOption) (v *LoadBalancerL7Policy, err error) {
+	// Exclude WithResponseBodyInto for the action (Update returns TaskIDList, must deserialize properly)
+	actionOpts := requestconfig.ExcludeResponseBodyInto(opts...)
+	resource, err := r.Update(ctx, l7policyID, params, actionOpts...)
+	if err != nil {
+		return
+	}
+
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return
+	}
+	var getParams LoadBalancerL7PolicyGetParams
+	requestconfig.UseDefaultParam(&params.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&params.RegionID, precfg.CloudRegionID)
+	getParams.ProjectID = params.ProjectID
+	getParams.RegionID = params.RegionID
+
+	if len(resource.Tasks) == 0 {
+		return nil, errors.New("expected at least one task to be created")
+	}
+	taskID := resource.Tasks[0]
+	// Exclude WithResponseBodyInto and clear request body for Poll (returns Task, must deserialize properly)
+	pollOpts := slices.Concat(
+		requestconfig.ExcludeResponseBodyInto(opts...),
+		[]option.RequestOption{requestconfig.WithoutRequestBody()},
+	)
+	_, err = r.tasks.Poll(ctx, taskID, pollOpts...)
+	if err != nil {
+		return
+	}
+
+	// Clear request body for Get
+	getOpts := slices.Concat(opts, []option.RequestOption{requestconfig.WithoutRequestBody()})
+	return r.Get(ctx, l7policyID, getParams, getOpts...)
+}
+
+type LoadBalancerL7PolicyNewParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Region ID
+	RegionID param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+
+	//
+	// Request body variants
+	//
+
+	// This field is a request body variant, only one variant field can be set.
+	OfRedirectToURL *LoadBalancerL7PolicyNewParamsBodyRedirectToURL `json:",inline"`
+	// This field is a request body variant, only one variant field can be set.
+	OfRedirectPrefix *LoadBalancerL7PolicyNewParamsBodyRedirectPrefix `json:",inline"`
+	// This field is a request body variant, only one variant field can be set.
+	OfRedirectToPool *LoadBalancerL7PolicyNewParamsBodyRedirectToPool `json:",inline"`
+	// This field is a request body variant, only one variant field can be set.
+	OfReject *LoadBalancerL7PolicyNewParamsBodyReject `json:",inline"`
+
+	paramObj
+}
+
+func (u LoadBalancerL7PolicyNewParams) MarshalJSON() ([]byte, error) {
+	return param.MarshalUnion(u, u.OfRedirectToURL, u.OfRedirectPrefix, u.OfRedirectToPool, u.OfReject)
+}
+func (r *LoadBalancerL7PolicyNewParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The properties Action, ListenerID, RedirectURL are required.
+type LoadBalancerL7PolicyNewParamsBodyRedirectToURL struct {
+	// Listener ID
+	ListenerID string `json:"listener_id" api:"required"`
+	// Requests matching this policy will be redirected to this URL.
+	RedirectURL string `json:"redirect_url" api:"required"`
+	// Human-readable name of the policy
+	Name param.Opt[string] `json:"name,omitzero"`
+	// The position of this policy on the listener
+	Position param.Opt[int64] `json:"position,omitzero"`
+	// Requests matching this policy will be redirected to the specified URL or Prefix
+	// URL with the HTTP response code. Valid options are 301, 302, 303, 307, or 308.
+	// Default is 302.
+	//
+	// Any of 301, 302, 303, 307, 308.
+	RedirectHTTPCode int64 `json:"redirect_http_code,omitzero"`
+	// A list of simple strings assigned to the resource.
+	Tags []string `json:"tags,omitzero"`
+	// Action
+	//
+	// This field can be elided, and will marshal its zero value as "REDIRECT_TO_URL".
+	Action constant.RedirectToURL `json:"action" default:"REDIRECT_TO_URL"`
+	paramObj
+}
+
+func (r LoadBalancerL7PolicyNewParamsBodyRedirectToURL) MarshalJSON() (data []byte, err error) {
+	type shadow LoadBalancerL7PolicyNewParamsBodyRedirectToURL
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *LoadBalancerL7PolicyNewParamsBodyRedirectToURL) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func init() {
+	apijson.RegisterFieldValidator[LoadBalancerL7PolicyNewParamsBodyRedirectToURL](
+		"redirect_http_code", 301, 302, 303, 307, 308,
+	)
+}
+
+// The properties Action, ListenerID, RedirectPrefix are required.
+type LoadBalancerL7PolicyNewParamsBodyRedirectPrefix struct {
+	// Listener ID
+	ListenerID string `json:"listener_id" api:"required"`
+	// Requests matching this policy will be redirected to this Prefix URL.
+	RedirectPrefix string `json:"redirect_prefix" api:"required"`
+	// Human-readable name of the policy
+	Name param.Opt[string] `json:"name,omitzero"`
+	// The position of this policy on the listener
+	Position param.Opt[int64] `json:"position,omitzero"`
+	// Requests matching this policy will be redirected to the specified URL or Prefix
+	// URL with the HTTP response code. Valid options are 301, 302, 303, 307, or 308.
+	// Default is 302.
+	//
+	// Any of 301, 302, 303, 307, 308.
+	RedirectHTTPCode int64 `json:"redirect_http_code,omitzero"`
+	// A list of simple strings assigned to the resource.
+	Tags []string `json:"tags,omitzero"`
+	// Action
+	//
+	// This field can be elided, and will marshal its zero value as "REDIRECT_PREFIX".
+	Action constant.RedirectPrefix `json:"action" default:"REDIRECT_PREFIX"`
+	paramObj
+}
+
+func (r LoadBalancerL7PolicyNewParamsBodyRedirectPrefix) MarshalJSON() (data []byte, err error) {
+	type shadow LoadBalancerL7PolicyNewParamsBodyRedirectPrefix
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *LoadBalancerL7PolicyNewParamsBodyRedirectPrefix) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func init() {
+	apijson.RegisterFieldValidator[LoadBalancerL7PolicyNewParamsBodyRedirectPrefix](
+		"redirect_http_code", 301, 302, 303, 307, 308,
+	)
+}
+
+// The properties Action, ListenerID, RedirectPoolID are required.
+type LoadBalancerL7PolicyNewParamsBodyRedirectToPool struct {
+	// Listener ID
+	ListenerID string `json:"listener_id" api:"required"`
+	// Requests matching this policy will be redirected to the pool with this ID.
+	RedirectPoolID string `json:"redirect_pool_id" api:"required"`
+	// Human-readable name of the policy
+	Name param.Opt[string] `json:"name,omitzero"`
+	// The position of this policy on the listener
+	Position param.Opt[int64] `json:"position,omitzero"`
+	// A list of simple strings assigned to the resource.
+	Tags []string `json:"tags,omitzero"`
+	// Action
+	//
+	// This field can be elided, and will marshal its zero value as "REDIRECT_TO_POOL".
+	Action constant.RedirectToPool `json:"action" default:"REDIRECT_TO_POOL"`
+	paramObj
+}
+
+func (r LoadBalancerL7PolicyNewParamsBodyRedirectToPool) MarshalJSON() (data []byte, err error) {
+	type shadow LoadBalancerL7PolicyNewParamsBodyRedirectToPool
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *LoadBalancerL7PolicyNewParamsBodyRedirectToPool) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The properties Action, ListenerID are required.
+type LoadBalancerL7PolicyNewParamsBodyReject struct {
+	// Listener ID
+	ListenerID string `json:"listener_id" api:"required"`
+	// Human-readable name of the policy
+	Name param.Opt[string] `json:"name,omitzero"`
+	// The position of this policy on the listener
+	Position param.Opt[int64] `json:"position,omitzero"`
+	// A list of simple strings assigned to the resource.
+	Tags []string `json:"tags,omitzero"`
+	// Action
+	//
+	// This field can be elided, and will marshal its zero value as "REJECT".
+	Action constant.Reject `json:"action" default:"REJECT"`
+	paramObj
+}
+
+func (r LoadBalancerL7PolicyNewParamsBodyReject) MarshalJSON() (data []byte, err error) {
+	type shadow LoadBalancerL7PolicyNewParamsBodyReject
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *LoadBalancerL7PolicyNewParamsBodyReject) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type LoadBalancerL7PolicyUpdateParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Region ID
+	RegionID param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+
+	//
+	// Request body variants
+	//
+
+	// This field is a request body variant, only one variant field can be set.
+	OfRedirectToURL *LoadBalancerL7PolicyUpdateParamsBodyRedirectToURL `json:",inline"`
+	// This field is a request body variant, only one variant field can be set.
+	OfRedirectPrefix *LoadBalancerL7PolicyUpdateParamsBodyRedirectPrefix `json:",inline"`
+	// This field is a request body variant, only one variant field can be set.
+	OfRedirectToPool *LoadBalancerL7PolicyUpdateParamsBodyRedirectToPool `json:",inline"`
+	// This field is a request body variant, only one variant field can be set.
+	OfReject *LoadBalancerL7PolicyUpdateParamsBodyReject `json:",inline"`
+
+	paramObj
+}
+
+func (u LoadBalancerL7PolicyUpdateParams) MarshalJSON() ([]byte, error) {
+	return param.MarshalUnion(u, u.OfRedirectToURL, u.OfRedirectPrefix, u.OfRedirectToPool, u.OfReject)
+}
+func (r *LoadBalancerL7PolicyUpdateParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The properties Action, RedirectURL are required.
+type LoadBalancerL7PolicyUpdateParamsBodyRedirectToURL struct {
+	// Requests matching this policy will be redirected to this URL. Only valid if
+	// action is `REDIRECT_TO_URL`.
+	RedirectURL string `json:"redirect_url" api:"required"`
+	// Human-readable name of the policy
+	Name param.Opt[string] `json:"name,omitzero"`
+	// The position of this policy on the listener
+	Position param.Opt[int64] `json:"position,omitzero"`
+	// Requests matching this policy will be redirected to the specified URL or Prefix
+	// URL with the HTTP response code. Valid if action is `REDIRECT_TO_URL` or
+	// `REDIRECT_PREFIX`. Valid options are 301, 302, 303, 307, or 308. Default is 302.
+	//
+	// Any of 301, 302, 303, 307, 308.
+	RedirectHTTPCode int64 `json:"redirect_http_code,omitzero"`
+	// A list of simple strings assigned to the resource.
+	Tags []string `json:"tags,omitzero"`
+	// Action
+	//
+	// This field can be elided, and will marshal its zero value as "REDIRECT_TO_URL".
+	Action constant.RedirectToURL `json:"action" default:"REDIRECT_TO_URL"`
+	paramObj
+}
+
+func (r LoadBalancerL7PolicyUpdateParamsBodyRedirectToURL) MarshalJSON() (data []byte, err error) {
+	type shadow LoadBalancerL7PolicyUpdateParamsBodyRedirectToURL
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *LoadBalancerL7PolicyUpdateParamsBodyRedirectToURL) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func init() {
+	apijson.RegisterFieldValidator[LoadBalancerL7PolicyUpdateParamsBodyRedirectToURL](
+		"redirect_http_code", 301, 302, 303, 307, 308,
+	)
+}
+
+// The properties Action, RedirectPrefix are required.
+type LoadBalancerL7PolicyUpdateParamsBodyRedirectPrefix struct {
+	// Requests matching this policy will be redirected to this Prefix URL.
+	RedirectPrefix string `json:"redirect_prefix" api:"required"`
+	// Human-readable name of the policy
+	Name param.Opt[string] `json:"name,omitzero"`
+	// The position of this policy on the listener
+	Position param.Opt[int64] `json:"position,omitzero"`
+	// Requests matching this policy will be redirected to the specified URL or Prefix
+	// URL with the HTTP response code. Valid options are 301, 302, 303, 307, or 308.
+	// Default is 302.
+	//
+	// Any of 301, 302, 303, 307, 308.
+	RedirectHTTPCode int64 `json:"redirect_http_code,omitzero"`
+	// A list of simple strings assigned to the resource.
+	Tags []string `json:"tags,omitzero"`
+	// Action
+	//
+	// This field can be elided, and will marshal its zero value as "REDIRECT_PREFIX".
+	Action constant.RedirectPrefix `json:"action" default:"REDIRECT_PREFIX"`
+	paramObj
+}
+
+func (r LoadBalancerL7PolicyUpdateParamsBodyRedirectPrefix) MarshalJSON() (data []byte, err error) {
+	type shadow LoadBalancerL7PolicyUpdateParamsBodyRedirectPrefix
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *LoadBalancerL7PolicyUpdateParamsBodyRedirectPrefix) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func init() {
+	apijson.RegisterFieldValidator[LoadBalancerL7PolicyUpdateParamsBodyRedirectPrefix](
+		"redirect_http_code", 301, 302, 303, 307, 308,
+	)
+}
+
+// The properties Action, RedirectPoolID are required.
+type LoadBalancerL7PolicyUpdateParamsBodyRedirectToPool struct {
+	// Requests matching this policy will be redirected to the pool with this ID.
+	RedirectPoolID string `json:"redirect_pool_id" api:"required"`
+	// Human-readable name of the policy
+	Name param.Opt[string] `json:"name,omitzero"`
+	// The position of this policy on the listener
+	Position param.Opt[int64] `json:"position,omitzero"`
+	// A list of simple strings assigned to the resource.
+	Tags []string `json:"tags,omitzero"`
+	// Action
+	//
+	// This field can be elided, and will marshal its zero value as "REDIRECT_TO_POOL".
+	Action constant.RedirectToPool `json:"action" default:"REDIRECT_TO_POOL"`
+	paramObj
+}
+
+func (r LoadBalancerL7PolicyUpdateParamsBodyRedirectToPool) MarshalJSON() (data []byte, err error) {
+	type shadow LoadBalancerL7PolicyUpdateParamsBodyRedirectToPool
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *LoadBalancerL7PolicyUpdateParamsBodyRedirectToPool) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The property Action is required.
+type LoadBalancerL7PolicyUpdateParamsBodyReject struct {
+	// Human-readable name of the policy
+	Name param.Opt[string] `json:"name,omitzero"`
+	// The position of this policy on the listener
+	Position param.Opt[int64] `json:"position,omitzero"`
+	// A list of simple strings assigned to the resource.
+	Tags []string `json:"tags,omitzero"`
+	// Action
+	//
+	// This field can be elided, and will marshal its zero value as "REJECT".
+	Action constant.Reject `json:"action" default:"REJECT"`
+	paramObj
+}
+
+func (r LoadBalancerL7PolicyUpdateParamsBodyReject) MarshalJSON() (data []byte, err error) {
+	type shadow LoadBalancerL7PolicyUpdateParamsBodyReject
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *LoadBalancerL7PolicyUpdateParamsBodyReject) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type LoadBalancerL7PolicyListParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Region ID
+	RegionID param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+	// Optional. Limit the number of returned items
+	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
+	// Optional. Offset value is used to exclude the first set of records from the
+	// result
+	Offset param.Opt[int64] `query:"offset,omitzero" json:"-"`
+	paramObj
+}
+
+// URLQuery serializes [LoadBalancerL7PolicyListParams]'s query parameters as
+// `url.Values`.
+func (r LoadBalancerL7PolicyListParams) URLQuery() (v url.Values, err error) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatRepeat,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type LoadBalancerL7PolicyDeleteParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Region ID
+	RegionID param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+	paramObj
+}
+
+type LoadBalancerL7PolicyGetParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Region ID
+	RegionID param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+	paramObj
+}

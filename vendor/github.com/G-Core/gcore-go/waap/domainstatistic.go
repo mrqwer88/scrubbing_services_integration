@@ -1,0 +1,977 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+package waap
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"net/http"
+	"net/url"
+	"slices"
+	"time"
+
+	"github.com/G-Core/gcore-go/internal/apijson"
+	"github.com/G-Core/gcore-go/internal/apiquery"
+	"github.com/G-Core/gcore-go/internal/requestconfig"
+	"github.com/G-Core/gcore-go/option"
+	"github.com/G-Core/gcore-go/packages/pagination"
+	"github.com/G-Core/gcore-go/packages/param"
+	"github.com/G-Core/gcore-go/packages/respjson"
+)
+
+// DomainStatisticService contains methods and other services that help with
+// interacting with the gcore API.
+//
+// Note, unlike clients, this service does not read variables from the environment
+// automatically. You should not instantiate this service directly, and instead use
+// the [NewDomainStatisticService] method instead.
+type DomainStatisticService struct {
+	Options []option.RequestOption
+}
+
+// NewDomainStatisticService generates a new service that applies the given options
+// to each request. These options are applied after the parent client's options (if
+// there is one), and before any request-specific options.
+func NewDomainStatisticService(opts ...option.RequestOption) (r DomainStatisticService) {
+	r = DomainStatisticService{}
+	r.Options = opts
+	return
+}
+
+// Retrieve a domain's DDoS attacks
+func (r *DomainStatisticService) GetDDOSAttacks(ctx context.Context, domainID int64, query DomainStatisticGetDDOSAttacksParams, opts ...option.RequestOption) (res *pagination.OffsetPage[WaapDDOSAttack], err error) {
+	var raw *http.Response
+	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
+	path := fmt.Sprintf("waap/v1/domains/%v/ddos-attacks", domainID)
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// Retrieve a domain's DDoS attacks
+func (r *DomainStatisticService) GetDDOSAttacksAutoPaging(ctx context.Context, domainID int64, query DomainStatisticGetDDOSAttacksParams, opts ...option.RequestOption) *pagination.OffsetPageAutoPager[WaapDDOSAttack] {
+	return pagination.NewOffsetPageAutoPager(r.GetDDOSAttacks(ctx, domainID, query, opts...))
+}
+
+// Returns the top DDoS counts grouped by URL, User-Agent or IP
+func (r *DomainStatisticService) GetDDOSInfo(ctx context.Context, domainID int64, query DomainStatisticGetDDOSInfoParams, opts ...option.RequestOption) (res *pagination.OffsetPage[WaapDDOSInfo], err error) {
+	var raw *http.Response
+	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
+	path := fmt.Sprintf("waap/v1/domains/%v/ddos-info", domainID)
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// Returns the top DDoS counts grouped by URL, User-Agent or IP
+func (r *DomainStatisticService) GetDDOSInfoAutoPaging(ctx context.Context, domainID int64, query DomainStatisticGetDDOSInfoParams, opts ...option.RequestOption) *pagination.OffsetPageAutoPager[WaapDDOSInfo] {
+	return pagination.NewOffsetPageAutoPager(r.GetDDOSInfo(ctx, domainID, query, opts...))
+}
+
+// Retrieve an domain's event statistics
+func (r *DomainStatisticService) GetEventsAggregated(ctx context.Context, domainID int64, query DomainStatisticGetEventsAggregatedParams, opts ...option.RequestOption) (res *WaapEventStatistics, err error) {
+	opts = slices.Concat(r.Options, opts)
+	path := fmt.Sprintf("waap/v1/domains/%v/stats", domainID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
+	return res, err
+}
+
+// Retrieves all the available information for a request that matches a given
+// request id
+func (r *DomainStatisticService) GetRequestDetails(ctx context.Context, requestID string, query DomainStatisticGetRequestDetailsParams, opts ...option.RequestOption) (res *WaapRequestDetails, err error) {
+	opts = slices.Concat(r.Options, opts)
+	if requestID == "" {
+		err = errors.New("missing required request_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("waap/v1/domains/%v/requests/%s/details", query.DomainID, requestID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	return res, err
+}
+
+// A collection of total numbers of events with blocked results per criteria
+type WaapBlockedStatistics struct {
+	// A collection of event counts per action. The first item is the action's
+	// abbreviation/full action name, and the second item is the number of events
+	Action [][]WaapBlockedStatisticsActionUnion `json:"action" api:"required"`
+	// A collection of event counts per country of origin. The first item is the
+	// country's ISO 3166-1 alpha-2, and the second item is the number of events
+	Country [][]WaapBlockedStatisticsCountryUnion `json:"country" api:"required"`
+	// A collection of event counts per organization that owns the event's client IP.
+	// The first item is the organization's name, and the second item is the number of
+	// events
+	Org [][]WaapBlockedStatisticsOrgUnion `json:"org" api:"required"`
+	// A collection of event counts per rule that triggered the event. The first item
+	// is the rule's name, and the second item is the number of events
+	RuleName [][]WaapBlockedStatisticsRuleNameUnion `json:"rule_name" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Action      respjson.Field
+		Country     respjson.Field
+		Org         respjson.Field
+		RuleName    respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r WaapBlockedStatistics) RawJSON() string { return r.JSON.raw }
+func (r *WaapBlockedStatistics) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// WaapBlockedStatisticsActionUnion contains all possible properties and values
+// from [string], [int64].
+//
+// Use the methods beginning with 'As' to cast the union to one of its variants.
+//
+// If the underlying value is not a json object, one of the following properties
+// will be valid: OfString OfInt]
+type WaapBlockedStatisticsActionUnion struct {
+	// This field will be present if the value is a [string] instead of an object.
+	OfString string `json:",inline"`
+	// This field will be present if the value is a [int64] instead of an object.
+	OfInt int64 `json:",inline"`
+	JSON  struct {
+		OfString respjson.Field
+		OfInt    respjson.Field
+		raw      string
+	} `json:"-"`
+}
+
+func (u WaapBlockedStatisticsActionUnion) AsString() (v string) {
+	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
+	return
+}
+
+func (u WaapBlockedStatisticsActionUnion) AsInt() (v int64) {
+	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
+	return
+}
+
+// Returns the unmodified JSON received from the API
+func (u WaapBlockedStatisticsActionUnion) RawJSON() string { return u.JSON.raw }
+
+func (r *WaapBlockedStatisticsActionUnion) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// WaapBlockedStatisticsCountryUnion contains all possible properties and values
+// from [string], [int64].
+//
+// Use the methods beginning with 'As' to cast the union to one of its variants.
+//
+// If the underlying value is not a json object, one of the following properties
+// will be valid: OfString OfInt]
+type WaapBlockedStatisticsCountryUnion struct {
+	// This field will be present if the value is a [string] instead of an object.
+	OfString string `json:",inline"`
+	// This field will be present if the value is a [int64] instead of an object.
+	OfInt int64 `json:",inline"`
+	JSON  struct {
+		OfString respjson.Field
+		OfInt    respjson.Field
+		raw      string
+	} `json:"-"`
+}
+
+func (u WaapBlockedStatisticsCountryUnion) AsString() (v string) {
+	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
+	return
+}
+
+func (u WaapBlockedStatisticsCountryUnion) AsInt() (v int64) {
+	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
+	return
+}
+
+// Returns the unmodified JSON received from the API
+func (u WaapBlockedStatisticsCountryUnion) RawJSON() string { return u.JSON.raw }
+
+func (r *WaapBlockedStatisticsCountryUnion) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// WaapBlockedStatisticsOrgUnion contains all possible properties and values from
+// [string], [int64].
+//
+// Use the methods beginning with 'As' to cast the union to one of its variants.
+//
+// If the underlying value is not a json object, one of the following properties
+// will be valid: OfString OfInt]
+type WaapBlockedStatisticsOrgUnion struct {
+	// This field will be present if the value is a [string] instead of an object.
+	OfString string `json:",inline"`
+	// This field will be present if the value is a [int64] instead of an object.
+	OfInt int64 `json:",inline"`
+	JSON  struct {
+		OfString respjson.Field
+		OfInt    respjson.Field
+		raw      string
+	} `json:"-"`
+}
+
+func (u WaapBlockedStatisticsOrgUnion) AsString() (v string) {
+	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
+	return
+}
+
+func (u WaapBlockedStatisticsOrgUnion) AsInt() (v int64) {
+	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
+	return
+}
+
+// Returns the unmodified JSON received from the API
+func (u WaapBlockedStatisticsOrgUnion) RawJSON() string { return u.JSON.raw }
+
+func (r *WaapBlockedStatisticsOrgUnion) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// WaapBlockedStatisticsRuleNameUnion contains all possible properties and values
+// from [string], [int64].
+//
+// Use the methods beginning with 'As' to cast the union to one of its variants.
+//
+// If the underlying value is not a json object, one of the following properties
+// will be valid: OfString OfInt]
+type WaapBlockedStatisticsRuleNameUnion struct {
+	// This field will be present if the value is a [string] instead of an object.
+	OfString string `json:",inline"`
+	// This field will be present if the value is a [int64] instead of an object.
+	OfInt int64 `json:",inline"`
+	JSON  struct {
+		OfString respjson.Field
+		OfInt    respjson.Field
+		raw      string
+	} `json:"-"`
+}
+
+func (u WaapBlockedStatisticsRuleNameUnion) AsString() (v string) {
+	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
+	return
+}
+
+func (u WaapBlockedStatisticsRuleNameUnion) AsInt() (v int64) {
+	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
+	return
+}
+
+// Returns the unmodified JSON received from the API
+func (u WaapBlockedStatisticsRuleNameUnion) RawJSON() string { return u.JSON.raw }
+
+func (r *WaapBlockedStatisticsRuleNameUnion) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// A collection of total numbers of events per criteria
+type WaapCountStatistics struct {
+	// A collection of event counts per action. The first item is the action's
+	// abbreviation/full action name, and the second item is the number of events
+	Action [][]WaapCountStatisticsActionUnion `json:"action" api:"required"`
+	// A collection of event counts per country of origin. The first item is the
+	// country's ISO 3166-1 alpha-2, and the second item is the number of events
+	Country [][]WaapCountStatisticsCountryUnion `json:"country" api:"required"`
+	// A collection of event counts per organization that owns the event's client IP.
+	// The first item is the organization's name, and the second item is the number of
+	// events
+	Org [][]WaapCountStatisticsOrgUnion `json:"org" api:"required"`
+	// A collection of event counts per rule that triggered the event. The first item
+	// is the rule's name, and the second item is the number of events
+	RuleName [][]WaapCountStatisticsRuleNameUnion `json:"rule_name" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Action      respjson.Field
+		Country     respjson.Field
+		Org         respjson.Field
+		RuleName    respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r WaapCountStatistics) RawJSON() string { return r.JSON.raw }
+func (r *WaapCountStatistics) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// WaapCountStatisticsActionUnion contains all possible properties and values from
+// [string], [int64].
+//
+// Use the methods beginning with 'As' to cast the union to one of its variants.
+//
+// If the underlying value is not a json object, one of the following properties
+// will be valid: OfString OfInt]
+type WaapCountStatisticsActionUnion struct {
+	// This field will be present if the value is a [string] instead of an object.
+	OfString string `json:",inline"`
+	// This field will be present if the value is a [int64] instead of an object.
+	OfInt int64 `json:",inline"`
+	JSON  struct {
+		OfString respjson.Field
+		OfInt    respjson.Field
+		raw      string
+	} `json:"-"`
+}
+
+func (u WaapCountStatisticsActionUnion) AsString() (v string) {
+	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
+	return
+}
+
+func (u WaapCountStatisticsActionUnion) AsInt() (v int64) {
+	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
+	return
+}
+
+// Returns the unmodified JSON received from the API
+func (u WaapCountStatisticsActionUnion) RawJSON() string { return u.JSON.raw }
+
+func (r *WaapCountStatisticsActionUnion) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// WaapCountStatisticsCountryUnion contains all possible properties and values from
+// [string], [int64].
+//
+// Use the methods beginning with 'As' to cast the union to one of its variants.
+//
+// If the underlying value is not a json object, one of the following properties
+// will be valid: OfString OfInt]
+type WaapCountStatisticsCountryUnion struct {
+	// This field will be present if the value is a [string] instead of an object.
+	OfString string `json:",inline"`
+	// This field will be present if the value is a [int64] instead of an object.
+	OfInt int64 `json:",inline"`
+	JSON  struct {
+		OfString respjson.Field
+		OfInt    respjson.Field
+		raw      string
+	} `json:"-"`
+}
+
+func (u WaapCountStatisticsCountryUnion) AsString() (v string) {
+	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
+	return
+}
+
+func (u WaapCountStatisticsCountryUnion) AsInt() (v int64) {
+	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
+	return
+}
+
+// Returns the unmodified JSON received from the API
+func (u WaapCountStatisticsCountryUnion) RawJSON() string { return u.JSON.raw }
+
+func (r *WaapCountStatisticsCountryUnion) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// WaapCountStatisticsOrgUnion contains all possible properties and values from
+// [string], [int64].
+//
+// Use the methods beginning with 'As' to cast the union to one of its variants.
+//
+// If the underlying value is not a json object, one of the following properties
+// will be valid: OfString OfInt]
+type WaapCountStatisticsOrgUnion struct {
+	// This field will be present if the value is a [string] instead of an object.
+	OfString string `json:",inline"`
+	// This field will be present if the value is a [int64] instead of an object.
+	OfInt int64 `json:",inline"`
+	JSON  struct {
+		OfString respjson.Field
+		OfInt    respjson.Field
+		raw      string
+	} `json:"-"`
+}
+
+func (u WaapCountStatisticsOrgUnion) AsString() (v string) {
+	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
+	return
+}
+
+func (u WaapCountStatisticsOrgUnion) AsInt() (v int64) {
+	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
+	return
+}
+
+// Returns the unmodified JSON received from the API
+func (u WaapCountStatisticsOrgUnion) RawJSON() string { return u.JSON.raw }
+
+func (r *WaapCountStatisticsOrgUnion) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// WaapCountStatisticsRuleNameUnion contains all possible properties and values
+// from [string], [int64].
+//
+// Use the methods beginning with 'As' to cast the union to one of its variants.
+//
+// If the underlying value is not a json object, one of the following properties
+// will be valid: OfString OfInt]
+type WaapCountStatisticsRuleNameUnion struct {
+	// This field will be present if the value is a [string] instead of an object.
+	OfString string `json:",inline"`
+	// This field will be present if the value is a [int64] instead of an object.
+	OfInt int64 `json:",inline"`
+	JSON  struct {
+		OfString respjson.Field
+		OfInt    respjson.Field
+		raw      string
+	} `json:"-"`
+}
+
+func (u WaapCountStatisticsRuleNameUnion) AsString() (v string) {
+	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
+	return
+}
+
+func (u WaapCountStatisticsRuleNameUnion) AsInt() (v int64) {
+	apijson.UnmarshalRoot(json.RawMessage(u.JSON.raw), &v)
+	return
+}
+
+// Returns the unmodified JSON received from the API
+func (u WaapCountStatisticsRuleNameUnion) RawJSON() string { return u.JSON.raw }
+
+func (r *WaapCountStatisticsRuleNameUnion) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type WaapDDOSAttack struct {
+	// End time of DDoS attack
+	EndTime time.Time `json:"end_time" api:"nullable" format:"date-time"`
+	// Start time of DDoS attack
+	StartTime time.Time `json:"start_time" api:"nullable" format:"date-time"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		EndTime     respjson.Field
+		StartTime   respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r WaapDDOSAttack) RawJSON() string { return r.JSON.raw }
+func (r *WaapDDOSAttack) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type WaapDDOSInfo struct {
+	// The number of requests made
+	Count int64 `json:"count" api:"required"`
+	// The value for the grouped by type
+	Identity string `json:"identity" api:"required"`
+	// Any of "URL", "IP", "User-Agent".
+	Type WaapDDOSInfoType `json:"type" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Count       respjson.Field
+		Identity    respjson.Field
+		Type        respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r WaapDDOSInfo) RawJSON() string { return r.JSON.raw }
+func (r *WaapDDOSInfo) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type WaapDDOSInfoType string
+
+const (
+	WaapDDOSInfoTypeURL       WaapDDOSInfoType = "URL"
+	WaapDDOSInfoTypeIP        WaapDDOSInfoType = "IP"
+	WaapDDOSInfoTypeUserAgent WaapDDOSInfoType = "User-Agent"
+)
+
+// A collection of event metrics over a time span
+type WaapEventStatistics struct {
+	// A collection of total numbers of events with blocked results per criteria
+	Blocked WaapBlockedStatistics `json:"blocked" api:"required"`
+	// A collection of total numbers of events per criteria
+	Count WaapCountStatistics `json:"count" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Blocked     respjson.Field
+		Count       respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r WaapEventStatistics) RawJSON() string { return r.JSON.raw }
+func (r *WaapEventStatistics) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Request's details used when displaying a single request.
+type WaapRequestDetails struct {
+	// Request ID
+	ID string `json:"id" api:"required"`
+	// Request action
+	Action string `json:"action" api:"required"`
+	// List of common tags
+	CommonTags []WaapRequestDetailsCommonTag `json:"common_tags" api:"required"`
+	// Content type of request
+	ContentType string `json:"content_type" api:"required"`
+	// Domain name
+	Domain string `json:"domain" api:"required"`
+	// Status code for http request
+	HTTPStatusCode int64 `json:"http_status_code" api:"required"`
+	// HTTP version of request
+	HTTPVersion string `json:"http_version" api:"required"`
+	// ID of challenge that was generated
+	IncidentID string `json:"incident_id" api:"required"`
+	// Request method
+	Method string `json:"method" api:"required"`
+	// Network details
+	Network WaapRequestDetailsNetwork `json:"network" api:"required"`
+	// Request path
+	Path string `json:"path" api:"required"`
+	// List of shield tags
+	PatternMatchedTags []WaapRequestDetailsPatternMatchedTag `json:"pattern_matched_tags" api:"required"`
+	// The query string of the request
+	QueryString string `json:"query_string" api:"required"`
+	// Reference ID to identify user sanction
+	ReferenceID string `json:"reference_id" api:"required"`
+	// HTTP request headers
+	RequestHeaders map[string]any `json:"request_headers" api:"required"`
+	// The time of the request
+	RequestTime time.Time `json:"request_time" api:"required" format:"date-time"`
+	// The type of the request that generated an event
+	RequestType string `json:"request_type" api:"required"`
+	// The real domain name
+	RequestedDomain string `json:"requested_domain" api:"required"`
+	// Time took to process all request
+	ResponseTime string `json:"response_time" api:"required"`
+	// The result of a request
+	//
+	// Any of "passed", "blocked", "suppressed", "".
+	Result WaapRequestDetailsResult `json:"result" api:"required"`
+	// ID of the triggered rule
+	RuleID string `json:"rule_id" api:"required"`
+	// Name of the triggered rule
+	RuleName string `json:"rule_name" api:"required"`
+	// The URI scheme of the request that generated an event
+	Scheme string `json:"scheme" api:"required"`
+	// The session ID associated with the request.
+	SessionID string `json:"session_id" api:"required"`
+	// The number requests in session
+	SessionRequestCount string `json:"session_request_count" api:"required"`
+	// List of traffic types
+	TrafficTypes []string `json:"traffic_types" api:"required"`
+	// User agent
+	UserAgent WaapRequestDetailsUserAgent `json:"user_agent" api:"required"`
+	// The decision made for processing the request through the WAAP.
+	//
+	// Any of "passed", "allowed", "monitored", "blocked", "".
+	Decision WaapRequestDetailsDecision `json:"decision"`
+	// Rules that matched the request and triggered the event decision.
+	Detector []WaapRequestDetailsDetector `json:"detector"`
+	// JA3 TLS client fingerprint as a 32-character lowercase hexadecimal MD5 hash, or
+	// an empty string when the record has no JA3 value.
+	Ja3 string `json:"ja3"`
+	// JA4 TLS client fingerprint in the form `<ja4_a>_<ja4_b>_<ja4_c>` (a 10-character
+	// prefix and two 12-character lowercase hexadecimal hashes), or an empty string
+	// when the record has no JA4 value.
+	Ja4 string `json:"ja4"`
+	// An optional action that may be applied in addition to the primary decision.
+	//
+	// Any of "captcha", "challenge", "".
+	OptionalAction WaapRequestDetailsOptionalAction `json:"optional_action"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		ID                  respjson.Field
+		Action              respjson.Field
+		CommonTags          respjson.Field
+		ContentType         respjson.Field
+		Domain              respjson.Field
+		HTTPStatusCode      respjson.Field
+		HTTPVersion         respjson.Field
+		IncidentID          respjson.Field
+		Method              respjson.Field
+		Network             respjson.Field
+		Path                respjson.Field
+		PatternMatchedTags  respjson.Field
+		QueryString         respjson.Field
+		ReferenceID         respjson.Field
+		RequestHeaders      respjson.Field
+		RequestTime         respjson.Field
+		RequestType         respjson.Field
+		RequestedDomain     respjson.Field
+		ResponseTime        respjson.Field
+		Result              respjson.Field
+		RuleID              respjson.Field
+		RuleName            respjson.Field
+		Scheme              respjson.Field
+		SessionID           respjson.Field
+		SessionRequestCount respjson.Field
+		TrafficTypes        respjson.Field
+		UserAgent           respjson.Field
+		Decision            respjson.Field
+		Detector            respjson.Field
+		Ja3                 respjson.Field
+		Ja4                 respjson.Field
+		OptionalAction      respjson.Field
+		ExtraFields         map[string]respjson.Field
+		raw                 string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r WaapRequestDetails) RawJSON() string { return r.JSON.raw }
+func (r *WaapRequestDetails) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Common tag details
+type WaapRequestDetailsCommonTag struct {
+	// Tag description information
+	Description string `json:"description" api:"required"`
+	// The tag's display name
+	DisplayName string `json:"display_name" api:"required"`
+	// Tag name
+	Tag string `json:"tag" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Description respjson.Field
+		DisplayName respjson.Field
+		Tag         respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r WaapRequestDetailsCommonTag) RawJSON() string { return r.JSON.raw }
+func (r *WaapRequestDetailsCommonTag) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Network details
+type WaapRequestDetailsNetwork struct {
+	// Client IP
+	ClientIP string `json:"client_ip" api:"required"`
+	// Country code
+	Country string `json:"country" api:"required"`
+	// Organization details
+	Organization WaapRequestDetailsNetworkOrganization `json:"organization" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		ClientIP     respjson.Field
+		Country      respjson.Field
+		Organization respjson.Field
+		ExtraFields  map[string]respjson.Field
+		raw          string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r WaapRequestDetailsNetwork) RawJSON() string { return r.JSON.raw }
+func (r *WaapRequestDetailsNetwork) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Organization details
+type WaapRequestDetailsNetworkOrganization struct {
+	// Organization name
+	Name string `json:"name" api:"required"`
+	// Network range
+	Subnet string `json:"subnet" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Name        respjson.Field
+		Subnet      respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r WaapRequestDetailsNetworkOrganization) RawJSON() string { return r.JSON.raw }
+func (r *WaapRequestDetailsNetworkOrganization) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Pattern matched tag details
+type WaapRequestDetailsPatternMatchedTag struct {
+	// Tag description information
+	Description string `json:"description" api:"required"`
+	// The tag's display name
+	DisplayName string `json:"display_name" api:"required"`
+	// The phase in which the tag was triggered: access -> Request, `header_filter` ->
+	// `response_header`, `body_filter` -> `response_body`
+	ExecutionPhase string `json:"execution_phase" api:"required"`
+	// The entity to which the variable that triggered the tag belong to. For example:
+	// `request_headers`, uri, cookies etc.
+	Field string `json:"field" api:"required"`
+	// The name of the variable which holds the value that triggered the tag
+	FieldName string `json:"field_name" api:"required"`
+	// The name of the detected regexp pattern
+	PatternName string `json:"pattern_name" api:"required"`
+	// The pattern which triggered the tag
+	PatternValue string `json:"pattern_value" api:"required"`
+	// Tag name
+	Tag string `json:"tag" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Description    respjson.Field
+		DisplayName    respjson.Field
+		ExecutionPhase respjson.Field
+		Field          respjson.Field
+		FieldName      respjson.Field
+		PatternName    respjson.Field
+		PatternValue   respjson.Field
+		Tag            respjson.Field
+		ExtraFields    map[string]respjson.Field
+		raw            string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r WaapRequestDetailsPatternMatchedTag) RawJSON() string { return r.JSON.raw }
+func (r *WaapRequestDetailsPatternMatchedTag) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The result of a request
+type WaapRequestDetailsResult string
+
+const (
+	WaapRequestDetailsResultPassed     WaapRequestDetailsResult = "passed"
+	WaapRequestDetailsResultBlocked    WaapRequestDetailsResult = "blocked"
+	WaapRequestDetailsResultSuppressed WaapRequestDetailsResult = "suppressed"
+	WaapRequestDetailsResultEmpty      WaapRequestDetailsResult = ""
+)
+
+// User agent
+type WaapRequestDetailsUserAgent struct {
+	// User agent browser
+	BaseBrowser string `json:"base_browser" api:"required"`
+	// User agent browser version
+	BaseBrowserVersion string `json:"base_browser_version" api:"required"`
+	// Client from User agent header
+	Client string `json:"client" api:"required"`
+	// User agent client type
+	ClientType string `json:"client_type" api:"required"`
+	// User agent client version
+	ClientVersion string `json:"client_version" api:"required"`
+	// User agent cpu
+	CPU string `json:"cpu" api:"required"`
+	// User agent device
+	Device string `json:"device" api:"required"`
+	// User agent device type
+	DeviceType string `json:"device_type" api:"required"`
+	// User agent
+	FullString string `json:"full_string" api:"required"`
+	// User agent os
+	Os string `json:"os" api:"required"`
+	// User agent engine
+	RenderingEngine string `json:"rendering_engine" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		BaseBrowser        respjson.Field
+		BaseBrowserVersion respjson.Field
+		Client             respjson.Field
+		ClientType         respjson.Field
+		ClientVersion      respjson.Field
+		CPU                respjson.Field
+		Device             respjson.Field
+		DeviceType         respjson.Field
+		FullString         respjson.Field
+		Os                 respjson.Field
+		RenderingEngine    respjson.Field
+		ExtraFields        map[string]respjson.Field
+		raw                string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r WaapRequestDetailsUserAgent) RawJSON() string { return r.JSON.raw }
+func (r *WaapRequestDetailsUserAgent) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// The decision made for processing the request through the WAAP.
+type WaapRequestDetailsDecision string
+
+const (
+	WaapRequestDetailsDecisionPassed    WaapRequestDetailsDecision = "passed"
+	WaapRequestDetailsDecisionAllowed   WaapRequestDetailsDecision = "allowed"
+	WaapRequestDetailsDecisionMonitored WaapRequestDetailsDecision = "monitored"
+	WaapRequestDetailsDecisionBlocked   WaapRequestDetailsDecision = "blocked"
+	WaapRequestDetailsDecisionEmpty     WaapRequestDetailsDecision = ""
+)
+
+// A rule that matched the request, with the matched subject and content.
+type WaapRequestDetailsDetector struct {
+	// The content that matched the rule
+	MatchedContent string `json:"matched_content" api:"required"`
+	// ID of the rule that matched
+	RuleID string `json:"rule_id" api:"required"`
+	// Name of the rule that matched
+	RuleName string `json:"rule_name" api:"required"`
+	// The name of the variable whose value triggered the rule
+	SubjectField string `json:"subject_field" api:"required"`
+	// The entity to which the matched variable belongs (e.g. `request_headers`, uri,
+	// cookies)
+	SubjectType string `json:"subject_type" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		MatchedContent respjson.Field
+		RuleID         respjson.Field
+		RuleName       respjson.Field
+		SubjectField   respjson.Field
+		SubjectType    respjson.Field
+		ExtraFields    map[string]respjson.Field
+		raw            string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r WaapRequestDetailsDetector) RawJSON() string { return r.JSON.raw }
+func (r *WaapRequestDetailsDetector) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// An optional action that may be applied in addition to the primary decision.
+type WaapRequestDetailsOptionalAction string
+
+const (
+	WaapRequestDetailsOptionalActionCaptcha   WaapRequestDetailsOptionalAction = "captcha"
+	WaapRequestDetailsOptionalActionChallenge WaapRequestDetailsOptionalAction = "challenge"
+	WaapRequestDetailsOptionalActionEmpty     WaapRequestDetailsOptionalAction = ""
+)
+
+type DomainStatisticGetDDOSAttacksParams struct {
+	// Filter attacks up to a specified end date in ISO 8601 format
+	EndTime param.Opt[time.Time] `query:"end_time,omitzero" format:"date-time" json:"-"`
+	// Filter attacks starting from a specified date in ISO 8601 format
+	StartTime param.Opt[time.Time] `query:"start_time,omitzero" format:"date-time" json:"-"`
+	// Number of items to return
+	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
+	// Number of items to skip
+	Offset param.Opt[int64] `query:"offset,omitzero" json:"-"`
+	// Sort the response by given field.
+	//
+	// Any of "start_time", "-start_time", "end_time", "-end_time".
+	Ordering DomainStatisticGetDDOSAttacksParamsOrdering `query:"ordering,omitzero" json:"-"`
+	paramObj
+}
+
+// URLQuery serializes [DomainStatisticGetDDOSAttacksParams]'s query parameters as
+// `url.Values`.
+func (r DomainStatisticGetDDOSAttacksParams) URLQuery() (v url.Values, err error) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatRepeat,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+// Sort the response by given field.
+type DomainStatisticGetDDOSAttacksParamsOrdering string
+
+const (
+	DomainStatisticGetDDOSAttacksParamsOrderingStartTime      DomainStatisticGetDDOSAttacksParamsOrdering = "start_time"
+	DomainStatisticGetDDOSAttacksParamsOrderingMinusStartTime DomainStatisticGetDDOSAttacksParamsOrdering = "-start_time"
+	DomainStatisticGetDDOSAttacksParamsOrderingEndTime        DomainStatisticGetDDOSAttacksParamsOrdering = "end_time"
+	DomainStatisticGetDDOSAttacksParamsOrderingMinusEndTime   DomainStatisticGetDDOSAttacksParamsOrdering = "-end_time"
+)
+
+type DomainStatisticGetDDOSInfoParams struct {
+	// The identity of the requests to group by
+	//
+	// Any of "URL", "User-Agent", "IP".
+	GroupBy DomainStatisticGetDDOSInfoParamsGroupBy `query:"group_by,omitzero" api:"required" json:"-"`
+	// Filter data items starting from a specified date in ISO 8601 format
+	Start string `query:"start" api:"required" json:"-"`
+	// Filter data items up to a specified end date in ISO 8601 format. If not
+	// provided, defaults to the current date and time.
+	End param.Opt[string] `query:"end,omitzero" json:"-"`
+	// Number of items to return
+	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
+	// Number of items to skip
+	Offset param.Opt[int64] `query:"offset,omitzero" json:"-"`
+	paramObj
+}
+
+// URLQuery serializes [DomainStatisticGetDDOSInfoParams]'s query parameters as
+// `url.Values`.
+func (r DomainStatisticGetDDOSInfoParams) URLQuery() (v url.Values, err error) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatRepeat,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+// The identity of the requests to group by
+type DomainStatisticGetDDOSInfoParamsGroupBy string
+
+const (
+	DomainStatisticGetDDOSInfoParamsGroupByURL       DomainStatisticGetDDOSInfoParamsGroupBy = "URL"
+	DomainStatisticGetDDOSInfoParamsGroupByUserAgent DomainStatisticGetDDOSInfoParamsGroupBy = "User-Agent"
+	DomainStatisticGetDDOSInfoParamsGroupByIP        DomainStatisticGetDDOSInfoParamsGroupBy = "IP"
+)
+
+type DomainStatisticGetEventsAggregatedParams struct {
+	// Filter data items starting from a specified date in ISO 8601 format
+	Start string `query:"start" api:"required" json:"-"`
+	// Filter data items up to a specified end date in ISO 8601 format. If not
+	// provided, defaults to the current date and time.
+	End param.Opt[string] `query:"end,omitzero" json:"-"`
+	// A list of action names to filter on.
+	//
+	// Any of "allow", "block", "captcha", "handshake".
+	Action []string `query:"action,omitzero" json:"-"`
+	// A list of IPs to filter event statistics.
+	IP []string `query:"ip,omitzero" format:"ipvanyaddress" json:"-"`
+	// A list of reference IDs to filter event statistics.
+	ReferenceID []string `query:"reference_id,omitzero" json:"-"`
+	// A list of results to filter event statistics.
+	//
+	// Any of "passed", "blocked", "monitored", "allowed".
+	Result []string `query:"result,omitzero" json:"-"`
+	paramObj
+}
+
+// URLQuery serializes [DomainStatisticGetEventsAggregatedParams]'s query
+// parameters as `url.Values`.
+func (r DomainStatisticGetEventsAggregatedParams) URLQuery() (v url.Values, err error) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatRepeat,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type DomainStatisticGetRequestDetailsParams struct {
+	// The domain ID
+	DomainID int64 `path:"domain_id" api:"required" json:"-"`
+	paramObj
+}

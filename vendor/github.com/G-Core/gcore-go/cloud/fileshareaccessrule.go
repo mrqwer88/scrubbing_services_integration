@@ -1,0 +1,258 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+package cloud
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"net/http"
+	"net/url"
+	"slices"
+
+	"github.com/G-Core/gcore-go/internal/apijson"
+	"github.com/G-Core/gcore-go/internal/apiquery"
+	"github.com/G-Core/gcore-go/internal/requestconfig"
+	"github.com/G-Core/gcore-go/option"
+	"github.com/G-Core/gcore-go/packages/param"
+	"github.com/G-Core/gcore-go/packages/respjson"
+)
+
+// File share access rules control which IP addresses can mount a file share and
+// their permissions (read-only or read-write).
+//
+// FileShareAccessRuleService contains methods and other services that help with
+// interacting with the gcore API.
+//
+// Note, unlike clients, this service does not read variables from the environment
+// automatically. You should not instantiate this service directly, and instead use
+// the [NewFileShareAccessRuleService] method instead.
+type FileShareAccessRuleService struct {
+	Options []option.RequestOption
+}
+
+// NewFileShareAccessRuleService generates a new service that applies the given
+// options to each request. These options are applied after the parent client's
+// options (if there is one), and before any request-specific options.
+func NewFileShareAccessRuleService(opts ...option.RequestOption) (r FileShareAccessRuleService) {
+	r = FileShareAccessRuleService{}
+	r.Options = opts
+	return
+}
+
+// Create file share access rule
+func (r *FileShareAccessRuleService) New(ctx context.Context, fileShareID string, params FileShareAccessRuleNewParams, opts ...option.RequestOption) (res *AccessRule, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&params.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&params.RegionID, precfg.CloudRegionID)
+	if !params.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !params.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	if fileShareID == "" {
+		err = errors.New("missing required file_share_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v1/file_shares/%v/%v/%s/access_rule", params.ProjectID.Value, params.RegionID.Value, fileShareID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, params, &res, opts...)
+	return res, err
+}
+
+// List file share access rules
+func (r *FileShareAccessRuleService) List(ctx context.Context, fileShareID string, params FileShareAccessRuleListParams, opts ...option.RequestOption) (res *AccessRuleList, err error) {
+	opts = slices.Concat(r.Options, opts)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return nil, err
+	}
+	requestconfig.UseDefaultParam(&params.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&params.RegionID, precfg.CloudRegionID)
+	if !params.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return nil, err
+	}
+	if !params.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return nil, err
+	}
+	if fileShareID == "" {
+		err = errors.New("missing required file_share_id parameter")
+		return nil, err
+	}
+	path := fmt.Sprintf("cloud/v1/file_shares/%v/%v/%s/access_rule", params.ProjectID.Value, params.RegionID.Value, fileShareID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, params, &res, opts...)
+	return res, err
+}
+
+// Delete file share access rule
+func (r *FileShareAccessRuleService) Delete(ctx context.Context, accessRuleID string, body FileShareAccessRuleDeleteParams, opts ...option.RequestOption) (err error) {
+	opts = slices.Concat(r.Options, opts)
+	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
+	precfg, err := requestconfig.PreRequestOptions(opts...)
+	if err != nil {
+		return err
+	}
+	requestconfig.UseDefaultParam(&body.ProjectID, precfg.CloudProjectID)
+	requestconfig.UseDefaultParam(&body.RegionID, precfg.CloudRegionID)
+	if !body.ProjectID.Valid() {
+		err = errors.New("missing required project_id parameter")
+		return err
+	}
+	if !body.RegionID.Valid() {
+		err = errors.New("missing required region_id parameter")
+		return err
+	}
+	if body.FileShareID == "" {
+		err = errors.New("missing required file_share_id parameter")
+		return err
+	}
+	if accessRuleID == "" {
+		err = errors.New("missing required access_rule_id parameter")
+		return err
+	}
+	path := fmt.Sprintf("cloud/v1/file_shares/%v/%v/%s/access_rule/%s", body.ProjectID.Value, body.RegionID.Value, body.FileShareID, accessRuleID)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, nil, opts...)
+	return err
+}
+
+type AccessRule struct {
+	// Access Rule ID
+	ID string `json:"id" api:"required" format:"uuid4"`
+	// Access mode
+	//
+	// Any of "ro", "rw".
+	AccessLevel AccessRuleAccessLevel `json:"access_level" api:"required"`
+	// Source IP or network
+	AccessTo string `json:"access_to" api:"required" format:"ipvanyaddress"`
+	// Access Rule state
+	//
+	// Any of "active", "applying", "denying", "error", "new", "queued_to_apply",
+	// "queued_to_deny".
+	State AccessRuleState `json:"state" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		ID          respjson.Field
+		AccessLevel respjson.Field
+		AccessTo    respjson.Field
+		State       respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r AccessRule) RawJSON() string { return r.JSON.raw }
+func (r *AccessRule) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Access mode
+type AccessRuleAccessLevel string
+
+const (
+	AccessRuleAccessLevelRo AccessRuleAccessLevel = "ro"
+	AccessRuleAccessLevelRw AccessRuleAccessLevel = "rw"
+)
+
+// Access Rule state
+type AccessRuleState string
+
+const (
+	AccessRuleStateActive        AccessRuleState = "active"
+	AccessRuleStateApplying      AccessRuleState = "applying"
+	AccessRuleStateDenying       AccessRuleState = "denying"
+	AccessRuleStateError         AccessRuleState = "error"
+	AccessRuleStateNew           AccessRuleState = "new"
+	AccessRuleStateQueuedToApply AccessRuleState = "queued_to_apply"
+	AccessRuleStateQueuedToDeny  AccessRuleState = "queued_to_deny"
+)
+
+type AccessRuleList struct {
+	// Number of objects
+	Count int64 `json:"count" api:"required"`
+	// Objects
+	Results []AccessRule `json:"results" api:"required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Count       respjson.Field
+		Results     respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r AccessRuleList) RawJSON() string { return r.JSON.raw }
+func (r *AccessRuleList) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type FileShareAccessRuleNewParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Region ID
+	RegionID param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+	// Access mode
+	//
+	// Any of "ro", "rw".
+	AccessMode FileShareAccessRuleNewParamsAccessMode `json:"access_mode,omitzero" api:"required"`
+	// Source IP or network
+	IPAddress string `json:"ip_address" api:"required" format:"ipvanyaddress"`
+	paramObj
+}
+
+func (r FileShareAccessRuleNewParams) MarshalJSON() (data []byte, err error) {
+	type shadow FileShareAccessRuleNewParams
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+func (r *FileShareAccessRuleNewParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Access mode
+type FileShareAccessRuleNewParamsAccessMode string
+
+const (
+	FileShareAccessRuleNewParamsAccessModeRo FileShareAccessRuleNewParamsAccessMode = "ro"
+	FileShareAccessRuleNewParamsAccessModeRw FileShareAccessRuleNewParamsAccessMode = "rw"
+)
+
+type FileShareAccessRuleListParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Region ID
+	RegionID param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+	// Optional. Limit the number of returned items
+	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
+	// Optional. Offset value is used to exclude the first set of records from the
+	// result
+	Offset param.Opt[int64] `query:"offset,omitzero" json:"-"`
+	paramObj
+}
+
+// URLQuery serializes [FileShareAccessRuleListParams]'s query parameters as
+// `url.Values`.
+func (r FileShareAccessRuleListParams) URLQuery() (v url.Values, err error) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatRepeat,
+		NestedFormat: apiquery.NestedQueryFormatDots,
+	})
+}
+
+type FileShareAccessRuleDeleteParams struct {
+	// Project ID
+	ProjectID param.Opt[int64] `path:"project_id,omitzero" api:"required" json:"-"`
+	// Region ID
+	RegionID param.Opt[int64] `path:"region_id,omitzero" api:"required" json:"-"`
+	// File Share ID
+	FileShareID string `path:"file_share_id" api:"required" format:"uuid4" json:"-"`
+	paramObj
+}
