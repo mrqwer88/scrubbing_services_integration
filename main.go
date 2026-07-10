@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
@@ -92,7 +91,7 @@ func main() {
 
 	configuration_file_path := "/etc/fastnetmon_scrubbing_services_integration.json"
 
-	conf_file_data, err := ioutil.ReadFile(configuration_file_path)
+	conf_file_data, err := os.ReadFile(configuration_file_path)
 
 	if err != nil {
 		fast_logger.Fatalf("Cannot open configuration file: %v", configuration_file_path)
@@ -122,7 +121,7 @@ func main() {
 	fast_logger.SetOutput(multi_writer)
 
 	fast_logger.Printf("Prepared to read data from stdin")
-	stdin_data, err := ioutil.ReadAll(os.Stdin)
+	stdin_data, err := io.ReadAll(os.Stdin)
 
 	if err != nil {
 		fast_logger.Fatal("Cannot read data from stdin")
@@ -485,7 +484,7 @@ func f5_xc_announce_route(f5_xc_api_url string, certificate_path string, certifi
 
 	if p12_certificate_path != "" {
 
-		p12_data, err := ioutil.ReadFile(p12_certificate_path)
+		p12_data, err := os.ReadFile(p12_certificate_path)
 
 		if err != nil {
 			return fmt.Errorf("Cannot read P12 certificate %s: %v", p12_certificate_path, err)
@@ -608,7 +607,7 @@ func f5_xc_announce_route(f5_xc_api_url string, certificate_path string, certifi
 		return fmt.Errorf("Cannot make POST query: %v", err)
 	}
 
-	response_body_raw, _ := ioutil.ReadAll(res.Body)
+	response_body_raw, _ := io.ReadAll(res.Body)
 
 	response_body := string(response_body_raw)
 
@@ -742,7 +741,7 @@ func f5_announce_route(auth_token string, prefix string, withdrawal bool) error 
 	}
 
 	if res.StatusCode == expected_status_code {
-		res_body, err := ioutil.ReadAll(res.Body)
+		res_body, err := io.ReadAll(res.Body)
 
 		if err != nil {
 			return fmt.Errorf("Cannot read body for successful answer: %v", err)
@@ -783,7 +782,7 @@ func f5_announce_route(auth_token string, prefix string, withdrawal bool) error 
 
 		*/
 
-		res_body, _ := ioutil.ReadAll(res.Body)
+		res_body, _ := io.ReadAll(res.Body)
 
 		return fmt.Errorf("Announce failed with code %d. Body: %s", res.StatusCode, res_body)
 	}
@@ -820,7 +819,7 @@ func path_announce_route(auth_token string, prefix string, withdrawal bool) erro
 	}
 
 	if res.StatusCode == 202 {
-		res_body, err := ioutil.ReadAll(res.Body)
+		res_body, err := io.ReadAll(res.Body)
 
 		if err != nil {
 			return fmt.Errorf("Cannot read body for successful answer: %v", err)
@@ -836,7 +835,7 @@ func path_announce_route(auth_token string, prefix string, withdrawal bool) erro
 	} else {
 		// According to documentation it can be 401, 404, 422
 		// We ignore error as we OK with empty body
-		res_body, _ := ioutil.ReadAll(res.Body)
+		res_body, _ := io.ReadAll(res.Body)
 
 		return fmt.Errorf("Auth failed with code %d. Body: %s", res.StatusCode, res_body)
 	}
@@ -895,7 +894,7 @@ func path_auth(username string, password string, fake_auth bool) (string, error)
 	}
 
 	if res.StatusCode == 200 {
-		res_body, err := ioutil.ReadAll(res.Body)
+		res_body, err := io.ReadAll(res.Body)
 
 		if err != nil {
 			return "", fmt.Errorf("Cannot read body for successful answer: %v", err)
@@ -921,7 +920,7 @@ func path_auth(username string, password string, fake_auth bool) (string, error)
 	} else {
 		// According to documentation it can be 401 or 422
 		// We ignore error as we OK with empty body
-		res_body, _ := ioutil.ReadAll(res.Body)
+		res_body, _ := io.ReadAll(res.Body)
 
 		return "", fmt.Errorf("Auth failed with code %d. Body: %s", res.StatusCode, res_body)
 	}
@@ -1000,7 +999,7 @@ func f5_auth(email string, password string, fake_auth bool) (string, error) {
 	}
 
 	if res.StatusCode == 201 {
-		res_body, err := ioutil.ReadAll(res.Body)
+		res_body, err := io.ReadAll(res.Body)
 
 		if err != nil {
 			return "", fmt.Errorf("Cannot read body for successful answer: %v", err)
@@ -1027,7 +1026,7 @@ func f5_auth(email string, password string, fake_auth bool) (string, error) {
 		// According to documentation it can be 400 and 401
 		// But in reality we observed 500
 		// We ignore error as we OK with empty body
-		res_body, _ := ioutil.ReadAll(res.Body)
+		res_body, _ := io.ReadAll(res.Body)
 
 		return "", fmt.Errorf("Auth failed with code %d. Body: %s", res.StatusCode, res_body)
 	}
