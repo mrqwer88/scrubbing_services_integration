@@ -393,6 +393,28 @@ func main() {
 				fmt.Printf("ID: %d, Name: %s, Description: %s, Version: %s\n", template.ID, template.Name, template.Description, template.Version)
 			}
 
+			return
+		}
+		if os.Getenv("LIST_GCORE_NETWORKS") != "" {
+			// https://docs.gcore.com/api-reference/ddos-protection/bgp-announces/list-bgp-announces
+			ctxList, cancelList := context.WithTimeout(context.Background(), 10*time.Second)
+			defer cancelList()
+			response, err := clientGcore.Security.BgpAnnounces.List(ctxList, gcore_security.BgpAnnounceListParams{})
+			if err != nil {
+				fast_logger.Printf("cannot get networks list: %v\n", err)
+				return
+			}
+			for _, announce := range *response {
+				fmt.Printf("Client ID: %d\n", announce.ClientID)
+				fmt.Println("Networks list:")
+				for _, cidr := range announce.Announced {
+					fmt.Printf("%s - announced", cidr)
+				}
+				for _, cidr := range announce.NotAnnounced {
+					fmt.Printf("%s - not_announced", cidr)
+				}
+			}
+			return
 		}
 
 		type AnnounceConfig struct {
